@@ -1,15 +1,19 @@
 package com.coolplay.system.security.service;
 
 import com.coolplay.system.common.baseservice.IBaseService;
-import com.coolplay.system.core.model.User;
+import com.coolplay.system.core.model.UserModel;
+import com.coolplay.system.core.model.UserRoleModel;
 import com.coolplay.system.security.dto.FunctionDto;
+import com.github.pagehelper.PageInfo;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by majiancheng on 2019/9/16.
  */
-public interface IUserService extends IBaseService<User> {
+public interface IUserService extends IBaseService<UserModel> {
 
     /**
      * 根据登录名获取用户信息
@@ -17,7 +21,7 @@ public interface IUserService extends IBaseService<User> {
      * @param loginName
      * @return
      */
-    public User findUserByLoginName(String loginName);
+    public UserModel findUserByLoginName(String loginName);
 
     /**
      * 根据用户ID获取用户角色
@@ -42,4 +46,16 @@ public interface IUserService extends IBaseService<User> {
      * @return
      */
     public String findLoginNameByUserId(Integer userId);
+
+    void updateLastLoginInfoByUserName(String username, Date date, String remoteAddr);
+
+    PageInfo<UserModel> selectByFilterAndPage(UserModel userModel, int pageNum, int pageSize);
+
+    List<UserModel> selectByFilter(UserModel userModel);
+
+    public UserModel findUserByUserId(int userId);
+
+    public List<UserRoleModel> selectUserRoleByUserId(int userId);
+
+    public Map<Integer, UserModel> findUserMapByUserIds(List<Integer> userIds);
 }

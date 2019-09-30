@@ -5,9 +5,10 @@
 
 <mapper namespace="com.coolplay.system.core.dao.RoleMapper">
 
-    <resultMap id="CompanyRole" type="com.coolplay.system.core.model.CompanyRoleModel">
+    <resultMap id="CompanyRole" type="com.coolplay.system.core.model.RoleModel">
         <result property="id" column="id"/>
         <result property="roleName" column="role_name"/>
+        <result property="companyId" column="company_id"/>
         <result property="status" column="status"/>
         <result property="ctime" column="c_time"/>
     </resultMap>
@@ -15,7 +16,7 @@
     <!-- 用于select查询公用抽取的列 -->
     <sql id="columns">
         <![CDATA[
-        id ,role_name ,status ,c_time
+        id ,role_name , company_id, status ,c_time
 	    ]]>
     </sql>
 
@@ -23,6 +24,9 @@
         <where>
             <if test="roleName != null">
                 AND role_name = #{roleName}
+            </if>
+            <if test="companyId != null">
+                AND company_id = #{companyId}
             </if>
         </where>
     </sql>
@@ -36,6 +40,15 @@
         ORDER BY f.`sort`
     </select>
 
+    <select id="selectById" resultMap="CompanyRole">
+        SELECT <include refid="columns"/> FROM d_company_role
+        WHERE id = #{id}
+    </select>
+
+    <select id="find" resultMap="CompanyRole">
+        SELECT <include refid="columns"/> FROM d_company_role
+        <include refid="findWhere"/>
+    </select>
 
 </mapper>
 

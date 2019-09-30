@@ -7,9 +7,10 @@
 
 package com.coolplay.system.core.model;
 
-import java.io.Serializable;
-import java.util.Date;
+import com.coolplay.system.common.handler.Sortable;
+
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * @author  shawn
@@ -17,11 +18,12 @@ import javax.persistence.*;
  * @since 1.0
  */
 @Table(name = "d_company_function")
-public class CompanyFunctionModel implements Serializable {
+public class FunctionModel extends Sortable {
 	private static final long serialVersionUID = 1L;
 
 	//columns START
-	@Column(name = "id")
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;//"主键"
 
 	@Column(name = "parent_id")
@@ -39,12 +41,18 @@ public class CompanyFunctionModel implements Serializable {
 	@Column(name = "action")
 	private String action;//"请求链接"
 
+	@Column(name = "icon")
+	private String icon;//"菜单图标"
+
 	@Column(name = "sort")
 	private Integer sort;//"排序"
 
 	@Column(name = "c_time")
 	private Date ctime;//"创建时间"
 	//columns END
+
+	@Transient
+	private String parentFunctionName;//"父菜单名称"
 		
 	public void setId(Integer id) {
 		this.id = id;
@@ -93,7 +101,15 @@ public class CompanyFunctionModel implements Serializable {
 	public String getAction() {
 		return this.action;
 	}
-		
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
 	public void setSort(Integer sort) {
 		this.sort = sort;
 	}
@@ -110,5 +126,12 @@ public class CompanyFunctionModel implements Serializable {
 		return this.ctime;
 	}
 
+	public String getParentFunctionName() {
+		return parentFunctionName;
+	}
+
+	public void setParentFunctionName(String parentFunctionName) {
+		this.parentFunctionName = parentFunctionName;
+	}
 }
 

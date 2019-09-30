@@ -7,9 +7,11 @@
 
 package com.coolplay.system.core.model;
 
-import java.io.Serializable;
-import java.util.Date;
+import com.coolplay.system.common.handler.Sortable;
+
 import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author  shawn
@@ -17,15 +19,19 @@ import javax.persistence.*;
  * @since 1.0
  */
 @Table(name = "d_company_role")
-public class CompanyRoleModel implements Serializable {
+public class RoleModel extends Sortable {
 	private static final long serialVersionUID = 1L;
 
 	//columns START
-	@Column(name = "id")
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;//"主键"
 
 	@Column(name = "role_name")
 	private String roleName;//"角色名称"
+
+	@Column(name = "company_id")
+	private Integer companyId;//"公司ID"
 
 	@Column(name = "status")
 	private Integer status;//"是否启用（0：不启用，1：启用）"
@@ -33,6 +39,9 @@ public class CompanyRoleModel implements Serializable {
 	@Column(name = "c_time")
 	private Date ctime;//"创建时间"
 	//columns END
+
+	@Transient
+	private List<Integer> functionIds;
 		
 	public void setId(Integer id) {
 		this.id = id;
@@ -49,7 +58,15 @@ public class CompanyRoleModel implements Serializable {
 	public String getRoleName() {
 		return this.roleName;
 	}
-		
+
+	public Integer getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(Integer companyId) {
+		this.companyId = companyId;
+	}
+
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
@@ -66,5 +83,12 @@ public class CompanyRoleModel implements Serializable {
 		return this.ctime;
 	}
 
+	public List<Integer> getFunctionIds() {
+		return functionIds;
+	}
+
+	public void setFunctionIds(List<Integer> functionIds) {
+		this.functionIds = functionIds;
+	}
 }
 

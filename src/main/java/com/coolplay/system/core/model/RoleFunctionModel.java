@@ -7,34 +7,27 @@
 
 package com.coolplay.system.core.model;
 
-import java.io.Serializable;
-import javax.persistence.*;
+import com.coolplay.system.common.handler.Sortable;
+
+import javax.persistence.Column;
+import javax.persistence.Table;
 
 /**
  * @author  shawn
  * @version 1.0
  * @since 1.0
  */
-@Table(name = "d_company_user_role")
-public class CompanyUserRoleModel implements Serializable {
+@Table(name = "d_company_role_function")
+public class RoleFunctionModel extends Sortable {
 	private static final long serialVersionUID = 1L;
 
 	//columns START
-	@Column(name = "user_id")
-	private Integer userId;//"用户ID"
-
 	@Column(name = "role_id")
 	private Integer roleId;//"角色ID"
 
+	@Column(name = "function_id")
+	private Integer functionId;//"菜单ID"
 	//columns END
-		
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-
-	public Integer getUserId() {
-		return this.userId;
-	}
 		
 	public void setRoleId(Integer roleId) {
 		this.roleId = roleId;
@@ -42,6 +35,14 @@ public class CompanyUserRoleModel implements Serializable {
 
 	public Integer getRoleId() {
 		return this.roleId;
+	}
+		
+	public void setFunctionId(Integer funcationId) {
+		this.functionId = funcationId;
+	}
+
+	public Integer getFunctionId() {
+		return this.functionId;
 	}
 
 }

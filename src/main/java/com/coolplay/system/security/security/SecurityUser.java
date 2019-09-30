@@ -1,5 +1,6 @@
 package com.coolplay.system.security.security;
 
+import com.coolplay.system.core.model.UserModel;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
@@ -25,9 +26,11 @@ public class SecurityUser extends User {
 
     private Date lastPasswordReset;
 
-    public SecurityUser(com.coolplay.system.core.model.User user,
+    private Integer companyId;
+
+    public SecurityUser(UserModel user,
             Collection<GrantedAuthority> userGrantedAuthorities) {
-        super(user.getUserName(), user.getPassword(), user.getStatus() == 1, user.getAccountNonExpired(),
+        super(user.getUserName(), user.getPassword(), user.getEnabled() == 1, user.getAccountNonExpired(),
                 user.getCredentialsNonExpired(), user.getAccountNonLocked(), userGrantedAuthorities);
         if (user != null) {
             setId(user.getId());
@@ -35,6 +38,7 @@ public class SecurityUser extends User {
             setDisplayName(user.getDisplayName());
             setContactPhone(user.getContactPhone());
             setLastPasswordReset(user.getLastPasswordReset());
+            setCompanyId(user.getCompanyId());
         }
     }
 
@@ -84,5 +88,13 @@ public class SecurityUser extends User {
 
     public void setLastPasswordReset(Date lastPasswordReset) {
         this.lastPasswordReset = lastPasswordReset;
+    }
+
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
     }
 }
