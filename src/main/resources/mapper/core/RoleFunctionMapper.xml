@@ -5,7 +5,7 @@
 
 <mapper namespace="com.coolplay.system.core.dao.RoleFunctionMapper">
 
-    <resultMap id="CompanyRoleFunction" type="com.coolplay.system.core.model.RoleFunctionModel">
+    <resultMap id="SystemRoleFunction" type="com.coolplay.system.core.model.RoleFunctionModel">
         <result property="roleId" column="role_id"/>
         <result property="functionId" column="function_id"/>
     </resultMap>
@@ -29,13 +29,13 @@
 	</sql>
 
 	
-	<select id="find" resultMap="CompanyRoleFunction">
-	    SELECT <include refid="columns"/> FROM d_company_role_function 
+	<select id="find" resultMap="SystemRoleFunction">
+	    SELECT <include refid="columns"/> FROM d_system_role_function
 		<include refid="findWhere"/>
     </select>
 
 	<update id="delByRoleId">
-		DELETE FROM d_company_role_function WHERE role_id = #{roleId}
+		DELETE FROM d_system_role_function WHERE role_id = #{roleId}
 	</update>
 	
 </mapper>

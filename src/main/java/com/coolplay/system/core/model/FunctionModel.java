@@ -17,7 +17,7 @@ import java.util.Date;
  * @version 1.0
  * @since 1.0
  */
-@Table(name = "d_company_function")
+@Table(name = "d_system_function")
 public class FunctionModel extends Sortable {
 	private static final long serialVersionUID = 1L;
 

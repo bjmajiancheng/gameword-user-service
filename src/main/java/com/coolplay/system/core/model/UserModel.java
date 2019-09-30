@@ -20,7 +20,7 @@ import java.util.Date;
  * @version 1.0
  * @since 1.0
  */
-@Table(name = "d_company_user")
+@Table(name = "d_system_user")
 public class UserModel extends Sortable {
 	private static final long serialVersionUID = 1L;
 
@@ -28,9 +28,6 @@ public class UserModel extends Sortable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;//"主键"
-
-	@Column(name = "company_id")
-	private Integer companyId;//"企业ID"
 
 	@Column(name = "user_name")
 	@NotEmpty
@@ -49,9 +46,6 @@ public class UserModel extends Sortable {
 
 	@Column(name = "contact_phone")
 	private String contactPhone;//"联系电话"
-
-	@Column(name = "dept_id")
-	private Integer deptId;//"部门ID"
 
 	@Column(name = "last_login_ip")
 	private String lastLoginIp;//"最后登录IP"
@@ -99,14 +93,6 @@ public class UserModel extends Sortable {
 		return this.id;
 	}
 		
-	public void setCompanyId(Integer companyId) {
-		this.companyId = companyId;
-	}
-
-	public Integer getCompanyId() {
-		return this.companyId;
-	}
-		
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
@@ -137,14 +123,6 @@ public class UserModel extends Sortable {
 
 	public String getContactPhone() {
 		return this.contactPhone;
-	}
-		
-	public void setDeptId(Integer deptId) {
-		this.deptId = deptId;
-	}
-
-	public Integer getDeptId() {
-		return this.deptId;
 	}
 		
 	public void setLastLoginIp(String lastLoginIp) {

@@ -5,7 +5,7 @@
 
 <mapper namespace="com.coolplay.system.core.dao.FunctionMapper">
 
-    <resultMap id="CompanyFunction" type="com.coolplay.system.core.model.FunctionModel">
+    <resultMap id="SystemFunction" type="com.coolplay.system.core.model.FunctionModel">
         <result property="id" column="id"/>
         <result property="parentId" column="parent_id"/>
         <result property="functionName" column="function_name"/>
@@ -45,18 +45,18 @@
 	</sql>
 
 	
-	<select id="find" resultMap="CompanyFunction" parameterType="java.util.Map">
-	    SELECT <include refid="columns"/> FROM d_company_function 
+	<select id="find" resultMap="SystemFunction" parameterType="java.util.Map">
+	    SELECT <include refid="columns"/> FROM d_system_function
 		<include refid="findWhere"/>
     </select>
 
-	<select id="selectById" resultMap="CompanyFunction">
-		SELECT <include refid="columns"/> FROM d_company_function
+	<select id="selectById" resultMap="SystemFunction">
+		SELECT <include refid="columns"/> FROM d_system_function
 		WHERE id = #{id}
 	</select>
 
 	<select id="selectFunctionTreeNodes" resultMap="TreeNodeMap">
-		select id,parent_id,function_name from d_company_function
+		select id,parent_id,function_name from d_system_function
 		<where>
 			<if test="functionName!=null and functionName!=''">
 				function_name like concat('%',concat(#{functionName},'%'))

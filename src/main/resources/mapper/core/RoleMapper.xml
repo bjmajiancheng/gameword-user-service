@@ -5,7 +5,7 @@
 
 <mapper namespace="com.coolplay.system.core.dao.RoleMapper">
 
-    <resultMap id="CompanyRole" type="com.coolplay.system.core.model.RoleModel">
+    <resultMap id="SystemRole" type="com.coolplay.system.core.model.RoleModel">
         <result property="id" column="id"/>
         <result property="roleName" column="role_name"/>
         <result property="companyId" column="company_id"/>
@@ -34,19 +34,19 @@
     <select id="findRoleMatchUpFunctions" resultType="java.util.Map">
         SELECT
           f.action AS function, r.id AS role
-        FROM d_company_role r
-        JOIN d_company_role_function rf ON r.id=rf.role_id
-        JOIN d_company_function f on f.id=rf.function_id
+        FROM d_system_role r
+        JOIN d_system_role_function rf ON r.id=rf.role_id
+        JOIN d_system_function f on f.id=rf.function_id
         ORDER BY f.`sort`
     </select>
 
-    <select id="selectById" resultMap="CompanyRole">
-        SELECT <include refid="columns"/> FROM d_company_role
+    <select id="selectById" resultMap="SystemRole">
+        SELECT <include refid="columns"/> FROM d_system_role
         WHERE id = #{id}
     </select>
 
-    <select id="find" resultMap="CompanyRole">
-        SELECT <include refid="columns"/> FROM d_company_role
+    <select id="find" resultMap="SystemRole">
+        SELECT <include refid="columns"/> FROM d_system_role
         <include refid="findWhere"/>
     </select>
 
