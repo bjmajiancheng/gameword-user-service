@@ -54,10 +54,6 @@ public class RoleServiceImpl extends BaseService<RoleModel> implements IRoleServ
             criteria.andLike("roleName", "%" + roleModel.getRoleName() + "%");
         }
 
-        if (roleModel.getCompanyId() != null) {
-            criteria.andEqualTo("companyId", roleModel.getCompanyId());
-        }
-
         if (roleModel.getStatus() != null) {
             criteria.andEqualTo("status", roleModel.getStatus());
         }

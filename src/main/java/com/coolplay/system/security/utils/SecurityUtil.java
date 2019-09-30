@@ -32,12 +32,6 @@ public class SecurityUtil {
         return null;
     }
 
-    public static Integer getCurrentCompanyId() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof SecurityUser) return ((SecurityUser) principal).getCompanyId();
-        return null;
-    }
-
     public static String encodeString(String character) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.encode(character);
