@@ -5,9 +5,9 @@ package com.coolplay.system.security.constants;
  */
 public class SecurityConstant {
 
-    public static final String USER_CACHE_PREFIX = "coolplay_company_platform_user_";
+    public static final String USER_CACHE_PREFIX = "coolplay_system_platform_user_";
 
-    public static final String RESOURCE_MAP = "coolplay_company_platform_resouce_map";
+    public static final String RESOURCE_MAP = "coolplay_system_platform_resouce_map";
 
-    public static final String FUNCTION_CACHE_PREFIX = "coolplay_company_platform_function_";
+    public static final String FUNCTION_CACHE_PREFIX = "coolplay_system_platform_function_";
 }
