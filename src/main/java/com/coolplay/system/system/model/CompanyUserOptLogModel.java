@@ -5,11 +5,12 @@
  * 网址：www.davdian.com
  */
 
-package com.coolplay.system.company.model;
+package com.coolplay.system.system.model;
 
-import java.io.Serializable;
-import java.util.Date;
+import com.coolplay.system.common.handler.Sortable;
+
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * @author  shawn
@@ -17,11 +18,12 @@ import javax.persistence.*;
  * @since 1.0
  */
 @Table(name = "d_company_user_opt_log")
-public class CompanyUserOptLogModel implements Serializable {
+public class CompanyUserOptLogModel extends Sortable {
 	private static final long serialVersionUID = 1L;
 
 	//columns START
-	@Column(name = "id")
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;//"主键"
 
 	@Column(name = "company_id")

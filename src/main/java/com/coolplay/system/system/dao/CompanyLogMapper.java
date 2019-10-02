@@ -5,10 +5,13 @@
  * 网址：www.davdian.com
  */
 
-package com.coolplay.system.company.dao;
-import com.coolplay.system.company.model.CompanyLogModel;
+package com.coolplay.system.system.dao;
 
-import java.util.*;
+import com.coolplay.system.system.model.CompanyLogModel;
+import tk.mybatis.mapper.common.Mapper;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author  davdian
@@ -16,7 +19,7 @@ import java.util.*;
  * @since 1.0
  */
 
-public interface CompanyLogMapper {
+public interface CompanyLogMapper extends Mapper<CompanyLogModel> {
 
 	public List<CompanyLogModel> find(Map<String, Object> param);
 

@@ -5,7 +5,9 @@
  * 网址：www.davdian.com
  */
 
-package com.coolplay.system.company.model;
+package com.coolplay.system.system.model;
+
+import com.coolplay.system.common.handler.Sortable;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -17,7 +19,7 @@ import javax.persistence.*;
  * @since 1.0
  */
 @Table(name = "d_company")
-public class CompanyModel implements Serializable {
+public class CompanyModel extends Sortable {
 	private static final long serialVersionUID = 1L;
 
 	//columns START

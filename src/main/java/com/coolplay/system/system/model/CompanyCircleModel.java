@@ -5,11 +5,12 @@
  * 网址：www.davdian.com
  */
 
-package com.coolplay.system.company.model;
+package com.coolplay.system.system.model;
 
-import java.io.Serializable;
-import java.util.Date;
+import com.coolplay.system.common.handler.Sortable;
+
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * @author  shawn
@@ -17,11 +18,12 @@ import javax.persistence.*;
  * @since 1.0
  */
 @Table(name = "d_company_circle")
-public class CompanyCircleModel implements Serializable {
+public class CompanyCircleModel extends Sortable {
 	private static final long serialVersionUID = 1L;
 
 	//columns START
-	@Column(name = "id")
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;//"主键"
 
 	@Column(name = "circle_id")
@@ -53,7 +55,29 @@ public class CompanyCircleModel implements Serializable {
 
 	@Column(name = "c_time")
 	private Date ctime;//"创建时间"
+
 	//columns END
+
+	@Transient
+	private String applicationStartTime;
+
+	@Transient
+	private String applicationEndTime;
+
+	@Transient
+	private String applicationUserName;//"申请用户名称"
+
+	@Transient
+	private String circleName;//"圈子名称"
+
+	@Transient
+	private Integer memberCnt;//"圈子人数"
+
+	@Transient
+	private String publicContent;//"圈子公告"
+
+	@Transient
+	private String circleLabels;//"圈子标签"
 		
 	public void setId(Integer id) {
 		this.id = id;
@@ -143,5 +167,60 @@ public class CompanyCircleModel implements Serializable {
 		return this.ctime;
 	}
 
+	public String getApplicationStartTime() {
+		return applicationStartTime;
+	}
+
+	public void setApplicationStartTime(String applicationStartTime) {
+		this.applicationStartTime = applicationStartTime;
+	}
+
+	public String getApplicationEndTime() {
+		return applicationEndTime;
+	}
+
+	public void setApplicationEndTime(String applicationEndTime) {
+		this.applicationEndTime = applicationEndTime;
+	}
+
+	public String getApplicationUserName() {
+		return applicationUserName;
+	}
+
+	public void setApplicationUserName(String applicationUserName) {
+		this.applicationUserName = applicationUserName;
+	}
+
+	public String getCircleName() {
+		return circleName;
+	}
+
+	public void setCircleName(String circleName) {
+		this.circleName = circleName;
+	}
+
+	public Integer getMemberCnt() {
+		return memberCnt;
+	}
+
+	public void setMemberCnt(Integer memberCnt) {
+		this.memberCnt = memberCnt;
+	}
+
+	public String getPublicContent() {
+		return publicContent;
+	}
+
+	public void setPublicContent(String publicContent) {
+		this.publicContent = publicContent;
+	}
+
+	public String getCircleLabels() {
+		return circleLabels;
+	}
+
+	public void setCircleLabels(String circleLabels) {
+		this.circleLabels = circleLabels;
+	}
 }
 
