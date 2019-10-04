@@ -69,4 +69,22 @@ public class CategoryServiceImpl extends BaseService<CategoryModel> implements I
 		}
 		return getMapper().selectByExample(example);
 	}
+
+
+	public Map<Integer, CategoryModel> findMapByIds(List<Integer> ids) {
+		if(CollectionUtils.isEmpty(ids)) {
+			return Collections.emptyMap();
+		}
+
+		List<CategoryModel> categorys = this.find(Collections.singletonMap("ids", ids));
+		if(CollectionUtils.isEmpty(categorys)) {
+			return Collections.emptyMap();
+		}
+		Map<Integer, CategoryModel> categoryModelMap = new HashMap<Integer, CategoryModel>();
+		for(CategoryModel categoryModel : categorys) {
+			categoryModelMap.put(categoryModel.getId(), categoryModel);
+		}
+
+		return categoryModelMap;
+	}
 }

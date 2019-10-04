@@ -17,7 +17,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.coolplay.system.system.model.LabelModel;
+import com.coolplay.system.system.model.CirclePostModel;
 import tk.mybatis.mapper.entity.Example;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -33,55 +33,39 @@ import com.coolplay.system.system.service.*;
  * @since 1.0
  */
 
-@Service("labelService")
-public class LabelServiceImpl extends BaseService<LabelModel> implements ILabelService{
+@Service("circlePostService")
+public class CirclePostServiceImpl extends BaseService<CirclePostModel> implements ICirclePostService{
 	@Autowired
-	private LabelMapper labelMapper;
+	private CirclePostMapper circlePostMapper;
 	
 	@Override
-	public LabelModel findById(Integer id) {
+	public CirclePostModel findById(Integer id) {
 		if(id == null) {
 			return null;
 		}
-		return labelMapper.findById(id);
+		return circlePostMapper.findById(id);
 	}
 
 
-	public List<LabelModel> find(Map<String, Object> param) {
-		return labelMapper.find(param);
+	public List<CirclePostModel> find(Map<String, Object> param) {
+		return circlePostMapper.find(param);
 	}
 
 	@Override
-	public PageInfo<LabelModel> selectByFilterAndPage(LabelModel labelModel, int pageNum,
+	public PageInfo<CirclePostModel> selectByFilterAndPage(CirclePostModel circlePostModel, int pageNum,
 		int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
-		List<LabelModel> list = this.selectByFilter(labelModel);
+		List<CirclePostModel> list = this.selectByFilter(circlePostModel);
 		return new PageInfo<>(list);
 	}
 
 	@Override
-	public List<LabelModel> selectByFilter(LabelModel labelModel) {
-		Example example = new Example(LabelModel.class);
+	public List<CirclePostModel> selectByFilter(CirclePostModel circlePostModel) {
+		Example example = new Example(CirclePostModel.class);
 		Example.Criteria criteria = example.createCriteria();
 
-		if(labelModel.getIsDel() != null) {
-			criteria.andEqualTo("isDel", labelModel.getIsDel());
-		}
-
-		if(labelModel.getStatus() != null) {
-			criteria.andEqualTo("status", labelModel.getStatus());
-		}
-
-		if(labelModel.getCatId() != null) {
-			criteria.andEqualTo("catId", labelModel.getCatId());
-		}
-
-		if(StringUtils.isNotEmpty(labelModel.getLabelName())) {
-			criteria.andLike("labelName", "%"+ labelModel.getLabelName() +"%");
-		}
-
-		if(StringUtils.isNotEmpty(labelModel.getSortWithOutOrderBy())) {
-			example.setOrderByClause(labelModel.getSortWithOutOrderBy());
+		if(StringUtils.isNotEmpty(circlePostModel.getSortWithOutOrderBy())) {
+			example.setOrderByClause(circlePostModel.getSortWithOutOrderBy());
 		}
 		return getMapper().selectByExample(example);
 	}

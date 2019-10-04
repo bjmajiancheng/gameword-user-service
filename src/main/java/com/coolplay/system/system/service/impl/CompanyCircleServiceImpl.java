@@ -58,6 +58,14 @@ public class CompanyCircleServiceImpl extends BaseService<CompanyCircleModel> im
 		Example example = new Example(CompanyCircleModel.class);
 		Example.Criteria criteria = example.createCriteria();
 
+		if(companyCircleModel.getCompanyId() != null) {
+			criteria.andEqualTo("companyId", companyCircleModel.getCompanyId());
+		}
+
+		if(companyCircleModel.getCircleId() != null) {
+			criteria.andEqualTo("circleId", companyCircleModel.getCircleId());
+		}
+
 		if(StringUtils.isNotEmpty(companyCircleModel.getApplicationStartTime())) {
 			criteria.andGreaterThanOrEqualTo("applicationTime", companyCircleModel.getApplicationStartTime());
 		}

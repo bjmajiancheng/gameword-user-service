@@ -6,7 +6,7 @@
  */
 
 package com.coolplay.system.system.dao;
-import com.coolplay.system.system.model.CompanyCircleModel;
+import com.coolplay.system.system.model.CircleLabelModel;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -20,10 +20,10 @@ import com.coolplay.system.system.service.*;
  * @since 1.0
  */
 
-public interface CompanyCircleMapper extends Mapper<CompanyCircleModel> {
+public interface CircleLabelMapper extends Mapper<CircleLabelModel> {
 
-	public List<CompanyCircleModel> find(Map<String, Object> param);
+	public List<CircleLabelModel> find(Map<String, Object> param);
 
-	public CompanyCircleModel findById(@Param("id") Integer id);
+	public CircleLabelModel findById(@Param("id") Integer id);
 
 }

@@ -3,9 +3,9 @@ package com.coolplay.system.system.api.common;
 import com.coolplay.system.common.utils.PageConvertUtil;
 import com.coolplay.system.common.utils.ResponseUtil;
 import com.coolplay.system.common.utils.Result;
-import com.coolplay.system.system.model.CompanyModel;
+import com.coolplay.system.system.model.CategoryModel;
 import com.coolplay.system.system.model.LabelModel;
-import com.coolplay.system.system.service.ILabelService;
+import com.coolplay.system.system.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,21 +18,20 @@ import java.util.List;
  * Created by majiancheng on 2019/10/4.
  */
 @Controller
-@RequestMapping("/api/common/label")
-public class LabelController {
+@RequestMapping("/api/common/category")
+public class CategoryController {
 
     @Autowired
-    private ILabelService labelService;
+    private ICategoryService categoryService;
 
     @ResponseBody
     @RequestMapping(value = "/options", method = RequestMethod.GET)
     public Result options() {
-        LabelModel labelModel = new LabelModel();
-        labelModel.setIsDel(0);
-        labelModel.setStatus(1);
+        CategoryModel categoryModel = new CategoryModel();
+        categoryModel.setIsDel(0);
 
-        List<LabelModel> labelModels = labelService.selectByFilter(labelModel);
+        List<CategoryModel> categoryModels = categoryService.selectByFilter(categoryModel);
 
-        return ResponseUtil.success(PageConvertUtil.grid(labelModels));
+        return ResponseUtil.success(PageConvertUtil.grid(categoryModels));
     }
 }

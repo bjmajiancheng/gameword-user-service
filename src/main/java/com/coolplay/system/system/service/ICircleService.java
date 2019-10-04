@@ -8,7 +8,7 @@
 package com.coolplay.system.system.service;
 
 import com.coolplay.system.common.baseservice.IBaseService;
-import com.coolplay.system.system.model.CompanyCircleModel;
+import com.coolplay.system.system.model.CircleModel;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import java.util.*;
@@ -21,15 +21,15 @@ import com.coolplay.system.system.service.*;
  * @since 1.0
  */
 
-public interface ICompanyCircleService extends IBaseService<CompanyCircleModel> {
+public interface ICircleService extends IBaseService<CircleModel> {
 
-	public CompanyCircleModel findById(Integer id);
+	public CircleModel findById(Integer id);
 
-	public List<CompanyCircleModel> find(Map<String, Object> param);
+	public List<CircleModel> find(Map<String, Object> param);
 
-	public PageInfo<CompanyCircleModel> selectByFilterAndPage(CompanyCircleModel companyCircleModel, int pageNum,
-			int pageSize);
+	public PageInfo<CircleModel> selectByFilterAndPage(CircleModel circleModel, int pageNum, int pageSize);
 
-	public List<CompanyCircleModel> selectByFilter(CompanyCircleModel companyCircleModel);
+	public List<CircleModel> selectByFilter(CircleModel circleModel);
 
+	public Map<Integer, CircleModel> findMapByIds(List<Integer> ids);
 }

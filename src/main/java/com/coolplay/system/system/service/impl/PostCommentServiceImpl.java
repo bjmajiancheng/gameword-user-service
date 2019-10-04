@@ -72,6 +72,10 @@ public class PostCommentServiceImpl extends BaseService<PostCommentModel> implem
 			criteria.andEqualTo("isDel", postCommentModel.getIsDel());
 		}
 
+		if(StringUtils.isNotEmpty(postCommentModel.getCommentContent())) {
+			criteria.andLike("commentContent", "%" + postCommentModel.getCommentContent() + "%");
+		}
+
 		if(StringUtils.isNotEmpty(postCommentModel.getSortWithOutOrderBy())) {
 			example.setOrderByClause(postCommentModel.getSortWithOutOrderBy());
 		}

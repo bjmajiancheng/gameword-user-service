@@ -26,7 +26,8 @@ public class LabelModel extends Sortable {
 	private static final long serialVersionUID = 1L;
 
 	//columns START
-	@Column(name = "id")
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;//"主键"
 
 	@Column(name = "cat_id")
@@ -48,6 +49,9 @@ public class LabelModel extends Sortable {
 	private Date ctime;//"创建时间"
 
 	//columns END
+
+	@Transient
+	private String catName;//"分类名称"
 		
 	public void setId(Integer id) {
 		this.id = id;
@@ -105,5 +109,12 @@ public class LabelModel extends Sortable {
 		return this.ctime;
 	}
 
+	public String getCatName() {
+		return catName;
+	}
+
+	public void setCatName(String catName) {
+		this.catName = catName;
+	}
 }
 

@@ -78,6 +78,18 @@ public class CompanyCircleModel extends Sortable {
 
 	@Transient
 	private String circleLabels;//"圈子标签"
+
+	@Transient
+	private String companyName;//"公司名称"
+
+	@Transient
+	private String userName;//"用户名"
+
+	@Transient
+	private String circleDesc;//"圈子说明"
+
+	@Transient
+	private Date circleCtime;//"圈子成立时间"
 		
 	public void setId(Integer id) {
 		this.id = id;
@@ -221,6 +233,38 @@ public class CompanyCircleModel extends Sortable {
 
 	public void setCircleLabels(String circleLabels) {
 		this.circleLabels = circleLabels;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getCircleDesc() {
+		return circleDesc;
+	}
+
+	public void setCircleDesc(String circleDesc) {
+		this.circleDesc = circleDesc;
+	}
+
+	public Date getCircleCtime() {
+		return circleCtime;
+	}
+
+	public void setCircleCtime(Date circleCtime) {
+		this.circleCtime = circleCtime;
 	}
 }
 

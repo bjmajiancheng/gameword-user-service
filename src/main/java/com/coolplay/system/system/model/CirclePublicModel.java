@@ -21,8 +21,8 @@ import javax.persistence.*;
  * @version 1.0
  * @since 1.0
  */
-@Table(name = "d_category")
-public class CategoryModel extends Sortable {
+@Table(name = "d_circle_public")
+public class CirclePublicModel extends Sortable {
 	private static final long serialVersionUID = 1L;
 
 	//columns START
@@ -30,11 +30,11 @@ public class CategoryModel extends Sortable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;//"主键"
 
-	@Column(name = "cat_name")
-	private String catName;//"分类名称"
+	@Column(name = "circle_id")
+	private Integer circleId;//"酷玩圈ID"
 
-	@Column(name = "is_del")
-	private Integer isDel;//"是否删除"
+	@Column(name = "public_content")
+	private String publicContent;//"公告内容"
 
 	@Column(name = "c_time")
 	private Date ctime;//"创建时间"
@@ -49,20 +49,20 @@ public class CategoryModel extends Sortable {
 		return this.id;
 	}
 		
-	public void setCatName(String catName) {
-		this.catName = catName;
+	public void setCircleId(Integer circleId) {
+		this.circleId = circleId;
 	}
 
-	public String getCatName() {
-		return this.catName;
+	public Integer getCircleId() {
+		return this.circleId;
 	}
 		
-	public void setIsDel(Integer isDel) {
-		this.isDel = isDel;
+	public void setPublicContent(String publicContent) {
+		this.publicContent = publicContent;
 	}
 
-	public Integer getIsDel() {
-		return this.isDel;
+	public String getPublicContent() {
+		return this.publicContent;
 	}
 		
 	public void setCtime(Date ctime) {

@@ -31,4 +31,6 @@ public interface ICategoryService extends IBaseService<CategoryModel> {
 
 	public List<CategoryModel> selectByFilter(CategoryModel categoryModel);
 
+	public Map<Integer, CategoryModel> findMapByIds(List<Integer> ids);
+
 }

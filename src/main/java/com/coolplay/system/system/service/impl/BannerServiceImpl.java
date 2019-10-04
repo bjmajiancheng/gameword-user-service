@@ -17,7 +17,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.coolplay.system.system.model.LabelModel;
+import com.coolplay.system.system.model.BannerModel;
 import tk.mybatis.mapper.entity.Example;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -33,55 +33,47 @@ import com.coolplay.system.system.service.*;
  * @since 1.0
  */
 
-@Service("labelService")
-public class LabelServiceImpl extends BaseService<LabelModel> implements ILabelService{
+@Service("bannerService")
+public class BannerServiceImpl extends BaseService<BannerModel> implements IBannerService{
 	@Autowired
-	private LabelMapper labelMapper;
+	private BannerMapper bannerMapper;
 	
 	@Override
-	public LabelModel findById(Integer id) {
+	public BannerModel findById(Integer id) {
 		if(id == null) {
 			return null;
 		}
-		return labelMapper.findById(id);
+		return bannerMapper.findById(id);
 	}
 
 
-	public List<LabelModel> find(Map<String, Object> param) {
-		return labelMapper.find(param);
+	public List<BannerModel> find(Map<String, Object> param) {
+		return bannerMapper.find(param);
 	}
 
 	@Override
-	public PageInfo<LabelModel> selectByFilterAndPage(LabelModel labelModel, int pageNum,
+	public PageInfo<BannerModel> selectByFilterAndPage(BannerModel bannerModel, int pageNum,
 		int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
-		List<LabelModel> list = this.selectByFilter(labelModel);
+		List<BannerModel> list = this.selectByFilter(bannerModel);
 		return new PageInfo<>(list);
 	}
 
 	@Override
-	public List<LabelModel> selectByFilter(LabelModel labelModel) {
-		Example example = new Example(LabelModel.class);
+	public List<BannerModel> selectByFilter(BannerModel bannerModel) {
+		Example example = new Example(BannerModel.class);
 		Example.Criteria criteria = example.createCriteria();
 
-		if(labelModel.getIsDel() != null) {
-			criteria.andEqualTo("isDel", labelModel.getIsDel());
+		if(StringUtils.isNotEmpty(bannerModel.getBannerTitle())) {
+			criteria.andLike("bannerTitle", "%" + bannerModel.getBannerTitle() + "%");
 		}
 
-		if(labelModel.getStatus() != null) {
-			criteria.andEqualTo("status", labelModel.getStatus());
+		if(bannerModel.getIsDel() != null) {
+			criteria.andEqualTo("isDel", bannerModel.getIsDel());
 		}
 
-		if(labelModel.getCatId() != null) {
-			criteria.andEqualTo("catId", labelModel.getCatId());
-		}
-
-		if(StringUtils.isNotEmpty(labelModel.getLabelName())) {
-			criteria.andLike("labelName", "%"+ labelModel.getLabelName() +"%");
-		}
-
-		if(StringUtils.isNotEmpty(labelModel.getSortWithOutOrderBy())) {
-			example.setOrderByClause(labelModel.getSortWithOutOrderBy());
+		if(StringUtils.isNotEmpty(bannerModel.getSortWithOutOrderBy())) {
+			example.setOrderByClause(bannerModel.getSortWithOutOrderBy());
 		}
 		return getMapper().selectByExample(example);
 	}

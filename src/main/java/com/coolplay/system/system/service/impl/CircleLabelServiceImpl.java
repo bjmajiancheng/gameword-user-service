@@ -17,7 +17,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.coolplay.system.system.model.LabelModel;
+import com.coolplay.system.system.model.CircleLabelModel;
 import tk.mybatis.mapper.entity.Example;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -33,55 +33,39 @@ import com.coolplay.system.system.service.*;
  * @since 1.0
  */
 
-@Service("labelService")
-public class LabelServiceImpl extends BaseService<LabelModel> implements ILabelService{
+@Service("circleLabelService")
+public class CircleLabelServiceImpl extends BaseService<CircleLabelModel> implements ICircleLabelService{
 	@Autowired
-	private LabelMapper labelMapper;
+	private CircleLabelMapper circleLabelMapper;
 	
 	@Override
-	public LabelModel findById(Integer id) {
+	public CircleLabelModel findById(Integer id) {
 		if(id == null) {
 			return null;
 		}
-		return labelMapper.findById(id);
+		return circleLabelMapper.findById(id);
 	}
 
 
-	public List<LabelModel> find(Map<String, Object> param) {
-		return labelMapper.find(param);
+	public List<CircleLabelModel> find(Map<String, Object> param) {
+		return circleLabelMapper.find(param);
 	}
 
 	@Override
-	public PageInfo<LabelModel> selectByFilterAndPage(LabelModel labelModel, int pageNum,
+	public PageInfo<CircleLabelModel> selectByFilterAndPage(CircleLabelModel circleLabelModel, int pageNum,
 		int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
-		List<LabelModel> list = this.selectByFilter(labelModel);
+		List<CircleLabelModel> list = this.selectByFilter(circleLabelModel);
 		return new PageInfo<>(list);
 	}
 
 	@Override
-	public List<LabelModel> selectByFilter(LabelModel labelModel) {
-		Example example = new Example(LabelModel.class);
+	public List<CircleLabelModel> selectByFilter(CircleLabelModel circleLabelModel) {
+		Example example = new Example(CircleLabelModel.class);
 		Example.Criteria criteria = example.createCriteria();
 
-		if(labelModel.getIsDel() != null) {
-			criteria.andEqualTo("isDel", labelModel.getIsDel());
-		}
-
-		if(labelModel.getStatus() != null) {
-			criteria.andEqualTo("status", labelModel.getStatus());
-		}
-
-		if(labelModel.getCatId() != null) {
-			criteria.andEqualTo("catId", labelModel.getCatId());
-		}
-
-		if(StringUtils.isNotEmpty(labelModel.getLabelName())) {
-			criteria.andLike("labelName", "%"+ labelModel.getLabelName() +"%");
-		}
-
-		if(StringUtils.isNotEmpty(labelModel.getSortWithOutOrderBy())) {
-			example.setOrderByClause(labelModel.getSortWithOutOrderBy());
+		if(StringUtils.isNotEmpty(circleLabelModel.getSortWithOutOrderBy())) {
+			example.setOrderByClause(circleLabelModel.getSortWithOutOrderBy());
 		}
 		return getMapper().selectByExample(example);
 	}
