@@ -59,7 +59,7 @@
 		<property name="dataSource" ref="dataSource"/>
 		<property name="mapperLocations">
 			<array>
-				<value>classpath*:mapper/core/**/*.xml</value>
+				<value>classpath*:mapper/**/*.xml</value>
 			</array>
 		</property>
 		<property name="typeAliasesPackage" value="com.coolplay.system.core.model"/>
@@ -82,7 +82,7 @@
 	</bean>
 
 	<bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.coolplay.system.core.dao"/>
+		<property name="basePackage" value="com.coolplay.system.core.dao,com.coolplay.system.system.dao"/>
 		<property name="properties">
 			<value>
 				mappers=tk.mybatis.mapper.common.Mapper

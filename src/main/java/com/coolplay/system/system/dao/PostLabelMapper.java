@@ -6,7 +6,7 @@
  */
 
 package com.coolplay.system.system.dao;
-import com.coolplay.system.system.model.CompanyLogModel;
+import com.coolplay.system.system.model.PostLabelModel;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -20,10 +20,11 @@ import com.coolplay.system.system.service.*;
  * @since 1.0
  */
 
-public interface CompanyLogMapper extends Mapper<CompanyLogModel> {
+public interface PostLabelMapper extends Mapper<PostLabelModel> {
 
-	public List<CompanyLogModel> find(Map<String, Object> param);
+	public List<PostLabelModel> find(Map<String, Object> param);
 
-	public CompanyLogModel findById(@Param("id") Integer id);
+	public PostLabelModel findById(@Param("id") Integer id);
 
+	public List<Integer> getPostIdsByLabelId(@Param("labelId")Integer labelId);
 }

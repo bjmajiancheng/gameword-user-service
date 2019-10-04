@@ -7,7 +7,8 @@
 
     <resultMap id="CompanyLog" type="com.coolplay.system.system.model.CompanyLogModel">
         <result property="id" column="id"/>
-        <result property="companyId" column="company_id"/>
+		<result property="companyId" column="company_id"/>
+		<result property="userId" column="user_id"/>
         <result property="userName" column="user_name"/>
         <result property="ip" column="ip"/>
         <result property="ctime" column="c_time"/>
@@ -16,7 +17,7 @@
 	<!-- 用于select查询公用抽取的列 -->
 	<sql id="columns">
 	    <![CDATA[
-        id ,company_id ,user_name ,ip ,c_time 
+        id ,company_id , user_id, user_name ,ip ,c_time
 	    ]]>
 	</sql>
 
@@ -37,6 +38,14 @@
 		<include refid="findWhere"/>
     </select>
 
+	<select id="findById" resultMap="CompanyLog" >
+	SELECT <include refid="columns"/>
+	<![CDATA[
+	        FROM d_company_log
+	        WHERE
+		        id = #{id} 
+	    ]]>
+	</select>
 	
 </mapper>
 

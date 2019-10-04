@@ -21,26 +21,19 @@ import javax.persistence.*;
  * @version 1.0
  * @since 1.0
  */
-@Table(name = "d_company_log")
-public class CompanyLogModel extends Sortable {
+@Table(name = "d_category")
+public class CategoryModel extends Sortable {
 	private static final long serialVersionUID = 1L;
 
 	//columns START
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Integer id;//"主键"
 
-	@Column(name = "company_id")
-	private Integer companyId;//"公司ID"
+	@Column(name = "cat_name")
+	private String catName;//"分类名称"
 
-	@Column(name = "user_id")
-	private Integer userId;//"用户ID"
-
-	@Column(name = "user_name")
-	private String userName;//"用户名称"
-
-	@Column(name = "ip")
-	private String ip;//"IP地址"
+	@Column(name = "is_del")
+	private Integer isDel;//"是否删除"
 
 	@Column(name = "c_time")
 	private Date ctime;//"创建时间"
@@ -55,36 +48,20 @@ public class CompanyLogModel extends Sortable {
 		return this.id;
 	}
 		
-	public void setCompanyId(Integer companyId) {
-		this.companyId = companyId;
+	public void setCatName(String catName) {
+		this.catName = catName;
 	}
 
-	public Integer getCompanyId() {
-		return this.companyId;
-	}
-
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getUserName() {
-		return this.userName;
+	public String getCatName() {
+		return this.catName;
 	}
 		
-	public void setIp(String ip) {
-		this.ip = ip;
+	public void setIsDel(Integer isDel) {
+		this.isDel = isDel;
 	}
 
-	public String getIp() {
-		return this.ip;
+	public Integer getIsDel() {
+		return this.isDel;
 	}
 		
 	public void setCtime(Date ctime) {

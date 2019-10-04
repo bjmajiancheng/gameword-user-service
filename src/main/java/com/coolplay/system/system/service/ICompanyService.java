@@ -5,6 +5,7 @@ import com.coolplay.system.system.model.CompanyModel;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by majiancheng on 2019/9/19.
@@ -17,4 +18,6 @@ public interface ICompanyService extends IBaseService<CompanyModel> {
             int pageNum, int pageSize);
 
     public List<CompanyModel> selectByFilter(CompanyModel companyModel);
+
+    public Map<Integer, CompanyModel> findMapByIds(List<Integer> ids);
 }

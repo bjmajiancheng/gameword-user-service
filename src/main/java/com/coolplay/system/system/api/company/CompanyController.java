@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -56,6 +57,15 @@ public class CompanyController {
         int cnt = companyService.updateNotNull(companyModel);
 
         return ResponseUtil.success();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/companyOptions", method = RequestMethod.GET)
+    public Result companyOptions() {
+        CompanyModel companyModel = new CompanyModel();
+        List<CompanyModel> companyModels = companyService.selectByFilter(companyModel);
+
+        return ResponseUtil.success(PageConvertUtil.grid(companyModels));
     }
 
 }

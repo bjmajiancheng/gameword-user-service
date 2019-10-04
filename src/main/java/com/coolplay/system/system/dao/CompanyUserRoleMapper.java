@@ -6,7 +6,7 @@
  */
 
 package com.coolplay.system.system.dao;
-import com.coolplay.system.system.model.CompanyLogModel;
+import com.coolplay.system.system.model.CompanyUserRoleModel;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -20,10 +20,11 @@ import com.coolplay.system.system.service.*;
  * @since 1.0
  */
 
-public interface CompanyLogMapper extends Mapper<CompanyLogModel> {
+public interface CompanyUserRoleMapper extends Mapper<CompanyUserRoleModel> {
 
-	public List<CompanyLogModel> find(Map<String, Object> param);
+	public List<CompanyUserRoleModel> find(Map<String, Object> param);
 
-	public CompanyLogModel findById(@Param("id") Integer id);
+	public CompanyUserRoleModel findById(@Param("id") Integer id);
 
+	public List<CompanyUserRoleModel> findByUserId(@Param("userId")Integer userId);
 }

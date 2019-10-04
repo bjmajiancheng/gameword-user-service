@@ -8,7 +8,7 @@
 package com.coolplay.system.system.service;
 
 import com.coolplay.system.common.baseservice.IBaseService;
-import com.coolplay.system.system.model.CompanyLogModel;
+import com.coolplay.system.system.model.PostLabelModel;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import java.util.*;
@@ -21,14 +21,14 @@ import com.coolplay.system.system.service.*;
  * @since 1.0
  */
 
-public interface ICompanyLogService extends IBaseService<CompanyLogModel> {
+public interface IPostLabelService extends IBaseService<PostLabelModel> {
 
-	public CompanyLogModel findById(Integer id);
+	public PostLabelModel findById(Integer id);
 
-	public List<CompanyLogModel> find(Map<String, Object> param);
+	public List<PostLabelModel> find(Map<String, Object> param);
 
-	public PageInfo<CompanyLogModel> selectByFilterAndPage(CompanyLogModel companyLogModel, int pageNum, int pageSize);
+	public PageInfo<PostLabelModel> selectByFilterAndPage(PostLabelModel postLabelModel, int pageNum, int pageSize);
 
-	public List<CompanyLogModel> selectByFilter(CompanyLogModel companyLogModel);
+	public List<PostLabelModel> selectByFilter(PostLabelModel postLabelModel);
 
 }

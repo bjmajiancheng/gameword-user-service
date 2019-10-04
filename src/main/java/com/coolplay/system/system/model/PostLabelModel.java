@@ -21,8 +21,8 @@ import javax.persistence.*;
  * @version 1.0
  * @since 1.0
  */
-@Table(name = "d_company_log")
-public class CompanyLogModel extends Sortable {
+@Table(name = "d_post_label")
+public class PostLabelModel extends Sortable {
 	private static final long serialVersionUID = 1L;
 
 	//columns START
@@ -30,17 +30,11 @@ public class CompanyLogModel extends Sortable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;//"主键"
 
-	@Column(name = "company_id")
-	private Integer companyId;//"公司ID"
+	@Column(name = "post_id")
+	private Integer postId;//"帖子ID"
 
-	@Column(name = "user_id")
-	private Integer userId;//"用户ID"
-
-	@Column(name = "user_name")
-	private String userName;//"用户名称"
-
-	@Column(name = "ip")
-	private String ip;//"IP地址"
+	@Column(name = "label_id")
+	private Integer labelId;//"标签ID"
 
 	@Column(name = "c_time")
 	private Date ctime;//"创建时间"
@@ -55,36 +49,20 @@ public class CompanyLogModel extends Sortable {
 		return this.id;
 	}
 		
-	public void setCompanyId(Integer companyId) {
-		this.companyId = companyId;
+	public void setPostId(Integer postId) {
+		this.postId = postId;
 	}
 
-	public Integer getCompanyId() {
-		return this.companyId;
-	}
-
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getUserName() {
-		return this.userName;
+	public Integer getPostId() {
+		return this.postId;
 	}
 		
-	public void setIp(String ip) {
-		this.ip = ip;
+	public void setLabelId(Integer labelId) {
+		this.labelId = labelId;
 	}
 
-	public String getIp() {
-		return this.ip;
+	public Integer getLabelId() {
+		return this.labelId;
 	}
 		
 	public void setCtime(Date ctime) {
