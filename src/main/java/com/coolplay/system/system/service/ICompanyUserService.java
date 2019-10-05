@@ -33,4 +33,6 @@ public interface ICompanyUserService extends IBaseService<CompanyUserModel> {
 	public List<CompanyUserModel> selectByFilter(CompanyUserModel companyUserModel);
 
 	public int delById(Integer userId);
+
+	public CompanyUserModel findByUserName(String userName);
 }

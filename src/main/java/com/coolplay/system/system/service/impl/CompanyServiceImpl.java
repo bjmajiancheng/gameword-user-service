@@ -50,6 +50,10 @@ public class CompanyServiceImpl extends BaseService<CompanyModel> implements ICo
             criteria.andLike("contactMobile", "%" + companyModel.getContactMobile() + "%");
         }
 
+        if(StringUtils.isNotEmpty(companyModel.getAdminUserName())) {
+            criteria.andLike("adminUserName", "%" + companyModel.getAdminUserName() + "%");
+        }
+
         if (StringUtils.isNotEmpty(companyModel.getSortWithOutOrderBy())) {
             example.setOrderByClause(companyModel.getSortWithOutOrderBy());
         }

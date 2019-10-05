@@ -69,6 +69,15 @@
 	<delete id="delById">
 		DELETE FROM d_company_user WHERE id = #{id}
 	</delete>
-	
+
+	<select id="findByUserName" resultMap="CompanyUser">
+		SELECT <include refid="columns"/>
+		<![CDATA[
+	        FROM d_company_user
+	        WHERE
+		        user_name = #{userName}
+	    ]]>
+	</select>
+
 </mapper>
 

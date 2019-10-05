@@ -87,4 +87,9 @@ public class CompanyUserServiceImpl extends BaseService<CompanyUserModel> implem
 	public int delById(Integer userId) {
 		return companyUserMapper.delById(userId);
 	}
+
+	@Override
+	public CompanyUserModel findByUserName(String userName) {
+		return companyUserMapper.findByUserName(userName);
+	}
 }

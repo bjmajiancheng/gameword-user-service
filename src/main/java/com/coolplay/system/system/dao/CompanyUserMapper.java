@@ -28,4 +28,6 @@ public interface CompanyUserMapper extends Mapper<CompanyUserModel> {
 
 	public int delById(@Param("id") Integer id);
 
+	public CompanyUserModel findByUserName(@Param("userName")String userName);
+
 }

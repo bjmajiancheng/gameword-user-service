@@ -3,10 +3,13 @@ package com.coolplay.system.system.api.company;
 import com.coolplay.system.common.utils.PageConvertUtil;
 import com.coolplay.system.common.utils.ResponseUtil;
 import com.coolplay.system.common.utils.Result;
+import com.coolplay.system.security.utils.SecurityUtil;
 import com.coolplay.system.system.model.CompanyModel;
+import com.coolplay.system.system.model.CompanyUserModel;
 import com.coolplay.system.system.service.ICompanyDeptService;
 import com.coolplay.system.system.service.ICompanyService;
 import com.coolplay.system.security.service.IRoleService;
+import com.coolplay.system.system.service.ICompanyUserService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,8 +35,11 @@ public class CompanyController {
     @Autowired
     private IRoleService roleService;
 
+    @Autowired
+    private ICompanyUserService companyUserService;
+
     @ResponseBody
-    @RequestMapping(value="list", method = RequestMethod.GET)
+    @RequestMapping(value="/list", method = RequestMethod.GET)
     public Map list(CompanyModel companyModel,
             @RequestParam(value = "page", required = false, defaultValue = "1") int pageNum,
             @RequestParam(value = "rows", required = false, defaultValue = "15") int pageSize) {
@@ -54,7 +60,35 @@ public class CompanyController {
     @ResponseBody
     @RequestMapping(value = "/updateCompany", method = RequestMethod.POST)
     public Result updateCompany(CompanyModel companyModel) {
+        companyModel.setReviewStatus(1);
+
+        //审核通过, 验证用户账户信息
+        if(companyModel.getStatus() == 1) {
+            CompanyUserModel companyUserModel = companyUserService.findByUserName(companyModel.getAdminUserName());
+            if(companyUserModel != null && !companyUserModel.getCompanyId().equals(companyModel.getId())) {
+                return ResponseUtil.error("后台账号已存在, 请设置其他后台账号!!!");
+            }
+
+
+            if(companyUserModel == null) {
+                companyUserModel = new CompanyUserModel();
+                companyUserModel.setCompanyId(companyModel.getId());
+                companyUserModel.setUserName(companyModel.getAdminUserName());
+                companyUserModel.setPassword(SecurityUtil.encodeString(companyModel.getAdminPassword()));
+                companyUserModel.setContactPhone(companyModel.getContactMobile());
+                companyUserModel.setAccountNonLocked(1);
+                companyUserModel.setAccountNonExpired(1);
+                companyUserModel.setCredentialsNonExpired(1);
+                companyUserModel.setIsAdmin(1);
+                companyUserModel.setEnabled(1);
+
+                int saveCnt = companyUserService.saveNotNull(companyUserModel);
+            }
+        }
+
         int cnt = companyService.updateNotNull(companyModel);
+
+        //审核通过,新增用户账户信息
 
         return ResponseUtil.success();
     }

@@ -45,6 +45,9 @@ public class CompanyModel extends Sortable {
 	@Column(name = "company_desc")
 	private String companyDesc;//"公司简介"
 
+	@Column(name = "company_type")
+	private Integer companyType;//"类型,1、企业，2、供应商"
+
 	@Column(name = "major_project")
 	private String majorProject;//"主营项目"
 
@@ -80,6 +83,12 @@ public class CompanyModel extends Sortable {
 
 	@Column(name = "is_del")
 	private Integer isDel;//"是否删除（0：未删除，1：已删除）"
+
+	@Column(name = "admin_user_name")
+	private String adminUserName;//"后台管理员账号"
+
+	@Column(name = "admin_password")
+	private String adminPassword;//"后台管理员密码"
 
 	@Column(name = "c_time")
 	private Date ctime;//"创建时间"
@@ -140,7 +149,15 @@ public class CompanyModel extends Sortable {
 	public String getCompanyDesc() {
 		return this.companyDesc;
 	}
-		
+
+	public Integer getCompanyType() {
+		return companyType;
+	}
+
+	public void setCompanyType(Integer companyType) {
+		this.companyType = companyType;
+	}
+
 	public void setMajorProject(String majorProject) {
 		this.majorProject = majorProject;
 	}
@@ -236,7 +253,23 @@ public class CompanyModel extends Sortable {
 	public Integer getIsDel() {
 		return this.isDel;
 	}
-		
+
+	public String getAdminUserName() {
+		return adminUserName;
+	}
+
+	public void setAdminUserName(String adminUserName) {
+		this.adminUserName = adminUserName;
+	}
+
+	public String getAdminPassword() {
+		return adminPassword;
+	}
+
+	public void setAdminPassword(String adminPassword) {
+		this.adminPassword = adminPassword;
+	}
+
 	public void setCtime(Date ctime) {
 		this.ctime = ctime;
 	}
