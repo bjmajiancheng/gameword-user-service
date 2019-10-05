@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.coolplay.system.system.dao.HelpMapper">
+
+    <resultMap id="Help" type="com.coolplay.system.system.model.HelpModel">
+        <result property="id" column="id"/>
+        <result property="helpTitle" column="help_title"/>
+        <result property="helpContent" column="help_content"/>
+        <result property="helpLevel" column="help_level"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="isDel" column="is_del"/>
+        <result property="systemUserId" column="system_user_id"/>
+        <result property="ctime" column="c_time"/>
+    </resultMap>
+
+	<resultMap id="TreeNodeMap" type="com.coolplay.system.common.utils.TreeNode">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="parent_id" property="pId" jdbcType="INTEGER"/>
+		<result column="help_title" property="name" jdbcType="VARCHAR"/>
+	</resultMap>
+
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+        id ,help_title ,help_content ,help_level ,parent_id ,is_del ,system_user_id ,c_time 
+	    ]]>
+	</sql>
+
+	<sql id="findWhere">
+	    <where>
+			<if test="helpTitle != null">
+				AND help_title = #{helpTitle}
+			</if>
+			<if test="helpContent != null">
+				AND help_content = #{helpContent}
+			</if>
+	    </where>
+	</sql>
+
+	
+	<select id="find" resultMap="Help">
+	    SELECT <include refid="columns"/> FROM d_help 
+		<include refid="findWhere"/>
+    </select>
+
+	<select id="findById" resultMap="Help" >
+	SELECT <include refid="columns"/>
+	<![CDATA[
+	        FROM d_help
+	        WHERE
+		        id = #{id} 
+	    ]]>
+	</select>
+
+	<select id="getHelpTreeNodes" resultMap="TreeNodeMap">
+		select id,parent_id,help_title from d_help
+		<where>
+			<if test="helpTitle!=null and helpTitle!=''">
+				help_title like concat('%',concat(#{helpTitle},'%'))
+			</if>
+			<if test="isDel!=null">
+				is_del = #{isDel}
+			</if>
+		</where>
+		order by c_time
+	</select>
+	
+</mapper>
+
