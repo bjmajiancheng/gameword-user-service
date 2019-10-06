@@ -4,18 +4,17 @@ import com.coolplay.system.common.utils.PageConvertUtil;
 import com.coolplay.system.common.utils.ResponseUtil;
 import com.coolplay.system.common.utils.Result;
 import com.coolplay.system.security.utils.SecurityUtil;
-import com.coolplay.system.system.model.CompanyModel;
-import com.coolplay.system.system.model.CompanyUserModel;
-import com.coolplay.system.system.service.ICompanyDeptService;
-import com.coolplay.system.system.service.ICompanyService;
+import com.coolplay.system.system.model.*;
+import com.coolplay.system.system.service.*;
 import com.coolplay.system.security.service.IRoleService;
-import com.coolplay.system.system.service.ICompanyUserService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +36,15 @@ public class CompanyController {
 
     @Autowired
     private ICompanyUserService companyUserService;
+
+    @Autowired
+    private ICompanyRoleService companyRoleService;
+
+    @Autowired
+    private ICompanyRoleFunctionService companyRoleFunctionService;
+
+    @Autowired
+    private ICompanyUserRoleService companyUserRoleService;
 
     @ResponseBody
     @RequestMapping(value="/list", method = RequestMethod.GET)
@@ -83,6 +91,33 @@ public class CompanyController {
                 companyUserModel.setEnabled(1);
 
                 int saveCnt = companyUserService.saveNotNull(companyUserModel);
+
+                CompanyRoleModel companyRoleModel = new CompanyRoleModel();
+                companyRoleModel.setCompanyId(companyModel.getId());
+                companyRoleModel.setRoleName("系统管理员");
+                companyRoleModel.setStatus(1);
+
+                saveCnt = companyRoleService.saveNotNull(companyRoleModel);
+
+                CompanyUserRoleModel companyUserRoleModel = new CompanyUserRoleModel();
+                companyUserRoleModel.setUserId(companyUserModel.getId());
+                companyUserRoleModel.setRoleId(companyRoleModel.getId());
+
+                companyUserRoleService.saveNotNull(companyUserRoleModel);
+
+                List<CompanyRoleFunctionModel> companyRoleFunctions = new ArrayList<CompanyRoleFunctionModel>();
+                List<Integer> functionIds = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
+                for(Integer functionId : functionIds) {
+                    CompanyRoleFunctionModel companyRoleFunction = new CompanyRoleFunctionModel();
+                    companyRoleFunction.setRoleId(companyRoleModel.getId());
+                    companyRoleFunction.setFunctionId(functionId);
+
+                    companyRoleFunctions.add(companyRoleFunction);
+                }
+
+                for(CompanyRoleFunctionModel companyRoleFunction : companyRoleFunctions) {
+                    companyRoleFunctionService.saveNotNull(companyRoleFunction);
+                }
             }
         }
 

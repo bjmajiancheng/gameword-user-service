@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.coolplay.system.system.dao.CompanyRoleFunctionMapper">
+
+    <resultMap id="CompanyRoleFunction" type="com.coolplay.system.system.model.CompanyRoleFunctionModel">
+        <result property="roleId" column="role_id"/>
+        <result property="functionId" column="function_id"/>
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+        role_id ,function_id 
+	    ]]>
+	</sql>
+
+	<sql id="findWhere">
+	    <where>
+	    </where>
+	</sql>
+
+	
+	<select id="find" resultMap="CompanyRoleFunction">
+	    SELECT <include refid="columns"/> FROM d_company_role_function 
+		<include refid="findWhere"/>
+    </select>
+
+	<select id="findById" resultMap="CompanyRoleFunction" >
+	SELECT <include refid="columns"/>
+	<![CDATA[
+	        FROM d_company_role_function
+	        WHERE
+	    ]]>
+	</select>
+	
+</mapper>
+
