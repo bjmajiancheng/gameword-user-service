@@ -104,7 +104,7 @@
         <!-- 设定文件上传时写入内存的最大值，如果小于这个参数不会生成临时文件，默认为10240 -->
         <property name="maxInMemorySize" value="40960"></property>
         <!-- 上传文件的临时路径 -->
-        <property name="uploadTempDir" value="fileUpload/temp"></property>
+        <!--<property name="uploadTempDir" value="fileUpload/temp"></property>-->
         <!-- 延迟文件解析 -->
         <property name="resolveLazily" value="true"/>
     </bean>
