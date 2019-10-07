@@ -1,39 +1,125 @@
 package com.coolplay.system.common.utils;
 
 import com.alibaba.fastjson.JSON;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Serializable;
+import java.text.MessageFormat;
+import java.util.*;
 
 /**
  * Created by majiancheng on 2019/10/5.
  */
-public class MessageUtil {
+public class MessageUtil implements Serializable {
+
+    private static final Logger logger = LoggerFactory.getLogger(MessageUtil.class);
+
+    private String userId;
+
+    private String account;
+
+    private String password;
+
+    private String uri;
+
+    private Properties smsProperties;
+
+    /**
+     * 加载配置
+     */
+    public void loadProperty() {
+        String path = MessageUtil.class.getResource("").getPath();
+        path = path.split("classes/com")[0] + "classes";
+        smsProperties = new Properties();
+        String smsFilePath = path + "/properties/message.properties";
+        try {
+            smsProperties.load(new InputStreamReader(
+                    new FileInputStream(smsFilePath), "UTF-8"));
+        } catch (IOException e) {
+            logger.error(String.format("message.properties not find %s", smsFilePath), e);
+        }
+
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
 
     /**
      * 发送短信信息
      *
      * @param mobile
-     * @param message
+     * @param key
+     * @param values
      * @return
      */
-    public static Result sendMessage(String mobile, String message) {
-        JaxWsDynamicClientFactory dcf = JaxWsDynamicClientFactory.newInstance();
-        Client client = dcf.createClient("http://192.168.224.182:8088/sapPushExpenseWebservice?wsdl");
-        try {
+    public Result sendMessage(String mobile, String key, String[] values) {
 
-            List<String> list = new ArrayList<>();
-            list.add("测试");
+        try{
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("UserID", this.getUserId());
+            params.put("Account", this.getAccount());
+            params.put("Password", this.getPassword());
+            params.put("Phones", String.format("%s;", mobile));
+            params.put("SendTime", "");
+            params.put("SendType", "1");
+            params.put("PostFixNumber", "");
 
-            Object[] objects = client.invoke("pushExpense", list);
-            System.out.println(JSON.toJSONString(objects[0]));
+            String msgContent = smsProperties.getProperty(key);
+            if (StringUtils.isEmpty(msgContent)) {
+                return ResponseUtil.error("短信模板不存在, 请确认模板信息");
+            }
 
-        }catch (Exception e){
+            if(values == null || values.length == 0) {
+                params.put("Content", msgContent);
+            } else {
+                params.put("Content", MessageFormat.format(msgContent, values));
+            }
+
+
+            HttpClientResult result = HttpClientUtil.doGet(this.getUri(), params);
+
+        } catch(Exception e) {
             e.printStackTrace();
         }
+
 
         return ResponseUtil.success();
     }

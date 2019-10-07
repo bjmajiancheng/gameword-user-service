@@ -22,7 +22,8 @@
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <array>
-                <value>classpath:value.properties</value>
+                <value>classpath:properties/value.properties</value>
+                <value>classpath:properties/message.properties</value>
             </array>
         </property>
     </bean>
