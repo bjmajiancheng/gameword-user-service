@@ -124,7 +124,9 @@ public class MessageUtil implements Serializable {
 
 
             HttpClientResult result = HttpClientUtil.doGet(this.getUri(), params);
+            logger.info("手机号码:{}, 短信发送结果:{}", mobile, JSON.toJSONString(result));
 
+            return ResponseUtil.success(JSON.toJSONString(result));
         } catch(Exception e) {
             e.printStackTrace();
         }
