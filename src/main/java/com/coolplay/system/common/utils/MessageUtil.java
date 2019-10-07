@@ -50,6 +50,20 @@ public class MessageUtil implements Serializable {
 
     }
 
+    public String getProperty(String key, String[] values) {
+        String msgContent = smsProperties.getProperty(key);
+
+        if(StringUtils.isEmpty(msgContent)) {
+            return "";
+        }
+
+        if(values == null || values.length == 0) {
+            return msgContent;
+        } else {
+            return MessageFormat.format(msgContent, values);
+        }
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -102,16 +116,11 @@ public class MessageUtil implements Serializable {
             params.put("SendType", "1");
             params.put("PostFixNumber", "");
 
-            String msgContent = smsProperties.getProperty(key);
-            if (StringUtils.isEmpty(msgContent)) {
-                return ResponseUtil.error("短信模板不存在, 请确认模板信息");
+            String content = this.getProperty(key, values);
+            if(StringUtils.isEmpty(content)) {
+                return ResponseUtil.error("短信模板不存在");
             }
-
-            if(values == null || values.length == 0) {
-                params.put("Content", msgContent);
-            } else {
-                params.put("Content", MessageFormat.format(msgContent, values));
-            }
+            params.put("Content", content);
 
 
             HttpClientResult result = HttpClientUtil.doGet(this.getUri(), params);

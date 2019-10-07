@@ -1,5 +1,7 @@
 package com.coolplay.system.system.api.company;
 
+import com.alibaba.fastjson.JSON;
+import com.coolplay.system.common.utils.MessageUtil;
 import com.coolplay.system.common.utils.PageConvertUtil;
 import com.coolplay.system.common.utils.ResponseUtil;
 import com.coolplay.system.common.utils.Result;
@@ -8,6 +10,8 @@ import com.coolplay.system.system.model.*;
 import com.coolplay.system.system.service.*;
 import com.coolplay.system.security.service.IRoleService;
 import com.github.pagehelper.PageInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +28,8 @@ import java.util.Map;
 @Controller
 @RequestMapping("/api/system/company")
 public class CompanyController {
+
+    private static final Logger logger = LoggerFactory.getLogger(CompanyController.class);
 
     @Autowired
     private ICompanyService companyService;
@@ -46,8 +52,11 @@ public class CompanyController {
     @Autowired
     private ICompanyUserRoleService companyUserRoleService;
 
+    @Autowired
+    private MessageUtil messageUtil;
+
     @ResponseBody
-    @RequestMapping(value="/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     public Map list(CompanyModel companyModel,
             @RequestParam(value = "page", required = false, defaultValue = "1") int pageNum,
             @RequestParam(value = "rows", required = false, defaultValue = "15") int pageSize) {
@@ -58,7 +67,7 @@ public class CompanyController {
     }
 
     @ResponseBody
-    @RequestMapping(value="/companyInfo", method = RequestMethod.GET)
+    @RequestMapping(value = "/companyInfo", method = RequestMethod.GET)
     public Result companyInfo(HttpServletRequest request, @RequestParam("id") Integer id) {
         CompanyModel companyModel = companyService.findCompanyById(id);
 
@@ -71,14 +80,13 @@ public class CompanyController {
         companyModel.setReviewStatus(1);
 
         //审核通过, 验证用户账户信息
-        if(companyModel.getStatus() == 1) {
+        if (companyModel.getStatus() == 1) {
             CompanyUserModel companyUserModel = companyUserService.findByUserName(companyModel.getAdminUserName());
-            if(companyUserModel != null && !companyUserModel.getCompanyId().equals(companyModel.getId())) {
+            if (companyUserModel != null && !companyUserModel.getCompanyId().equals(companyModel.getId())) {
                 return ResponseUtil.error("后台账号已存在, 请设置其他后台账号!!!");
             }
 
-
-            if(companyUserModel == null) {
+            if (companyUserModel == null) {
                 companyUserModel = new CompanyUserModel();
                 companyUserModel.setCompanyId(companyModel.getId());
                 companyUserModel.setUserName(companyModel.getAdminUserName());
@@ -107,7 +115,7 @@ public class CompanyController {
 
                 List<CompanyRoleFunctionModel> companyRoleFunctions = new ArrayList<CompanyRoleFunctionModel>();
                 List<Integer> functionIds = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
-                for(Integer functionId : functionIds) {
+                for (Integer functionId : functionIds) {
                     CompanyRoleFunctionModel companyRoleFunction = new CompanyRoleFunctionModel();
                     companyRoleFunction.setRoleId(companyRoleModel.getId());
                     companyRoleFunction.setFunctionId(functionId);
@@ -115,10 +123,25 @@ public class CompanyController {
                     companyRoleFunctions.add(companyRoleFunction);
                 }
 
-                for(CompanyRoleFunctionModel companyRoleFunction : companyRoleFunctions) {
+                for (CompanyRoleFunctionModel companyRoleFunction : companyRoleFunctions) {
                     companyRoleFunctionService.saveNotNull(companyRoleFunction);
                 }
+
+                String key = "sms_0000000001";
+                String[] values = new String[] { companyModel.getAdminUserName(), companyModel.getAdminPassword() };
+                Result result = messageUtil.sendMessage(companyModel.getContactMobile(), key, values);
+
+                logger.info("发送短信完成, 手机号:{}, msg:{}, result:{}.", companyModel.getContactMobile(),
+                        messageUtil.getProperty(key, values), JSON.toJSONString(result));
             }
+        } else {
+            String key = "sms_0000000002";
+            String[] values = new String[] { companyModel.getRejectReason() };
+
+            //驳回返回短信信息
+            Result result = messageUtil.sendMessage(companyModel.getContactMobile(), key, values);
+            logger.info("发送短信完成, 手机号:{}, msg:{}, result:{}.", companyModel.getContactMobile(),
+                    messageUtil.getProperty(key, values), JSON.toJSONString(result));
         }
 
         int cnt = companyService.updateNotNull(companyModel);
