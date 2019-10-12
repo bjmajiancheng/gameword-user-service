@@ -87,11 +87,19 @@ public class UserController {
         List<UserRoleModel> userRoleModels = userService.selectUserRoleByUserId(userId);
 
         if(CollectionUtils.isNotEmpty(userRoleModels)) {
-            userModel.setRoleId(userRoleModels.get(0).getRoleId());
-            RoleModel roleModel = roleService.selectById(userRoleModels.get(0).getRoleId());
-            if(roleModel != null) {
-                userModel.setRoleName(roleModel.getRoleName());
+            List<Integer> roleIds = new ArrayList<Integer>();
+            StringBuffer sb = new StringBuffer();
+            for(UserRoleModel userRoleModel : userRoleModels) {
+                roleIds.add(userRoleModel.getRoleId());
+
+                if(sb.length() > 0) {
+                    sb.append("、");
+                }
+                RoleModel roleModel = roleService.selectById(userRoleModel.getRoleId());
+                sb.append(roleModel.getRoleName());
             }
+            userModel.setRoleIds(roleIds);
+            userModel.setRoleName(sb.toString());
         }
 
         return ResponseUtil.success(userModel);
@@ -116,10 +124,14 @@ public class UserController {
         int updateCnt = userService.updateNotNull(userModel);
 
         int delCnt = systemUserRoleService.deleteByUserId(userModel.getId());
-        UserRoleModel userRoleModel = new UserRoleModel();
-        userRoleModel.setUserId(userModel.getId());
-        userRoleModel.setRoleId(userModel.getRoleId());
-        systemUserRoleService.saveNotNull(userRoleModel);
+        if(CollectionUtils.isNotEmpty(userModel.getRoleIds())) {
+            for(Integer roleId : userModel.getRoleIds()) {
+                UserRoleModel userRoleModel = new UserRoleModel();
+                userRoleModel.setUserId(userModel.getId());
+                userRoleModel.setRoleId(roleId);
+                systemUserRoleService.saveNotNull(userRoleModel);
+            }
+        }
 
         return ResponseUtil.success();
     }
@@ -130,10 +142,14 @@ public class UserController {
         try{
             int saveCnt = userService.saveNotNull(userModel);
 
-            UserRoleModel userRoleModel = new UserRoleModel();
-            userRoleModel.setUserId(userModel.getId());
-            userRoleModel.setRoleId(userModel.getRoleId());
-            systemUserRoleService.saveNotNull(userRoleModel);
+            if(CollectionUtils.isNotEmpty(userModel.getRoleIds())) {
+                for(Integer roleId : userModel.getRoleIds()) {
+                    UserRoleModel userRoleModel = new UserRoleModel();
+                    userRoleModel.setUserId(userModel.getId());
+                    userRoleModel.setRoleId(roleId);
+                    systemUserRoleService.saveNotNull(userRoleModel);
+                }
+            }
         } catch(DuplicateKeyException e) {
             e.printStackTrace();
             return ResponseUtil.error("用户名已占用, 请更换其他用户名!!");

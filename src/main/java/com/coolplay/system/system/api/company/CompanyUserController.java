@@ -1,8 +1,10 @@
 package com.coolplay.system.system.api.company;
 
+import com.coolplay.system.common.tools.RedisCache;
 import com.coolplay.system.common.utils.PageConvertUtil;
 import com.coolplay.system.common.utils.ResponseUtil;
 import com.coolplay.system.common.utils.Result;
+import com.coolplay.system.security.constants.SecurityConstant;
 import com.coolplay.system.system.model.*;
 import com.coolplay.system.system.service.*;
 import com.github.pagehelper.PageInfo;
@@ -40,6 +42,9 @@ public class CompanyUserController {
     @Autowired
     private ICompanyUserRoleService companyUserRoleService;
 
+    @Autowired
+    private RedisCache redisCache;
+
     @ResponseBody
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public Map list(CompanyUserModel companyUserModel,
@@ -76,6 +81,9 @@ public class CompanyUserController {
         companyUserModel.setEnabled(enable);
 
         int updateCnt = companyUserService.updateNotNull(companyUserModel);
+
+        companyUserModel = companyUserService.findById(userId);
+        redisCache.del(SecurityConstant.COMPANY_USER_CACHE_PREFIX + companyUserModel.getUserName());
 
         return ResponseUtil.success();
     }
@@ -121,6 +129,13 @@ public class CompanyUserController {
     @ResponseBody
     @RequestMapping(value = "/delUser", method = RequestMethod.GET)
     public Result delUser(@RequestParam("userId") Integer userId) {
+
+
+        CompanyUserModel companyUserModel = companyUserService.findById(userId);
+        if(companyUserModel != null) {
+            redisCache.del(SecurityConstant.COMPANY_USER_CACHE_PREFIX + companyUserModel.getUserName());
+        }
+
         int delCnt = companyUserService.delById(userId);
 
         return ResponseUtil.success();
@@ -140,6 +155,10 @@ public class CompanyUserController {
         }
 
         int updateCnt = companyUserService.updateNotNull(companyUserModel);
+
+        if(companyUserModel != null) {
+            redisCache.del(SecurityConstant.COMPANY_USER_CACHE_PREFIX + companyUserModel.getUserName());
+        }
 
         return ResponseUtil.success();
     }

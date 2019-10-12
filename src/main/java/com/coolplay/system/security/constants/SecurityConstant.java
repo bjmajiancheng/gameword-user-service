@@ -14,4 +14,6 @@ public class SecurityConstant {
     public static final String MOBILE_VERIFY_CODE_PREFIX = "coolplay_system_platform_verify_code_";
 
     public final static int THREE_MINUTES_EXPIRE_SECOND = 3 * 60;
+
+    public static final String COMPANY_USER_CACHE_PREFIX = "coolplay_company_platform_user_";
 }

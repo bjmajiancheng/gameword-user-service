@@ -114,7 +114,7 @@ public class CompanyController {
                 companyUserRoleService.saveNotNull(companyUserRoleModel);
 
                 List<CompanyRoleFunctionModel> companyRoleFunctions = new ArrayList<CompanyRoleFunctionModel>();
-                List<Integer> functionIds = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
+                List<Integer> functionIds = Arrays.asList(1, 2, 3, 5, 6, 7, 8, 9);
                 for (Integer functionId : functionIds) {
                     CompanyRoleFunctionModel companyRoleFunction = new CompanyRoleFunctionModel();
                     companyRoleFunction.setRoleId(companyRoleModel.getId());

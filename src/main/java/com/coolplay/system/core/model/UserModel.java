@@ -14,6 +14,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author  davdian
@@ -83,7 +84,7 @@ public class UserModel extends Sortable {
 	private String deptName;
 
 	@Transient
-	private Integer roleId;//"角色Id"
+	private List<Integer> roleIds;//"角色Ids"
 		
 	public void setId(Integer id) {
 		this.id = id;
@@ -205,12 +206,12 @@ public class UserModel extends Sortable {
 		this.roleName = roleName;
 	}
 
-	public Integer getRoleId() {
-		return roleId;
+	public List<Integer> getRoleIds() {
+		return roleIds;
 	}
 
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
+	public void setRoleIds(List<Integer> roleIds) {
+		this.roleIds = roleIds;
 	}
 
 	public String getDeptName() {
