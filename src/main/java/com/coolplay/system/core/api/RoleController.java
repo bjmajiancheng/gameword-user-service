@@ -5,7 +5,9 @@ import com.coolplay.system.common.utils.ResponseUtil;
 import com.coolplay.system.common.utils.Result;
 import com.coolplay.system.core.model.RoleFunctionModel;
 import com.coolplay.system.core.model.RoleModel;
+import com.coolplay.system.core.model.UserRoleModel;
 import com.coolplay.system.core.service.ISystemRoleFunctionService;
+import com.coolplay.system.core.service.ISystemUserRoleService;
 import com.coolplay.system.security.security.CoolplayUserCache;
 import com.coolplay.system.security.service.IRoleService;
 import com.coolplay.system.security.utils.SecurityUtil;
@@ -38,6 +40,9 @@ public class RoleController {
 
     @Autowired
     private ISystemRoleFunctionService systemRoleFunctionService;
+
+    @Autowired
+    private ISystemUserRoleService systemUserRoleService;
 
     @ResponseBody
     @RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -117,6 +122,15 @@ public class RoleController {
                 roleFunctionModel.setRoleId(roleModel.getId());
                 roleFunctionModel.setFunctionId(functionId);
                 systemRoleFunctionService.saveNotNull(roleFunctionModel);
+            }
+        }
+
+        UserRoleModel userRoleModel = new UserRoleModel();
+        userRoleModel.setRoleId(roleModel.getId());
+        List<UserRoleModel> userRoleModels = systemUserRoleService.selectByFilter(userRoleModel);
+        if(CollectionUtils.isNotEmpty(userRoleModels)) {
+            for(UserRoleModel tmpUserRoleModel : userRoleModels) {
+                coolplayUserCache.removeUserFromCacheByUserId(tmpUserRoleModel.getUserId());
             }
         }
 

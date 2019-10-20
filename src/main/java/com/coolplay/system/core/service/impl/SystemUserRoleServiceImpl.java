@@ -56,6 +56,14 @@ public class SystemUserRoleServiceImpl extends BaseService<UserRoleModel> implem
 		Example example = new Example(UserRoleModel.class);
 		Example.Criteria criteria = example.createCriteria();
 
+		if(systemUserRoleModel.getUserId() != null) {
+			criteria.andEqualTo("userId", systemUserRoleModel.getUserId());
+		}
+
+		if(systemUserRoleModel.getRoleId() != null) {
+			criteria.andEqualTo("roleId", systemUserRoleModel.getRoleId());
+		}
+
 		if(StringUtils.isNotEmpty(systemUserRoleModel.getSortWithOutOrderBy())) {
 			example.setOrderByClause(systemUserRoleModel.getSortWithOutOrderBy());
 		}
