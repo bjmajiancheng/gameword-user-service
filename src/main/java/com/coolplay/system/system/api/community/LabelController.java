@@ -46,6 +46,7 @@ public class LabelController {
             @RequestParam(value = "page", required = false, defaultValue = "1") int pageNum,
             @RequestParam(value = "rows", required = false, defaultValue = "15") int pageSize) {
         labelModel.setIsDel(0);
+        labelModel.setType(1);
         PageInfo<LabelModel> pageInfo = labelService.selectByFilterAndPage(labelModel, pageNum, pageSize);
 
         if(CollectionUtils.isNotEmpty(pageInfo.getList())) {
@@ -77,8 +78,10 @@ public class LabelController {
             labelModel.setIsDel(0);
             labelModel.setCtime(new Date());
             labelModel.setCreator(securityUser.getDisplayName());
+            labelModel.setUserId(securityUser.getId());
+            labelModel.setType(1);
 
-            labelService.saveNotNull(labelModel);
+            int saveCnt = labelService.saveNotNull(labelModel);
         } catch(DuplicateKeyException e) {
             e.printStackTrace();
             return ResponseUtil.error("标签名不能重复, 请更换其他标签名!!");

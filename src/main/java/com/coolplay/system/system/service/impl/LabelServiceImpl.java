@@ -80,6 +80,10 @@ public class LabelServiceImpl extends BaseService<LabelModel> implements ILabelS
 			criteria.andLike("labelName", "%"+ labelModel.getLabelName() +"%");
 		}
 
+		if(labelModel.getType() != null) {
+			criteria.andEqualTo("type", labelModel.getType());
+		}
+
 		if(StringUtils.isNotEmpty(labelModel.getSortWithOutOrderBy())) {
 			example.setOrderByClause(labelModel.getSortWithOutOrderBy());
 		}
