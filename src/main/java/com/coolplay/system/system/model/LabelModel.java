@@ -39,10 +39,10 @@ public class LabelModel extends Sortable {
 	@Column(name = "creator")
 	private String creator;//"创建人"
 
-	@Column(name="user_id")
-	private Integer userId;//"用户ID"
+	@Column(name = "creator_user_id")
+	private Integer creatorUserId;//"用户ID"
 
-	@Column(name="type")
+	@Column(name = "type")
 	private Integer type;//"标签类型，1：系统创建，2：用户创建"
 
 	@Column(name = "status")
@@ -91,12 +91,12 @@ public class LabelModel extends Sortable {
 		return this.creator;
 	}
 
-	public Integer getUserId() {
-		return userId;
+	public Integer getCreatorUserId() {
+		return creatorUserId;
 	}
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setCreatorUserId(Integer creatorUserId) {
+		this.creatorUserId = creatorUserId;
 	}
 
 	public Integer getType() {

@@ -78,7 +78,7 @@ public class LabelController {
             labelModel.setIsDel(0);
             labelModel.setCtime(new Date());
             labelModel.setCreator(securityUser.getDisplayName());
-            labelModel.setUserId(securityUser.getId());
+            labelModel.setCreatorUserId(securityUser.getId());
             labelModel.setType(1);
 
             int saveCnt = labelService.saveNotNull(labelModel);

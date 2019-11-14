@@ -10,7 +10,7 @@
         <result property="catId" column="cat_id"/>
         <result property="labelName" column="label_name"/>
 		<result property="creator" column="creator"/>
-		<result property="userId" column="user_id"/>
+		<result property="creatorUserId" column="creator_user_id"/>
 		<result property="type" column="type"/>
         <result property="status" column="status"/>
         <result property="isDel" column="is_del"/>
@@ -20,7 +20,7 @@
 	<!-- 用于select查询公用抽取的列 -->
 	<sql id="columns">
 	    <![CDATA[
-        id ,cat_id ,label_name ,creator , user_id, type, status ,is_del ,c_time
+        id ,cat_id ,label_name ,creator , creator_user_id, type, status ,is_del ,c_time
 	    ]]>
 	</sql>
 
