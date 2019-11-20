@@ -64,6 +64,14 @@ public class CategoryServiceImpl extends BaseService<CategoryModel> implements I
 		Example example = new Example(CategoryModel.class);
 		Example.Criteria criteria = example.createCriteria();
 
+		if(StringUtils.isNotEmpty(categoryModel.getCatName())) {
+			criteria.andLike("catName", categoryModel.getCatName());
+		}
+
+		if(categoryModel.getIsDel() != null) {
+			criteria.andEqualTo("isDel", categoryModel.getIsDel());
+		}
+
 		if(StringUtils.isNotEmpty(categoryModel.getSortWithOutOrderBy())) {
 			example.setOrderByClause(categoryModel.getSortWithOutOrderBy());
 		}

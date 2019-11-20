@@ -33,6 +33,9 @@ public class CategoryModel extends Sortable {
 	@Column(name = "cat_name")
 	private String catName;//"分类名称"
 
+	@Column(name = "cat_desc")
+	private String catDesc;//"分类备注"
+
 	@Column(name = "is_del")
 	private Integer isDel;//"是否删除"
 
@@ -56,7 +59,15 @@ public class CategoryModel extends Sortable {
 	public String getCatName() {
 		return this.catName;
 	}
-		
+
+	public String getCatDesc() {
+		return catDesc;
+	}
+
+	public void setCatDesc(String catDesc) {
+		this.catDesc = catDesc;
+	}
+
 	public void setIsDel(Integer isDel) {
 		this.isDel = isDel;
 	}
