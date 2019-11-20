@@ -69,4 +69,18 @@ public class PostLabelServiceImpl extends BaseService<PostLabelModel> implements
 		}
 		return getMapper().selectByExample(example);
 	}
+
+	/**
+	 * 根据标签id获取帖子集合信息
+	 *
+	 * @param labelId
+	 * @return
+	 */
+	public List<Integer> getPostIdsByLabelId(Integer labelId) {
+		if(labelId == null || labelId == 0) {
+			return Collections.emptyList();
+		}
+
+		return postLabelMapper.getPostIdsByLabelId(labelId);
+	}
 }

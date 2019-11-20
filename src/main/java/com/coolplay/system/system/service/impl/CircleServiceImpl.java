@@ -73,7 +73,7 @@ public class CircleServiceImpl extends BaseService<CircleModel> implements ICirc
 		}
 
 		if(StringUtils.isNotEmpty(circleModel.getUserName())) {
-			List<Integer> userIds = appUserMapper.getIdsByUserName(circleModel.getUserName());
+			List<Integer> userIds = appUserMapper.getIdsByUserName("%" + circleModel.getUserName() + "%");
 			if(CollectionUtils.isEmpty(userIds)) {
 				userIds = Collections.singletonList(-1);
 			}

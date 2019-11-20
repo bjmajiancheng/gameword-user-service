@@ -31,4 +31,11 @@ public interface IPostLabelService extends IBaseService<PostLabelModel> {
 
 	public List<PostLabelModel> selectByFilter(PostLabelModel postLabelModel);
 
+	/**
+	 * 根据标签id获取帖子集合信息
+	 *
+	 * @param labelId
+	 * @return
+     */
+	public List<Integer> getPostIdsByLabelId(Integer labelId);
 }

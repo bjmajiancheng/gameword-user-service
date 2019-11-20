@@ -85,7 +85,7 @@ public class UserServiceImpl extends BaseService<UserModel> implements IUserServ
         Example example = new Example(UserModel.class);
         Example.Criteria criteria = example.createCriteria();
         if (StringUtils.isNotEmpty(userModel.getContactPhone())) {
-            criteria.andEqualTo("contactPhone", userModel.getContactPhone());
+            criteria.andLike("contactPhone", "%" + userModel.getContactPhone() + "%");
         }
         if (StringUtils.isNotEmpty(userModel.getDisplayName())) {
             criteria.andLike("displayName", "%" + userModel.getDisplayName() + "%");

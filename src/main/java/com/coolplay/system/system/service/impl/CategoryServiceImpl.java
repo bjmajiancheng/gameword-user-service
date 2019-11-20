@@ -65,7 +65,7 @@ public class CategoryServiceImpl extends BaseService<CategoryModel> implements I
 		Example.Criteria criteria = example.createCriteria();
 
 		if(StringUtils.isNotEmpty(categoryModel.getCatName())) {
-			criteria.andLike("catName", categoryModel.getCatName());
+			criteria.andLike("catName", "%"+ categoryModel.getCatName() +"%s");
 		}
 
 		if(categoryModel.getIsDel() != null) {

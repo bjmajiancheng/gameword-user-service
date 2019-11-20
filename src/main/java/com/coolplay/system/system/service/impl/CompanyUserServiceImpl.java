@@ -73,7 +73,7 @@ public class CompanyUserServiceImpl extends BaseService<CompanyUserModel> implem
 		}
 
 		if(StringUtils.isNotEmpty(companyUserModel.getContactPhone())) {
-			criteria.andEqualTo("contactPhone", companyUserModel.getContactPhone());
+			criteria.andLike("contactPhone", "%" + companyUserModel.getContactPhone() + "%");
 		}
 
 		if(StringUtils.isNotEmpty(companyUserModel.getSortWithOutOrderBy())) {
