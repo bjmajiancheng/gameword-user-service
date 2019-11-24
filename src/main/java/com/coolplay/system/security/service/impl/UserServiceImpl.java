@@ -102,7 +102,7 @@ public class UserServiceImpl extends BaseService<UserModel> implements IUserServ
     @Override
     public UserModel findUserByUserId(int userId) {
         UserModel userModel = userMapper.findUserByUserId(userId);
-        userModel.setPassword("");
+        //userModel.setPassword("");
         return userModel;
     }
 

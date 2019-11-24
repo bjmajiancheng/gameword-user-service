@@ -12,8 +12,11 @@ import com.coolplay.system.security.security.SecurityUser;
 import com.coolplay.system.security.service.IRoleService;
 import com.coolplay.system.security.service.IUserService;
 import com.coolplay.system.security.utils.SecurityUtil;
+import com.coolplay.system.system.model.UserPassMappingModel;
+import com.coolplay.system.system.service.IUserPassMappingService;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
@@ -45,6 +48,9 @@ public class UserController {
 
     @Autowired
     private ISystemUserRoleService systemUserRoleService;
+
+    @Autowired
+    private IUserPassMappingService userPassMappingService;
 
     @ResponseBody
     @RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -86,6 +92,13 @@ public class UserController {
         UserModel userModel = userService.findUserByUserId(userId);
         List<UserRoleModel> userRoleModels = userService.selectUserRoleByUserId(userId);
 
+        if(StringUtils.isNotEmpty(userModel.getPassword())) {
+            UserPassMappingModel passMapping = userPassMappingService.findByPasswordEncode(userModel.getPassword());
+            if(passMapping != null) {
+                userModel.setPassword(passMapping.getPassword());
+            }
+        }
+
         if(CollectionUtils.isNotEmpty(userRoleModels)) {
             List<Integer> roleIds = new ArrayList<Integer>();
             StringBuffer sb = new StringBuffer();
@@ -96,7 +109,9 @@ public class UserController {
                     sb.append("、");
                 }
                 RoleModel roleModel = roleService.selectById(userRoleModel.getRoleId());
-                sb.append(roleModel.getRoleName());
+                if(roleModel != null) {
+                    sb.append(roleModel.getRoleName());
+                }
             }
             userModel.setRoleIds(roleIds);
             userModel.setRoleName(sb.toString());
@@ -121,6 +136,17 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value="/updateUser", method = RequestMethod.POST)
     public Result updateUser(UserModel userModel) {
+
+        if(StringUtils.isNotEmpty(userModel.getPassword())) {
+            String passwordEncode = SecurityUtil.encodeString(userModel.getPassword());
+
+            UserPassMappingModel userPassMappingModel = new UserPassMappingModel();
+            userPassMappingModel.setPassword(userModel.getPassword());
+            userPassMappingModel.setPasswordEncode(passwordEncode);
+            userPassMappingService.saveNotNull(userPassMappingModel);
+            userModel.setPassword(passwordEncode);
+        }
+
         int updateCnt = userService.updateNotNull(userModel);
 
         int delCnt = systemUserRoleService.deleteByUserId(userModel.getId());
@@ -133,6 +159,8 @@ public class UserController {
             }
         }
 
+        coolplayUserCache.removeUserFromCacheByUserId(userModel.getId());
+
         return ResponseUtil.success();
     }
 
@@ -140,6 +168,16 @@ public class UserController {
     @RequestMapping(value="/saveUser", method = RequestMethod.POST)
     public Result saveUser(UserModel userModel) {
         try{
+            if(StringUtils.isNotEmpty(userModel.getPassword())) {
+                String passwordEncode = SecurityUtil.encodeString(userModel.getPassword());
+
+                UserPassMappingModel userPassMappingModel = new UserPassMappingModel();
+                userPassMappingModel.setPassword(userModel.getPassword());
+                userPassMappingModel.setPasswordEncode(passwordEncode);
+                userPassMappingService.saveNotNull(userPassMappingModel);
+                userModel.setPassword(passwordEncode);
+            }
+
             int saveCnt = userService.saveNotNull(userModel);
 
             if(CollectionUtils.isNotEmpty(userModel.getRoleIds())) {
