@@ -28,13 +28,14 @@
 		<result property="isDel" column="is_del"/>
 		<result property="adminUserName" column="admin_user_name"/>
 		<result property="adminPassword" column="admin_password"/>
-        <result property="ctime" column="c_time"/>
+		<result property="ctime" column="c_time"/>
+		<result property="utime" column="u_time"/>
     </resultMap>
 
 	<!-- 用于select查询公用抽取的列 -->
 	<sql id="columns">
 	    <![CDATA[
-        id ,company_full_name ,company_name ,contact_name ,contact_address ,contact_mobile ,company_desc ,company_type, major_project ,company_email ,legal_name ,legal_idcard ,idcard_positive_photo ,idcard_negative_photo ,business_license_url ,review_status ,read_cnt ,status ,reject_reason ,is_del, admin_user_name, admin_password, c_time
+        id ,company_full_name ,company_name ,contact_name ,contact_address ,contact_mobile ,company_desc ,company_type, major_project ,company_email ,legal_name ,legal_idcard ,idcard_positive_photo ,idcard_negative_photo ,business_license_url ,review_status ,read_cnt ,status ,reject_reason ,is_del, admin_user_name, admin_password, c_time, u_time
 	    ]]>
 	</sql>
 
