@@ -10,7 +10,10 @@ package com.coolplay.system.system.model;
 import com.coolplay.system.common.handler.Sortable;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -69,6 +72,15 @@ public class CompanyModel extends Sortable {
 	@Column(name = "business_license_url")
 	private String businessLicenseUrl;//"营业执照附件"
 
+	@Column(name = "pos_x")
+	private BigDecimal posX;//"公司x坐标"
+
+	@Column(name = "pos_y")
+	private BigDecimal posY;//"公司y坐标"
+
+	@Column(name = "backgroud_img")
+	private String backgroudImg;//"背景图片"
+
 	@Column(name = "review_status")
 	private Integer reviewStatus;//"浏览次数"
 
@@ -96,6 +108,9 @@ public class CompanyModel extends Sortable {
 	@Column(name = "u_time")
 	private Date utime = new Date();//"更新时间"
 	//columns END
+
+	@Transient
+	private List<Integer> industryIds = new ArrayList<Integer>();//行业Ids
 		
 	public void setId(Integer id) {
 		this.id = id;
@@ -216,6 +231,30 @@ public class CompanyModel extends Sortable {
 	public String getBusinessLicenseUrl() {
 		return this.businessLicenseUrl;
 	}
+
+	public BigDecimal getPosX() {
+		return posX;
+	}
+
+	public void setPosX(BigDecimal posX) {
+		this.posX = posX;
+	}
+
+	public BigDecimal getPosY() {
+		return posY;
+	}
+
+	public void setPosY(BigDecimal posY) {
+		this.posY = posY;
+	}
+
+	public String getBackgroudImg() {
+		return backgroudImg;
+	}
+
+	public void setBackgroudImg(String backgroudImg) {
+		this.backgroudImg = backgroudImg;
+	}
 		
 	public void setReviewStatus(Integer reviewStatus) {
 		this.reviewStatus = reviewStatus;
@@ -287,6 +326,14 @@ public class CompanyModel extends Sortable {
 
 	public void setUtime(Date utime) {
 		this.utime = utime;
+	}
+
+	public List<Integer> getIndustryIds() {
+		return industryIds;
+	}
+
+	public void setIndustryIds(List<Integer> industryIds) {
+		this.industryIds = industryIds;
 	}
 }
 

@@ -10,6 +10,7 @@ import com.coolplay.system.system.model.*;
 import com.coolplay.system.system.service.*;
 import com.coolplay.system.security.service.IRoleService;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,9 @@ public class CompanyController {
     @Autowired
     private MessageUtil messageUtil;
 
+    @Autowired
+    private ICompanyIndustryService companyIndustryService;
+
     @ResponseBody
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public Map list(CompanyModel companyModel,
@@ -71,6 +75,15 @@ public class CompanyController {
     public Result companyInfo(HttpServletRequest request, @RequestParam("id") Integer id) {
         CompanyModel companyModel = companyService.findCompanyById(id);
 
+        List<CompanyIndustryModel> companyIndustrys = companyIndustryService.findByCompanyId(companyModel.getId());
+        if(CollectionUtils.isNotEmpty(companyIndustrys)) {
+            List<Integer> industryIds = new ArrayList<Integer>();
+            for(CompanyIndustryModel companyIndustry : companyIndustrys) {
+                industryIds.add(companyIndustry.getIndustryId());
+            }
+
+            companyModel.setIndustryIds(industryIds);
+        }
         return ResponseUtil.success(companyModel);
     }
 
@@ -145,6 +158,17 @@ public class CompanyController {
         }
 
         int cnt = companyService.updateNotNull(companyModel);
+
+        int delCnt = companyIndustryService.delByCompanyId(companyModel.getId());
+        if(CollectionUtils.isNotEmpty(companyModel.getIndustryIds())) {
+            for(Integer industryId : companyModel.getIndustryIds()) {
+                CompanyIndustryModel companyIndustry = new CompanyIndustryModel();
+                companyIndustry.setCompanyId(companyModel.getId());
+                companyIndustry.setIndustryId(industryId);
+
+                companyIndustryService.saveNotNull(companyIndustry);
+            }
+        }
 
         //审核通过,新增用户账户信息
 

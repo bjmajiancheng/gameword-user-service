@@ -3,15 +3,19 @@ package com.coolplay.system.common.api;
 import com.coolplay.system.common.dto.ResetPassDto;
 import com.coolplay.system.common.tools.RedisCache;
 import com.coolplay.system.common.utils.MessageUtil;
+import com.coolplay.system.common.utils.Option;
 import com.coolplay.system.common.utils.ResponseUtil;
 import com.coolplay.system.common.utils.Result;
 import com.coolplay.system.core.model.UserModel;
 import com.coolplay.system.security.constants.SecurityConstant;
 import com.coolplay.system.security.service.IUserService;
 import com.coolplay.system.security.utils.SecurityUtil;
+import com.coolplay.system.system.model.IndustryModel;
 import com.coolplay.system.system.model.VerifyCodeModel;
+import com.coolplay.system.system.service.IIndustryService;
 import com.coolplay.system.system.service.IVerifyCodeService;
 import com.google.code.kaptcha.Producer;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,8 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Date;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by majiancheng on 2019/9/17.
@@ -50,6 +53,9 @@ public class NoneAuthController {
 
     @Autowired
     private IVerifyCodeService verifyCodeService;
+
+    @Autowired
+    private IIndustryService industryService;
 
     @RequestMapping("/captcha")
     public void captcha(@RequestParam("vkey") String vkey, HttpServletRequest httpServletRequest,
@@ -149,5 +155,28 @@ public class NoneAuthController {
         redisCache.del(SecurityConstant.USER_CACHE_PREFIX + userModel.getUserName());
 
         return ResponseUtil.success();
+    }
+
+    /**
+     * 行业选项信息
+     *
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/industryOptions", method = RequestMethod.GET)
+    public Result industryOptions() {
+
+        List<IndustryModel> industryModels = industryService.find(Collections.singletonMap("isDel", 0));
+
+        if(CollectionUtils.isEmpty(industryModels)) {
+            return ResponseUtil.error("系统异常, 请稍后重试");
+        }
+
+        List<Option> options = new ArrayList<Option>();
+        for(IndustryModel industryModel : industryModels) {
+            options.add(new Option(industryModel.getIndustryName(), industryModel.getId()));
+        }
+
+        return ResponseUtil.success(options);
     }
 }
