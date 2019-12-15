@@ -69,4 +69,13 @@ public class CirclePostServiceImpl extends BaseService<CirclePostModel> implemen
 		}
 		return getMapper().selectByExample(example);
 	}
+
+
+	public List<CirclePostModel> findByPostId(Integer postId) {
+		if(postId == null || postId == 0) {
+			return Collections.emptyList();
+		}
+
+		return circlePostMapper.findByPostId(postId);
+	}
 }

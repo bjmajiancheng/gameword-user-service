@@ -40,6 +40,9 @@ public class CirclePostModel extends Sortable {
 	private Date ctime;//"创建时间"
 
 	//columns END
+
+	@Transient
+	private String circleName;//"酷玩圈名称"
 		
 	public void setId(Integer id) {
 		this.id = id;
@@ -73,5 +76,12 @@ public class CirclePostModel extends Sortable {
 		return this.ctime;
 	}
 
+	public String getCircleName() {
+		return circleName;
+	}
+
+	public void setCircleName(String circleName) {
+		this.circleName = circleName;
+	}
 }
 

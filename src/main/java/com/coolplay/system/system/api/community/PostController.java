@@ -3,13 +3,11 @@ package com.coolplay.system.system.api.community;
 import com.coolplay.system.common.utils.PageConvertUtil;
 import com.coolplay.system.common.utils.ResponseUtil;
 import com.coolplay.system.common.utils.Result;
+import com.coolplay.system.system.model.CirclePostModel;
 import com.coolplay.system.system.model.CompanyModel;
 import com.coolplay.system.system.model.PostModel;
 import com.coolplay.system.system.model.UserModel;
-import com.coolplay.system.system.service.IAppUserService;
-import com.coolplay.system.system.service.IPostCommentService;
-import com.coolplay.system.system.service.IPostLabelService;
-import com.coolplay.system.system.service.IPostService;
+import com.coolplay.system.system.service.*;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +40,9 @@ public class PostController {
 
     @Autowired
     private IAppUserService appUserService;
+
+    @Autowired
+    private ICirclePostService circlePostService;
 
     @ResponseBody
     @RequestMapping(value="/list", method = RequestMethod.GET)
@@ -108,5 +110,13 @@ public class PostController {
         int updateCnt = postService.updateNotNull(postModel);
 
         return ResponseUtil.success();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/circleList", method = RequestMethod.GET)
+    public Result circleList(@RequestParam("postId") Integer postId) {
+        List<CirclePostModel> circlePosts = circlePostService.findByPostId(postId);
+
+        return ResponseUtil.success(Collections.singletonMap("circlePosts", circlePosts));
     }
 }

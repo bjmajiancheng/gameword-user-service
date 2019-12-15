@@ -31,4 +31,5 @@ public interface ICirclePostService extends IBaseService<CirclePostModel> {
 
 	public List<CirclePostModel> selectByFilter(CirclePostModel circlePostModel);
 
+	public List<CirclePostModel> findByPostId(Integer postId);
 }

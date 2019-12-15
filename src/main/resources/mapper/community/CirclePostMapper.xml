@@ -8,19 +8,24 @@
     <resultMap id="CirclePost" type="com.coolplay.system.system.model.CirclePostModel">
         <result property="id" column="id"/>
         <result property="circleId" column="circle_id"/>
-        <result property="postId" column="post_id"/>
+		<result property="postId" column="post_id"/>
+		<result property="isTop" column="is_top"/>
+		<result property="circleName" column="circle_name"/>
         <result property="ctime" column="c_time"/>
     </resultMap>
 
 	<!-- 用于select查询公用抽取的列 -->
 	<sql id="columns">
 	    <![CDATA[
-        id ,circle_id ,post_id ,c_time 
+        id ,circle_id ,post_id, is_top, c_time
 	    ]]>
 	</sql>
 
 	<sql id="findWhere">
 	    <where>
+			<if test="postId != null">
+				AND post_id = #{postId}
+			</if>
 	    </where>
 	</sql>
 
@@ -38,6 +43,12 @@
 		        id = #{id} 
 	    ]]>
 	</select>
-	
+
+	<select id="findByPostId" resultMap="CirclePost" >
+		SELECT cp.circle_id, cp.post_id, cp.is_top, c.circle_name
+		FROM d_circle_post cp
+		INNER JOIN d_circle c ON cp.circle_id = c.id
+		WHERE cp.post_id = #{postId}
+	</select>
 </mapper>
 
