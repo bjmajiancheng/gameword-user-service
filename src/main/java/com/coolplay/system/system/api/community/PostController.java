@@ -94,12 +94,9 @@ public class PostController {
 
         int updateCnt = postService.updateNotNull(postModel);
 
+        updateCnt = circlePostService.updateTopByPostId(circlePostModel.getPostId(), 0);
         if(CollectionUtils.isNotEmpty(circlePostModel.getCircleIds())) {
-            if(circlePostModel.getIsTop() == 1) {//置顶操作
-                updateCnt = circlePostService.updateTopByCirclePostInfo(circlePostModel.getCircleIds(), circlePostModel.getPostId(), circlePostModel.getIsTop());
-            } else if(circlePostModel.getIsTop() == 0) {//取消置顶操作
-                updateCnt = circlePostService.updateTopByCirclePostInfo(circlePostModel.getCircleIds(), circlePostModel.getPostId(), circlePostModel.getIsTop());
-            }
+            updateCnt = circlePostService.updateTopByCirclePostInfo(circlePostModel.getCircleIds(), circlePostModel.getPostId(), circlePostModel.getIsTop());
         }
 
         return ResponseUtil.success();

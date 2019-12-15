@@ -34,4 +34,6 @@ public interface ICirclePostService extends IBaseService<CirclePostModel> {
 	public List<CirclePostModel> findByPostId(Integer postId);
 
 	public int updateTopByCirclePostInfo(List<Integer> circleIds, Integer postId, Integer isTop);
+
+	public int updateTopByPostId(Integer postId, Integer isTop);
 }

@@ -58,5 +58,9 @@
 				#{item}
 			</foreach>
 	</update>
+
+	<update id="updateTopByCirclePostInfo">
+		UPDATE d_circle_post set is_top = #{isTop} WHERE post_id = #{postId}
+	</update>
 </mapper>
 
