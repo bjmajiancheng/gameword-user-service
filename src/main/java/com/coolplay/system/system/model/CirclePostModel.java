@@ -36,6 +36,9 @@ public class CirclePostModel extends Sortable {
 	@Column(name = "post_id")
 	private Integer postId;//"帖子ID"
 
+	@Column(name = "is_top")
+	private Integer isTop;//"是否置顶"
+
 	@Column(name = "c_time")
 	private Date ctime;//"创建时间"
 
@@ -67,7 +70,15 @@ public class CirclePostModel extends Sortable {
 	public Integer getPostId() {
 		return this.postId;
 	}
-		
+
+	public Integer getIsTop() {
+		return isTop;
+	}
+
+	public void setIsTop(Integer isTop) {
+		this.isTop = isTop;
+	}
+
 	public void setCtime(Date ctime) {
 		this.ctime = ctime;
 	}
