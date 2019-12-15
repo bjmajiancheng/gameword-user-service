@@ -59,7 +59,7 @@
 			</foreach>
 	</update>
 
-	<update id="updateTopByCirclePostInfo">
+	<update id="updateTopByPostId">
 		UPDATE d_circle_post set is_top = #{isTop} WHERE post_id = #{postId}
 	</update>
 </mapper>
