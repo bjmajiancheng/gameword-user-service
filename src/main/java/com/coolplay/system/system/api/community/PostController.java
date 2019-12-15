@@ -89,7 +89,7 @@ public class PostController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/updateIsTop", method = RequestMethod.GET)
+    @RequestMapping(value = "/updateIsTop", method = RequestMethod.POST)
     public Result updateIsTop(@RequestParam("id") Integer id, @RequestParam("isTop") Integer isTop, @RequestParam("circleIds") List<Integer> circleIds) {
         PostModel postModel = new PostModel();
         postModel.setId(id);
