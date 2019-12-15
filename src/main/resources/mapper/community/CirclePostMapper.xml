@@ -52,7 +52,7 @@
 	</select>
 
 	<update id="updateTopByCirclePostInfo">
-		UPDATE d_post_label set is_top = #{isTop} WHERE post_id = #{postId}
+		UPDATE d_circle_post set is_top = #{isTop} WHERE post_id = #{postId}
 		AND circle_id IN
 			<foreach collection="circleIds" item="item" open="(" separator="," close=")">
 				#{item}
