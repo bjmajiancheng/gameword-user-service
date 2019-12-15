@@ -12,10 +12,7 @@ import com.github.pagehelper.PageInfo;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -90,18 +87,18 @@ public class PostController {
 
     @ResponseBody
     @RequestMapping(value = "/updateIsTop", method = RequestMethod.POST)
-    public Result updateIsTop(@RequestParam("id") Integer id, @RequestParam("isTop") Integer isTop, @RequestParam("circleIds") List<Integer> circleIds) {
+    public Result updateIsTop(@RequestBody CirclePostModel circlePostModel) {
         PostModel postModel = new PostModel();
-        postModel.setId(id);
-        postModel.setIsTop(isTop);
+        postModel.setId(circlePostModel.getPostId());
+        postModel.setIsTop(circlePostModel.getIsTop());
 
         int updateCnt = postService.updateNotNull(postModel);
 
-        if(CollectionUtils.isNotEmpty(circleIds)) {
-            if(isTop == 1) {//置顶操作
-                updateCnt = circlePostService.updateTopByCirclePostInfo(circleIds, id, isTop);
-            } else if(isTop == 0) {//取消置顶操作
-                updateCnt = circlePostService.updateTopByCirclePostInfo(circleIds, id, isTop);
+        if(CollectionUtils.isNotEmpty(circlePostModel.getCircleIds())) {
+            if(circlePostModel.getIsTop() == 1) {//置顶操作
+                updateCnt = circlePostService.updateTopByCirclePostInfo(circlePostModel.getCircleIds(), circlePostModel.getPostId(), circlePostModel.getIsTop());
+            } else if(circlePostModel.getIsTop() == 0) {//取消置顶操作
+                updateCnt = circlePostService.updateTopByCirclePostInfo(circlePostModel.getCircleIds(), circlePostModel.getPostId(), circlePostModel.getIsTop());
             }
         }
 

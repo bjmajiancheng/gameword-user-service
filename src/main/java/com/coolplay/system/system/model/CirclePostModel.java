@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.persistence.*;
 
@@ -46,6 +47,9 @@ public class CirclePostModel extends Sortable {
 
 	@Transient
 	private String circleName;//"酷玩圈名称"
+
+	@Transient
+	private List<Integer> circleIds;//圈子id
 		
 	public void setId(Integer id) {
 		this.id = id;
@@ -93,6 +97,14 @@ public class CirclePostModel extends Sortable {
 
 	public void setCircleName(String circleName) {
 		this.circleName = circleName;
+	}
+
+	public List<Integer> getCircleIds() {
+		return circleIds;
+	}
+
+	public void setCircleIds(List<Integer> circleIds) {
+		this.circleIds = circleIds;
 	}
 }
 
