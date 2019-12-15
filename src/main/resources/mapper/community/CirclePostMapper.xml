@@ -50,5 +50,13 @@
 		INNER JOIN d_circle c ON cp.circle_id = c.id
 		WHERE cp.post_id = #{postId}
 	</select>
+
+	<update id="updateTopByCirclePostInfo">
+		UPDATE d_post_label set is_top = #{isTop} WHERE post_id = #{postId}
+		AND circle_id IN
+			<foreach collection="circleIds" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+	</update>
 </mapper>
 

@@ -90,12 +90,20 @@ public class PostController {
 
     @ResponseBody
     @RequestMapping(value = "/updateIsTop", method = RequestMethod.GET)
-    public Result updateIsTop(@RequestParam("id") Integer id, @RequestParam("isTop") Integer isTop) {
+    public Result updateIsTop(@RequestParam("id") Integer id, @RequestParam("isTop") Integer isTop, @RequestParam("circleIds") List<Integer> circleIds) {
         PostModel postModel = new PostModel();
         postModel.setId(id);
         postModel.setIsTop(isTop);
 
         int updateCnt = postService.updateNotNull(postModel);
+
+        if(CollectionUtils.isNotEmpty(circleIds)) {
+            if(isTop == 1) {//置顶操作
+                updateCnt = circlePostService.updateTopByCirclePostInfo(circleIds, id, isTop);
+            } else if(isTop == 0) {//取消置顶操作
+                updateCnt = circlePostService.updateTopByCirclePostInfo(circleIds, id, isTop);
+            }
+        }
 
         return ResponseUtil.success();
     }

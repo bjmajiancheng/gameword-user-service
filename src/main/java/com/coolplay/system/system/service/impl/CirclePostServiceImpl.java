@@ -78,4 +78,11 @@ public class CirclePostServiceImpl extends BaseService<CirclePostModel> implemen
 
 		return circlePostMapper.findByPostId(postId);
 	}
+
+	public int updateTopByCirclePostInfo(List<Integer> circleIds, Integer postId, Integer isTop) {
+		if(CollectionUtils.isEmpty(circleIds)) {
+			return 0;
+		}
+		return circlePostMapper.updateTopByCirclePostInfo(circleIds, postId, isTop);
+	}
 }

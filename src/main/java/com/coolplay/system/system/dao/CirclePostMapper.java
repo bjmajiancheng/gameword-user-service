@@ -27,4 +27,6 @@ public interface CirclePostMapper extends Mapper<CirclePostModel> {
 	public CirclePostModel findById(@Param("id") Integer id);
 
 	public List<CirclePostModel> findByPostId(@Param("postId")Integer postId);
+
+	public int updateTopByCirclePostInfo(@Param("circleIds")List<Integer> circleIds, @Param("postId")Integer postId, @Param("isTop")Integer isTop);
 }
