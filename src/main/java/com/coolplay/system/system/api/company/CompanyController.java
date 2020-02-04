@@ -65,6 +65,7 @@ public class CompanyController {
             @RequestParam(value = "page", required = false, defaultValue = "1") int pageNum,
             @RequestParam(value = "rows", required = false, defaultValue = "15") int pageSize) {
         companyModel.setIsDel(0);
+        companyModel.setSort_("review_status_asc");
         PageInfo<CompanyModel> pageInfo = companyService.selectByFilterAndPage(companyModel, pageNum, pageSize);
 
         return PageConvertUtil.grid(pageInfo);
@@ -100,10 +101,12 @@ public class CompanyController {
             }
 
             if (companyUserModel == null) {
+                CompanyModel dbCompanyModel = companyService.findCompanyById(companyModel.getId());
+
                 companyUserModel = new CompanyUserModel();
                 companyUserModel.setCompanyId(companyModel.getId());
                 companyUserModel.setUserName(companyModel.getAdminUserName());
-                companyUserModel.setPassword(SecurityUtil.encodeString(companyModel.getAdminPassword()));
+                companyUserModel.setPassword(SecurityUtil.encodeString(dbCompanyModel.getAdminPassword()));
                 companyUserModel.setContactPhone(companyModel.getContactMobile());
                 companyUserModel.setAccountNonLocked(1);
                 companyUserModel.setAccountNonExpired(1);
