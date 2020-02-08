@@ -144,7 +144,7 @@ public class CompanyController {
                 }
 
                 String key = "sms_0000000001";
-                String[] values = new String[] { companyModel.getAdminUserName(), companyModel.getAdminPassword() };
+                String[] values = new String[] { companyModel.getAdminUserName(), dbCompanyModel.getAdminPassword() };
                 Result result = messageUtil.sendMessage(companyModel.getContactMobile(), key, values);
 
                 logger.info("发送短信完成, 手机号:{}, msg:{}, result:{}.", companyModel.getContactMobile(),
