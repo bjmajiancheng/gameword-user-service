@@ -85,6 +85,12 @@ public class UserModel extends Sortable {
 
 	@Transient
 	private List<Integer> roleIds;//"角色Ids"
+
+	@Transient
+	private String newPassword;//新密码
+
+	@Transient
+	private String confirmPasswor;//确认密码
 		
 	public void setId(Integer id) {
 		this.id = id;
@@ -220,6 +226,22 @@ public class UserModel extends Sortable {
 
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
+	}
+
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+
+	public String getConfirmPasswor() {
+		return confirmPasswor;
+	}
+
+	public void setConfirmPasswor(String confirmPasswor) {
+		this.confirmPasswor = confirmPasswor;
 	}
 }
 
