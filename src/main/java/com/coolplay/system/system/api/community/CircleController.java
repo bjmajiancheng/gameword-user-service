@@ -41,6 +41,7 @@ public class CircleController {
             @RequestParam(value = "page", required = false, defaultValue = "1") int pageNum,
             @RequestParam(value = "rows", required = false, defaultValue = "15") int pageSize) {
 
+        circleModel.setSort_("review_status_asc");
         PageInfo<CircleModel> pageInfo = circleService.selectByFilterAndPage(circleModel, pageNum, pageSize);
 
         if (CollectionUtils.isNotEmpty(pageInfo.getList())) {
