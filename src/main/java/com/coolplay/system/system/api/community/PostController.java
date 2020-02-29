@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by majiancheng on 2019/10/3.
@@ -98,6 +95,31 @@ public class PostController {
         if(CollectionUtils.isNotEmpty(circlePostModel.getCircleIds())) {
             updateCnt = circlePostService.updateTopByCirclePostInfo(circlePostModel.getCircleIds(), circlePostModel.getPostId(), circlePostModel.getIsTop());
         }
+
+        return ResponseUtil.success();
+    }
+
+    /**
+     * 全局置顶帖子
+     *
+     * @param postModel
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/topPost", method = RequestMethod.POST)
+    public Result topPost(@RequestBody PostModel postModel) {
+        postModel.setIsTop(1);
+        postModel.setTopTime(new Date());
+        /*PostModel postModel = new PostModel();
+        postModel.setId(circlePostModel.getPostId());
+        postModel.setIsTop(circlePostModel.getIsTop());*/
+
+        int updateCnt = postService.updateNotNull(postModel);
+
+        /*updateCnt = circlePostService.updateTopByPostId(circlePostModel.getPostId(), 0);
+        if(CollectionUtils.isNotEmpty(circlePostModel.getCircleIds())) {
+            updateCnt = circlePostService.updateTopByCirclePostInfo(circlePostModel.getCircleIds(), circlePostModel.getPostId(), circlePostModel.getIsTop());
+        }*/
 
         return ResponseUtil.success();
     }
