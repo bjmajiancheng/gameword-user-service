@@ -1,5 +1,6 @@
 package com.coolplay.system.system.api.community;
 
+import com.coolplay.system.common.utils.DateUtil;
 import com.coolplay.system.common.utils.PageConvertUtil;
 import com.coolplay.system.common.utils.ResponseUtil;
 import com.coolplay.system.common.utils.Result;
@@ -108,8 +109,11 @@ public class PostController {
     @ResponseBody
     @RequestMapping(value = "/topPost", method = RequestMethod.POST)
     public Result topPost(@RequestBody PostModel postModel) {
-        postModel.setIsTop(1);
-        postModel.setTopTime(new Date());
+        if(postModel.getIsTop() == 1) {
+            postModel.setTopTime(new Date());
+        } else {
+            postModel.setTopTime(DateUtil.StringToDate("0000-00-00 00:00:00"));
+        }
         /*PostModel postModel = new PostModel();
         postModel.setId(circlePostModel.getPostId());
         postModel.setIsTop(circlePostModel.getIsTop());*/
