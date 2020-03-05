@@ -53,7 +53,7 @@ public class PostModel extends Sortable {
 	private Integer isTop;//"是否置顶"
 
 	@Column(name = "top_time")
-	private Date topTime;//"置顶时间"
+	private String topTime;//"置顶时间"
 
 	@Column(name = "like_cnt")
 	private Integer likeCnt;//"点赞人数"
@@ -209,11 +209,11 @@ public class PostModel extends Sortable {
 		this.publicUserName = publicUserName;
 	}
 
-	public void setTopTime(Date topTime) {
+	public void setTopTime(String topTime) {
 		this.topTime = topTime;
 	}
 
-	public Date getTopTime() {
+	public String getTopTime() {
 		return topTime;
 	}
 }
