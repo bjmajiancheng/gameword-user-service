@@ -1,4 +1,4 @@
-package com.gameword.user.user.api.index;
+package com.gameword.user.user.api;
 
 import com.gameword.user.common.utils.PageConvertUtil;
 import com.gameword.user.common.utils.ResponseUtil;

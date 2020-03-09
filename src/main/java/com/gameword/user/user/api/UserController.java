@@ -1,4 +1,4 @@
-package com.gameword.user.user.api.user;
+package com.gameword.user.user.api;
 
 import com.gameword.user.common.utils.*;
 import com.gameword.user.core.model.UserModel;
