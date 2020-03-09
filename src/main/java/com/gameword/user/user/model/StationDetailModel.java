@@ -32,8 +32,8 @@ public class StationDetailModel extends Sortable {
 	@Column(name = "station_id")
 	private Integer stationId;//"驿站ID"
 
-	@Column(name = "type")
-	private Integer type;//"类型 1：中文 2：英文"
+	@Column(name = "language")
+	private Integer language;//"类型 1：中文 2：英文"
 
 	@Column(name = "city_title")
 	private String cityTitle;//"城市标题"
@@ -107,12 +107,12 @@ public class StationDetailModel extends Sortable {
 		return this.stationId;
 	}
 		
-	public void setType(Integer type) {
-		this.type = type;
+	public void setLanguage(Integer language) {
+		this.language = language;
 	}
 
-	public Integer getType() {
-		return this.type;
+	public Integer getLanguage() {
+		return this.language;
 	}
 		
 	public void setCityTitle(String cityTitle) {

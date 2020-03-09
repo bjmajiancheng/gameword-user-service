@@ -18,15 +18,9 @@ public class QueryDto implements Serializable {
 
     private String queryStr;//查询字符串
 
-    private Integer voteNumber;//投票数量
-
-    private Integer matchId;//赛事ID
-
     private String nickName;//用户昵称
 
     private Integer sex;//性别
-
-    private Integer provinceId;//省份ID
 
     private Integer cityId;//城市ID
 
@@ -40,21 +34,23 @@ public class QueryDto implements Serializable {
 
     private String headImage;//个人照片
 
-    private String videoUrl;//作品视频链接
-
-    private Integer workId;//作品ID
-
-    private String workName;//作品名称
-
-    private Integer judgesScore;//作品分数
-
-    private String content;//评论内容
+    private String content;//内容
 
     private Integer type;//类型
 
     private String verifyCode;//验证码
 
     private String originPassword;//原始密码
+
+    private Integer language;//语种 1：中文，2：英文
+
+    private String title;
+
+    private String userName;
+
+    private String email;
+
+    private String other;
 
     public Integer getId() {
         return id;
@@ -80,22 +76,6 @@ public class QueryDto implements Serializable {
         this.queryStr = queryStr;
     }
 
-    public Integer getVoteNumber() {
-        return voteNumber;
-    }
-
-    public void setVoteNumber(Integer voteNumber) {
-        this.voteNumber = voteNumber;
-    }
-
-    public Integer getMatchId() {
-        return matchId;
-    }
-
-    public void setMatchId(Integer matchId) {
-        this.matchId = matchId;
-    }
-
     public String getNickName() {
         return nickName;
     }
@@ -110,14 +90,6 @@ public class QueryDto implements Serializable {
 
     public void setSex(Integer sex) {
         this.sex = sex;
-    }
-
-    public Integer getProvinceId() {
-        return provinceId;
-    }
-
-    public void setProvinceId(Integer provinceId) {
-        this.provinceId = provinceId;
     }
 
     public Integer getCityId() {
@@ -168,38 +140,6 @@ public class QueryDto implements Serializable {
         this.headImage = headImage;
     }
 
-    public String getVideoUrl() {
-        return videoUrl;
-    }
-
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
-    }
-
-    public Integer getWorkId() {
-        return workId;
-    }
-
-    public void setWorkId(Integer workId) {
-        this.workId = workId;
-    }
-
-    public String getWorkName() {
-        return workName;
-    }
-
-    public void setWorkName(String workName) {
-        this.workName = workName;
-    }
-
-    public Integer getJudgesScore() {
-        return judgesScore;
-    }
-
-    public void setJudgesScore(Integer judgesScore) {
-        this.judgesScore = judgesScore;
-    }
-
     public String getContent() {
         return content;
     }
@@ -230,5 +170,45 @@ public class QueryDto implements Serializable {
 
     public void setOriginPassword(String originPassword) {
         this.originPassword = originPassword;
+    }
+
+    public Integer getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Integer language) {
+        this.language = language;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getOther() {
+        return other;
+    }
+
+    public void setOther(String other) {
+        this.other = other;
     }
 }

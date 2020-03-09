@@ -31,4 +31,5 @@ public interface IStationService extends IBaseService<StationModel> {
 
 	public List<StationModel> selectByFilter(StationModel stationModel);
 
+	public StationModel findByCityId(Integer cityId);
 }
