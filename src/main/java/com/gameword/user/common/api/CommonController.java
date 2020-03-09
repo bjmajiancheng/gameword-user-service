@@ -38,12 +38,6 @@ public class CommonController {
 
     private final static Logger logger = LoggerFactory.getLogger(CommonController.class);
 
-    @Value("${weather.url}")
-    private String weatherUrl;
-
-    @Value("${weather.picture.url}")
-    private String weatherPictureUrl;
-
     @Autowired
     private IAttachmentService attachmentService;
 

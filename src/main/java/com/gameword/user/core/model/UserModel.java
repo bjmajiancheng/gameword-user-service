@@ -8,7 +8,6 @@
 package com.gameword.user.core.model;
 
 import com.gameword.user.common.handler.Sortable;
-import com.gameword.user.user.model.WorkModel;
 
 import java.util.Date;
 import java.util.List;
@@ -110,9 +109,6 @@ public class UserModel extends Sortable {
 
 	@Transient
 	private List<Integer> userIds;//用户集合
-
-	@Transient
-	private List<WorkModel> workList;//参赛作品集合
 
 	@Transient
 	private String matchLogo;//赛事LOGO
@@ -339,14 +335,6 @@ public class UserModel extends Sortable {
 
 	public void setUserIds(List<Integer> userIds) {
 		this.userIds = userIds;
-	}
-
-	public List<WorkModel> getWorkList() {
-		return workList;
-	}
-
-	public void setWorkList(List<WorkModel> workList) {
-		this.workList = workList;
 	}
 
 	public String getMatchLogo() {
