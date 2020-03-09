@@ -44,8 +44,8 @@ public class StationDetailModel extends Sortable {
 	@Column(name = "thumb_img")
 	private String thumbImg;//"缩略图"
 
-	@Column(name = "desc")
-	private String desc;//"简介"
+	@Column(name = "description")
+	private String description;//"简介"
 
 	@Column(name = "business_desc")
 	private String businessDesc;//"工商业"
@@ -139,12 +139,12 @@ public class StationDetailModel extends Sortable {
 		return this.thumbImg;
 	}
 		
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public String getDesc() {
-		return this.desc;
+	public String getDescription() {
+		return this.description;
 	}
 		
 	public void setBusinessDesc(String businessDesc) {
