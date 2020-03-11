@@ -24,7 +24,9 @@
         <result property="sportDesc" column="sport_desc"/>
         <result property="climateDesc" column="climate_desc"/>
         <result property="celebrityDesc" column="celebrity_desc"/>
-        <result property="tipsDesc" column="tips_desc"/>
+		<result property="tipsDesc" column="tips_desc"/>
+		<result property="cityInfo" column="city_info"/>
+		<result property="businessCooperation" column="business_cooperation"/>
         <result property="ctime" column="c_time"/>
         <result property="utime" column="u_time"/>
     </resultMap>
@@ -32,7 +34,7 @@
 	<!-- 用于select查询公用抽取的列 -->
 	<sql id="columns">
 	    <![CDATA[
-        id ,station_id ,type ,city_title ,topic_img ,thumb_img ,description ,business_desc ,travel_desc ,education_desc ,medical_desc ,specialty_desc ,holiday_desc ,culture_desc ,food_desc ,sport_desc ,climate_desc ,celebrity_desc ,tips_desc ,c_time ,u_time
+        id ,station_id ,type ,city_title ,topic_img ,thumb_img ,description ,business_desc ,travel_desc ,education_desc ,medical_desc ,specialty_desc ,holiday_desc ,culture_desc ,food_desc ,sport_desc ,climate_desc ,celebrity_desc ,tips_desc , city_info, business_cooperation, c_time ,u_time
 	    ]]>
 	</sql>
 

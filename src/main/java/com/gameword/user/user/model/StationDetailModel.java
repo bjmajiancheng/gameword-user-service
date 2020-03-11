@@ -83,6 +83,12 @@ public class StationDetailModel extends Sortable {
 	@Column(name = "tips_desc")
 	private String tipsDesc;//"锦囊"
 
+	@Column(name = "city_info")
+	private String cityInfo;//"城市信息"
+
+	@Column(name = "business_cooperation")
+	private String businessCooperation;//"商务合作"
+
 	@Column(name = "c_time")
 	private Date ctime;//"创建时间"
 
@@ -242,7 +248,23 @@ public class StationDetailModel extends Sortable {
 	public String getTipsDesc() {
 		return this.tipsDesc;
 	}
-		
+
+	public String getCityInfo() {
+		return cityInfo;
+	}
+
+	public void setCityInfo(String cityInfo) {
+		this.cityInfo = cityInfo;
+	}
+
+	public String getBusinessCooperation() {
+		return businessCooperation;
+	}
+
+	public void setBusinessCooperation(String businessCooperation) {
+		this.businessCooperation = businessCooperation;
+	}
+
 	public void setCtime(Date ctime) {
 		this.ctime = ctime;
 	}
