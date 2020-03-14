@@ -10,8 +10,13 @@
         <result property="countryId" column="country_id"/>
         <result property="cityId" column="city_id"/>
         <result property="status" column="status"/>
-        <result property="createUserId" column="create_user_id"/>
-        <result property="updateUserId" column="update_user_id"/>
+		<result property="cnCityInfo" column="cn_city_info"/>
+		<result property="enCityInfo" column="en_city_info"/>
+		<result property="cnBusinessCooperation" column="cn_business_cooperation"/>
+		<result property="enBusinessCooperation" column="en_business_cooperation"/>
+		<result property="createUserId" column="create_user_id"/>
+		<result property="updateUserId" column="update_user_id"/>
+		<result property="isDel" column="is_del"/>
         <result property="ctime" column="c_time"/>
         <result property="utime" column="u_time"/>
     </resultMap>
@@ -19,7 +24,7 @@
 	<!-- 用于select查询公用抽取的列 -->
 	<sql id="columns">
 	    <![CDATA[
-        id ,country_id ,city_id ,status ,create_user_id ,update_user_id ,c_time ,u_time 
+        id ,country_id ,city_id ,status ,cn_city_info ,en_city_info ,cn_business_cooperation ,en_business_cooperation ,create_user_id ,update_user_id , is_del, c_time ,u_time
 	    ]]>
 	</sql>
 

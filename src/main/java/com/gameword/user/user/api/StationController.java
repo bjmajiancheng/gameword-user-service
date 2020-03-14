@@ -49,15 +49,15 @@ public class StationController {
             }
 
             StationDetailModel stationDetailModel = new StationDetailModel();
-            stationDetailModel.setStationId(stationModel.getId());
-            stationDetailModel.setLanguage(queryDto.getLanguage());
-
-            List<StationDetailModel> stationDetails = stationDetailService.selectByFilter(stationDetailModel);
-            if(CollectionUtils.isEmpty(stationDetails)) {
-                return ResponseUtil.error("系统异常, 请稍后重试。");
+            if(queryDto.getLanguage() == 1) {
+                stationDetailModel.setCityInfo(stationModel.getCnCityInfo());
+                stationDetailModel.setBusinessCooperation(stationModel.getCnBusinessCooperation());
+            } else if(queryDto.getLanguage() == 2) {
+                stationDetailModel.setCityInfo(stationModel.getEnCityInfo());
+                stationDetailModel.setBusinessCooperation(stationModel.getEnBusinessCooperation());
             }
 
-            return ResponseUtil.success(Collections.singletonMap("stationDetail", stationDetails.get(0)));
+            return ResponseUtil.success(Collections.singletonMap("stationDetail", stationDetailModel));
         } catch (Exception e) {
             e.printStackTrace();
 

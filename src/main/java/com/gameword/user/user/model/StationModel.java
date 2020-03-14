@@ -38,11 +38,26 @@ public class StationModel extends Sortable {
 	@Column(name = "status")
 	private Integer status;//"状态"
 
+	@Column(name = "cn_city_info")
+	private String cnCityInfo;//"中文城市信息"
+
+	@Column(name = "en_city_info")
+	private String enCityInfo;//"英文城市信息"
+
+	@Column(name = "cn_business_cooperation")
+	private String cnBusinessCooperation;//"中文商务合作"
+
+	@Column(name = "en_business_cooperation")
+	private String enBusinessCooperation;//"英文商务合作"
+
 	@Column(name = "create_user_id")
 	private Integer createUserId;//"创建人"
 
 	@Column(name = "update_user_id")
 	private Integer updateUserId;//"最后修改人"
+
+	@Column(name = "is_del")
+	private Integer isDel;
 
 	@Column(name = "c_time")
 	private Date ctime;//"创建时间"
@@ -116,5 +131,44 @@ public class StationModel extends Sortable {
 		return this.utime;
 	}
 
+	public String getCnCityInfo() {
+		return cnCityInfo;
+	}
+
+	public void setCnCityInfo(String cnCityInfo) {
+		this.cnCityInfo = cnCityInfo;
+	}
+
+	public String getEnCityInfo() {
+		return enCityInfo;
+	}
+
+	public void setEnCityInfo(String enCityInfo) {
+		this.enCityInfo = enCityInfo;
+	}
+
+	public String getCnBusinessCooperation() {
+		return cnBusinessCooperation;
+	}
+
+	public void setCnBusinessCooperation(String cnBusinessCooperation) {
+		this.cnBusinessCooperation = cnBusinessCooperation;
+	}
+
+	public String getEnBusinessCooperation() {
+		return enBusinessCooperation;
+	}
+
+	public void setEnBusinessCooperation(String enBusinessCooperation) {
+		this.enBusinessCooperation = enBusinessCooperation;
+	}
+
+	public Integer getIsDel() {
+		return isDel;
+	}
+
+	public void setIsDel(Integer isDel) {
+		this.isDel = isDel;
+	}
 }
 
