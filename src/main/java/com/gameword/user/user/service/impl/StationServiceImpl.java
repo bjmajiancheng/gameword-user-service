@@ -64,6 +64,10 @@ public class StationServiceImpl extends BaseService<StationModel> implements ISt
 		Example example = new Example(StationModel.class);
 		Example.Criteria criteria = example.createCriteria();
 
+		if(stationModel.getCityId() != null) {
+			criteria.andEqualTo("cityId", stationModel.getCityId());
+		}
+
 		if(StringUtils.isNotEmpty(stationModel.getSortWithOutOrderBy())) {
 			example.setOrderByClause(stationModel.getSortWithOutOrderBy());
 		}
