@@ -71,6 +71,8 @@
         <intercept-url pattern="/api/city/list" access="permitAll"/>
         <intercept-url pattern="/api/contact/addContact" access="permitAll"/>
 
+        <intercept-url pattern="/api/advertise/info" access="permitAll"/>
+
         <intercept-url pattern="/**" access="isAuthenticated()"/>
         <!-- 加载权限拦截 -->
         <custom-filter ref="filterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/>

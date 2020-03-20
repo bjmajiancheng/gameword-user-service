@@ -52,6 +52,8 @@ public class QueryDto implements Serializable {
 
     private String other;
 
+    private Integer platform;
+
     public Integer getId() {
         return id;
     }
@@ -210,5 +212,11 @@ public class QueryDto implements Serializable {
 
     public void setOther(String other) {
         this.other = other;
+    }
+
+    public Integer getPlatform(){return platform;}
+
+    public void setPlatform(Integer platform) {
+        this.platform = platform;
     }
 }
