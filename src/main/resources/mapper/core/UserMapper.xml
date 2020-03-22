@@ -5,43 +5,47 @@
 
 <mapper namespace="com.gameword.user.core.dao.UserMapper">
 
-	<resultMap id="User" type="com.gameword.user.core.model.UserModel">
+	<resultMap id="User" type="com.gameword.user.user.model.UserModel">
 		<result property="id" column="id"/>
-		<result property="userName" column="user_name"/>
-		<result property="password" column="password"/>
-		<result property="mobilePhone" column="mobile_phone"/>
-		<result property="wechatId" column="wechat_id"/>
-		<result property="qqId" column="qq_id"/>
-		<result property="nickName" column="nick_name"/>
-		<result property="userDesc" column="user_desc"/>
-		<result property="headImage" column="head_image"/>
-		<result property="provinceId" column="province_id"/>
-		<result property="provinceName" column="province_name"/>
-		<result property="cityId" column="city_id"/>
-		<result property="cityName" column="city_name"/>
-		<result property="birthYear" column="birth_year"/>
-		<result property="sex" column="sex"/>
 		<result property="userType" column="user_type"/>
+		<result property="mobilePhone" column="mobile_phone"/>
+		<result property="email" column="email"/>
+		<result property="password" column="password"/>
+		<result property="countryId" column="country_id"/>
+		<result property="cityId" column="city_id"/>
+		<result property="lastName" column="last_name"/>
+		<result property="firstName" column="first_name"/>
+		<result property="birthday" column="birthday"/>
+		<result property="sex" column="sex"/>
+		<result property="nickName" column="nick_name"/>
+		<result property="agencyName" column="agency_name"/>
+		<result property="desc" column="desc"/>
+		<result property="headImage" column="head_image"/>
+		<result property="inviteCode" column="invite_code"/>
+		<result property="balance" column="balance"/>
+		<result property="registerTime" column="register_time"/>
+		<result property="status" column="status"/>
+		<result property="enabled" column="enabled"/>
+		<result property="lastLoginIp" column="last_login_ip"/>
+		<result property="lastLoginTime" column="last_login_time"/>
 		<result property="accountNonLocked" column="account_non_locked"/>
 		<result property="accountNonExpired" column="account_non_expired"/>
 		<result property="credentialsNonExpired" column="credentials_non_expired"/>
-		<result property="lastLoginIp" column="last_login_ip"/>
-		<result property="lastLoginTime" column="last_login_time"/>
-		<result property="enabled" column="enabled"/>
 		<result property="lastPasswordReset" column="last_password_reset"/>
 		<result property="ctime" column="c_time"/>
+		<result property="utime" column="u_time"/>
 	</resultMap>
 
 	<!-- 用于select查询公用抽取的列 -->
 	<sql id="columns">
 		<![CDATA[
-        id ,user_name ,mobile_phone ,wechat_id ,qq_id ,nick_name ,user_desc ,head_image ,province_id ,province_name ,city_id ,city_name ,birth_year ,sex ,user_type ,account_non_locked ,account_non_expired ,credentials_non_expired ,last_login_ip ,last_login_time ,enabled ,last_password_reset ,c_time
+        id ,user_type ,mobile_phone ,email ,country_id ,city_id ,last_name ,first_name ,birthday ,sex ,nick_name ,agency_name ,desc ,head_image ,invite_code ,balance ,register_time ,status ,enabled ,last_login_ip ,last_login_time ,account_non_locked ,account_non_expired ,credentials_non_expired ,last_password_reset ,c_time ,u_time
 	    ]]>
 	</sql>
 
 	<sql id="passwordColumns">
 		<![CDATA[
-        id ,user_name ,password ,mobile_phone ,wechat_id ,qq_id ,nick_name ,user_desc ,head_image ,province_id ,province_name ,city_id ,city_name ,birth_year ,sex ,user_type ,account_non_locked ,account_non_expired ,credentials_non_expired ,last_login_ip ,last_login_time ,enabled ,last_password_reset ,c_time
+        id ,user_type ,mobile_phone ,email ,password ,country_id ,city_id ,last_name ,first_name ,birthday ,sex ,nick_name ,agency_name ,desc ,head_image ,invite_code ,balance ,register_time ,status ,enabled ,last_login_ip ,last_login_time ,account_non_locked ,account_non_expired ,credentials_non_expired ,last_password_reset ,c_time ,u_time
 	    ]]>
 	</sql>
 
@@ -132,6 +136,11 @@
 	<select id="findUserByMobilePhone" resultMap="User">
 		SELECT <include refid="passwordColumns"/> FROM d_user
 		WHERE mobile_phone = #{mobilePhone}
+	</select>
+
+	<select id="findUserByEmail" resultMap="User">
+		SELECT <include refid="passwordColumns"/> FROM d_user
+		WHERE email = #{email}
 	</select>
 
 	<select id="findUserByThirdInfo" resultMap="User">

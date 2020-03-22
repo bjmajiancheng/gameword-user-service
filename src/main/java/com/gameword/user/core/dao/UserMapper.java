@@ -39,4 +39,6 @@ public interface UserMapper extends Mapper<UserModel> {
 	public List<Integer> findByLabelName(@Param("labelName")String labelName);
 
 	public List<Integer> findByNickName(@Param("nickName")String nickName);
+
+	public UserModel findUserByEmail(@Param("email")String email);
 }

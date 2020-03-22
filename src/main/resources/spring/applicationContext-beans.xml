@@ -38,4 +38,8 @@
         <property name="uri" value="${message.uri}" />
     </bean>
 
+
+    <bean id="ailSender" class="com.gameword.user.common.utils.MailSender" />
+
+
 </beans>

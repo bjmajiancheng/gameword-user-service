@@ -1,6 +1,7 @@
 package com.gameword.user.common.api;
 
 import com.gameword.user.common.service.IAttachmentService;
+import com.gameword.user.common.utils.MailSender;
 import com.gameword.user.common.utils.MessageUtil;
 import com.gameword.user.common.utils.ResponseUtil;
 import com.gameword.user.common.utils.Result;
@@ -52,6 +53,9 @@ public class CommonController {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private MailSender mailSender;
 
     @RequestMapping(value = "/uploadFile", method = { RequestMethod.POST })
     @ResponseBody
@@ -201,6 +205,63 @@ public class CommonController {
             redisCache.set(SecurityConstant.MOBILE_VERIFY_CODE_PREFIX + mobilePhone, verifyCode, SecurityConstant.THREE_MINUTES_EXPIRE_SECOND);
 
             Result result = messageUtil.sendMessage(mobilePhone, key, values);
+
+            return ResponseUtil.success("验证码发送成功");
+        } catch(Exception e) {
+            e.printStackTrace();
+
+            return ResponseUtil.error("系统异常, 请稍后重试。");
+        }
+    }
+
+    /**
+     * 发送验证码
+     *
+     * @param queryDto
+     */
+    @ResponseBody
+    @RequestMapping(value = "/sendEmailVerifyCode", method = RequestMethod.POST)
+    public Result sendEmailVerifyCode(@RequestBody QueryDto queryDto) {
+        String email = queryDto.getEmail();
+        if(StringUtils.isEmpty(email) || queryDto.getType() == null) {
+            return ResponseUtil.error("请输入邮箱和类型");
+        }
+
+        try {
+            String verifyCode = "";
+            Object obj = redisCache.get(SecurityConstant.MOBILE_VERIFY_CODE_PREFIX + email);
+            if(obj != null) {
+                return ResponseUtil.error("验证码还在有效期, 请查看邮箱");
+            }
+
+            //注册逻辑判断
+            if(queryDto.getType() == 1) {
+                UserModel userModel = userService.findUserByEmail(queryDto.getEmail());
+                if(userModel != null) {
+                    return ResponseUtil.error("该邮箱已注册");
+                }
+            }
+
+
+            verifyCode = String.valueOf(new Random().nextInt(8999) + 1000);
+
+            String key = "sms_0000000003";
+            String[] values = {verifyCode};
+
+
+            String msgContent = messageUtil.getProperty(key, values);
+
+            VerifyCodeModel verifyCodeModel = new VerifyCodeModel();
+            verifyCodeModel.setEmail(email);
+            verifyCodeModel.setVerifyCode(verifyCode);
+            verifyCodeModel.setContent(msgContent);
+            verifyCodeModel.setCtime(new Date());
+            verifyCodeService.saveNotNull(verifyCodeModel);
+
+            //验证码设置缓存信息
+            redisCache.set(SecurityConstant.MOBILE_VERIFY_CODE_PREFIX + email, verifyCode, SecurityConstant.THREE_MINUTES_EXPIRE_SECOND);
+
+            Result result = mailSender.sendEmail(queryDto.getEmail(), "验证码", msgContent);
 
             return ResponseUtil.success("验证码发送成功");
         } catch(Exception e) {
