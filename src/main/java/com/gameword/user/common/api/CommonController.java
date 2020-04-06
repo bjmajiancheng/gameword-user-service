@@ -6,12 +6,16 @@ import com.gameword.user.common.utils.MessageUtil;
 import com.gameword.user.common.utils.ResponseUtil;
 import com.gameword.user.common.utils.Result;
 import com.gameword.user.core.model.UserModel;
+import com.gameword.user.user.model.CityModel;
+import com.gameword.user.user.model.CountryModel;
 import com.gameword.user.user.model.VerifyCodeModel;
 import com.gameword.user.common.dto.QueryDto;
 import com.gameword.user.common.tools.RedisCache;
 import com.gameword.user.core.model.Attachment;
 import com.gameword.user.security.constants.SecurityConstant;
 import com.gameword.user.security.service.IUserService;
+import com.gameword.user.user.service.ICityService;
+import com.gameword.user.user.service.ICountryService;
 import com.gameword.user.user.service.IVerifyCodeService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -56,6 +60,12 @@ public class CommonController {
 
     @Autowired
     private MailSender mailSender;
+
+    @Autowired
+    private ICountryService countryService;
+
+    @Autowired
+    private ICityService cityService;
 
     @RequestMapping(value = "/uploadFile", method = { RequestMethod.POST })
     @ResponseBody
@@ -268,6 +278,46 @@ public class CommonController {
             e.printStackTrace();
 
             return ResponseUtil.error("系统异常, 请稍后重试。");
+        }
+    }
+
+    /**
+     * 国家列表
+     *
+     * @param queryDto
+     */
+    @ResponseBody
+    @RequestMapping(value = "/countryList", method = RequestMethod.POST)
+    public Result countryList(@RequestBody QueryDto queryDto) {
+
+        try {
+            List<CountryModel> countryModels = countryService.find(Collections.emptyMap());
+
+            return ResponseUtil.success(Collections.singletonMap("countrys", countryModels));
+        } catch(Exception e) {
+            e.printStackTrace();
+
+            return ResponseUtil.error("系统异常, 请稍后重试。");
+        }
+    }
+
+    /**
+     * 城市列表
+     *
+     * @param queryDto
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/cityList", method = RequestMethod.POST)
+    public Result cityList(@RequestBody QueryDto queryDto) {
+        try {
+            List<CityModel> cityModels = cityService.find(Collections.singletonMap("countryId", queryDto.getCountryId()));
+
+            return ResponseUtil.success(Collections.singletonMap("citys", cityModels));
+        } catch(Exception e) {
+            e.printStackTrace();
+
+            return ResponseUtil.error();
         }
     }
 

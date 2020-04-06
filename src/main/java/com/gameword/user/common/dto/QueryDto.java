@@ -54,6 +54,8 @@ public class QueryDto implements Serializable {
 
     private Integer platform;
 
+    private Integer countryId;
+
     public Integer getId() {
         return id;
     }
@@ -219,4 +221,13 @@ public class QueryDto implements Serializable {
     public void setPlatform(Integer platform) {
         this.platform = platform;
     }
+
+    public Integer getCountryId() {
+        return countryId;
+    }
+
+    public void setCountryId(Integer countryId) {
+        this.countryId = countryId;
+    }
+
 }
