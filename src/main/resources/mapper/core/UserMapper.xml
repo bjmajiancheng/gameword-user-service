@@ -5,7 +5,7 @@
 
 <mapper namespace="com.gameword.user.core.dao.UserMapper">
 
-	<resultMap id="User" type="com.gameword.user.user.model.UserModel">
+	<resultMap id="User" type="com.gameword.user.core.model.UserModel">
 		<result property="id" column="id"/>
 		<result property="userType" column="user_type"/>
 		<result property="mobilePhone" column="mobile_phone"/>
