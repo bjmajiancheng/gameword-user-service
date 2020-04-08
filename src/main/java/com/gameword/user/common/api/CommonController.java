@@ -312,6 +312,7 @@ public class CommonController {
     public Result cityList(@RequestBody QueryDto queryDto) {
         try {
 
+
             CityModel cityModel = new CityModel();
 
             List<CityModel> cityModels = cityService.find(Collections.singletonMap("countryId", queryDto.getCountryId()));
