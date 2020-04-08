@@ -9,9 +9,8 @@ package com.gameword.user.core.model;
 
 import com.gameword.user.common.handler.Sortable;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -24,68 +23,63 @@ public class UserModel extends Sortable {
 	private static final long serialVersionUID = 1L;
 
 	//columns START
-	@Column(name = "id")
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;//"主键"
-
-	@Column(name = "user_type")
-	private Integer userType;//"用户类型；0：学生，1：商务会员"
 
 	@Column(name = "user_name")
 	private String userName;//"用户名"
 
-	@Column(name = "mobile_phone")
-	private String mobilePhone;//"手机号"
-
-	@Column(name = "email")
-	private String email;//"email"
-
 	@Column(name = "password")
 	private String password;//"密码"
 
-	@Column(name = "country_id")
-	private Integer countryId;//"国籍"
+	@Column(name = "mobile_phone")
+	private String mobilePhone;//"手机号"
 
-	@Column(name = "city_id")
-	private Integer cityId;//"所在城市"
+	@Column(name = "wechat_id")
+	private String wechatId;//"微信ID"
 
-	@Column(name = "last_name")
-	private String lastName;//"姓"
-
-	@Column(name = "first_name")
-	private String firstName;//"名"
-
-	@Column(name = "birthday")
-	private String birthday;//"出生日期"
-
-	@Column(name = "sex")
-	private Integer sex;//"性别"
+	@Column(name = "qq_id")
+	private String qqId;//"QQ ID"
 
 	@Column(name = "nick_name")
 	private String nickName;//"昵称"
 
-	@Column(name = "agency_name")
-	private String agencyName;//"机构/学校名称"
-
-	@Column(name = "desc")
-	private String desc;//"个人简介（一段文字）"
+	@Column(name = "user_desc")
+	private String userDesc;//"用户简介"
 
 	@Column(name = "head_image")
-	private String headImage;//"头像（照片）"
+	private String headImage;//"头图"
 
-	@Column(name = "invite_code")
-	private String inviteCode;//"邀请码"
+	@Column(name = "province_id")
+	private Integer provinceId;//"省份ID"
 
-	@Column(name = "balance")
-	private BigDecimal balance;//"余额"
+	@Column(name = "province_name")
+	private String provinceName;//"省份名称"
 
-	@Column(name = "register_time")
-	private Date registerTime;//"注册时间"
+	@Column(name = "city_id")
+	private Integer cityId;//"城市ID"
 
-	@Column(name = "status")
-	private Integer status;//"状态 0：正常，1：禁用"
+	@Column(name = "city_name")
+	private String cityName;//"城市名称"
 
-	@Column(name = "enabled")
-	private Boolean enabled;//"状态，0=冻结，1=正常"
+	@Column(name = "birth_year")
+	private Integer birthYear;//"出生年"
+
+	@Column(name = "sex")
+	private Integer sex;//"性别 1：男，2：女"
+
+	@Column(name = "user_type")
+	private Integer userType;//"用户类型 1：管理员，2：评委，3：城市合伙人，4：普通用户"
+
+	@Column(name = "account_non_locked")
+	private Boolean accountNonLocked;//"未锁定状态，0=锁定，1=正常"
+
+	@Column(name = "account_non_expired")
+	private Boolean accountNonExpired;//"账号过期状态，0=过期，1=正常"
+
+	@Column(name = "credentials_non_expired")
+	private Boolean credentialsNonExpired;//"密码失效状态：0：已失效 1：未失效"
 
 	@Column(name = "last_login_ip")
 	private String lastLoginIp;//"最后登录IP"
@@ -93,37 +87,32 @@ public class UserModel extends Sortable {
 	@Column(name = "last_login_time")
 	private Date lastLoginTime;//"最后登录时间"
 
-	@Column(name = "account_non_locked")
-	private Boolean accountNonLocked;//"未锁定状态，1=正常，0=锁定"
-
-	@Column(name = "account_non_expired")
-	private Boolean accountNonExpired;//"账号过期状态，1=正常，0=过期"
-
-	@Column(name = "credentials_non_expired")
-	private Boolean credentialsNonExpired;//"密码失效状态：1：未失效 0：已失效"
+	@Column(name = "enabled")
+	private Boolean enabled;//"状态，0=冻结，1=正常"
 
 	@Column(name = "last_password_reset")
-	private Date lastPasswordReset;//"上次密码重置时间"
+	private Date lastPasswordReset;//"最后重置密码时间"
 
 	@Column(name = "c_time")
 	private Date ctime;//"创建时间"
 
-	@Column(name = "u_time")
-	private Date utime;//"更新时间"
 	//columns END
 
 	@Transient
 	private String token;
 
 	@Transient
-	private String verifyCode;
+	private String verifyCode;//验证码
 
 	@Transient
-	private String queryStr;
+	private String queryStr;//查询文本
 
 	@Transient
-	private List<Integer> userIds;
+	private List<Integer> userIds;//用户集合
 
+	@Transient
+	private String matchLogo;//赛事LOGO
+		
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -132,36 +121,12 @@ public class UserModel extends Sortable {
 		return this.id;
 	}
 		
-	public void setUserType(Integer userType) {
-		this.userType = userType;
-	}
-
-	public Integer getUserType() {
-		return this.userType;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
 
-	public void setMobilePhone(String mobilePhone) {
-		this.mobilePhone = mobilePhone;
-	}
-
-	public String getMobilePhone() {
-		return this.mobilePhone;
-	}
-		
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getEmail() {
-		return this.email;
+	public String getUserName() {
+		return this.userName;
 	}
 		
 	public void setPassword(String password) {
@@ -172,52 +137,28 @@ public class UserModel extends Sortable {
 		return this.password;
 	}
 		
-	public void setCountryId(Integer countryId) {
-		this.countryId = countryId;
+	public void setMobilePhone(String mobilePhone) {
+		this.mobilePhone = mobilePhone;
 	}
 
-	public Integer getCountryId() {
-		return this.countryId;
+	public String getMobilePhone() {
+		return this.mobilePhone;
 	}
 		
-	public void setCityId(Integer cityId) {
-		this.cityId = cityId;
+	public void setWechatId(String wechatId) {
+		this.wechatId = wechatId;
 	}
 
-	public Integer getCityId() {
-		return this.cityId;
+	public String getWechatId() {
+		return this.wechatId;
 	}
 		
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setQqId(String qqId) {
+		this.qqId = qqId;
 	}
 
-	public String getLastName() {
-		return this.lastName;
-	}
-		
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getFirstName() {
-		return this.firstName;
-	}
-		
-	public void setBirthday(String birthday) {
-		this.birthday = birthday;
-	}
-
-	public String getBirthday() {
-		return this.birthday;
-	}
-		
-	public void setSex(Integer sex) {
-		this.sex = sex;
-	}
-
-	public Integer getSex() {
-		return this.sex;
+	public String getQqId() {
+		return this.qqId;
 	}
 		
 	public void setNickName(String nickName) {
@@ -228,20 +169,12 @@ public class UserModel extends Sortable {
 		return this.nickName;
 	}
 		
-	public void setAgencyName(String agencyName) {
-		this.agencyName = agencyName;
+	public void setUserDesc(String userDesc) {
+		this.userDesc = userDesc;
 	}
 
-	public String getAgencyName() {
-		return this.agencyName;
-	}
-		
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
-
-	public String getDesc() {
-		return this.desc;
+	public String getUserDesc() {
+		return this.userDesc;
 	}
 		
 	public void setHeadImage(String headImage) {
@@ -252,60 +185,60 @@ public class UserModel extends Sortable {
 		return this.headImage;
 	}
 		
-	public void setInviteCode(String inviteCode) {
-		this.inviteCode = inviteCode;
+	public void setProvinceId(Integer provinceId) {
+		this.provinceId = provinceId;
 	}
 
-	public String getInviteCode() {
-		return this.inviteCode;
+	public Integer getProvinceId() {
+		return this.provinceId;
 	}
 		
-	public void setBalance(BigDecimal balance) {
-		this.balance = balance;
+	public void setProvinceName(String provinceName) {
+		this.provinceName = provinceName;
 	}
 
-	public BigDecimal getBalance() {
-		return this.balance;
+	public String getProvinceName() {
+		return this.provinceName;
 	}
 		
-	public void setRegisterTime(Date registerTime) {
-		this.registerTime = registerTime;
+	public void setCityId(Integer cityId) {
+		this.cityId = cityId;
 	}
 
-	public Date getRegisterTime() {
-		return this.registerTime;
+	public Integer getCityId() {
+		return this.cityId;
 	}
 		
-	public void setStatus(Integer status) {
-		this.status = status;
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
 	}
 
-	public Integer getStatus() {
-		return this.status;
+	public String getCityName() {
+		return this.cityName;
 	}
 		
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
+	public void setBirthYear(Integer birthYear) {
+		this.birthYear = birthYear;
 	}
 
-	public Boolean getEnabled() {
-		return this.enabled;
+	public Integer getBirthYear() {
+		return this.birthYear;
 	}
 		
-	public void setLastLoginIp(String lastLoginIp) {
-		this.lastLoginIp = lastLoginIp;
+	public void setSex(Integer sex) {
+		this.sex = sex;
 	}
 
-	public String getLastLoginIp() {
-		return this.lastLoginIp;
+	public Integer getSex() {
+		return this.sex;
 	}
 		
-	public void setLastLoginTime(Date lastLoginTime) {
-		this.lastLoginTime = lastLoginTime;
+	public void setUserType(Integer userType) {
+		this.userType = userType;
 	}
 
-	public Date getLastLoginTime() {
-		return this.lastLoginTime;
+	public Integer getUserType() {
+		return this.userType;
 	}
 		
 	public void setAccountNonLocked(Boolean accountNonLocked) {
@@ -332,6 +265,30 @@ public class UserModel extends Sortable {
 		return this.credentialsNonExpired;
 	}
 		
+	public void setLastLoginIp(String lastLoginIp) {
+		this.lastLoginIp = lastLoginIp;
+	}
+
+	public String getLastLoginIp() {
+		return this.lastLoginIp;
+	}
+		
+	public void setLastLoginTime(Date lastLoginTime) {
+		this.lastLoginTime = lastLoginTime;
+	}
+
+	public Date getLastLoginTime() {
+		return this.lastLoginTime;
+	}
+		
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public Boolean getEnabled() {
+		return this.enabled;
+	}
+		
 	public void setLastPasswordReset(Date lastPasswordReset) {
 		this.lastPasswordReset = lastPasswordReset;
 	}
@@ -346,14 +303,6 @@ public class UserModel extends Sortable {
 
 	public Date getCtime() {
 		return this.ctime;
-	}
-		
-	public void setUtime(Date utime) {
-		this.utime = utime;
-	}
-
-	public Date getUtime() {
-		return this.utime;
 	}
 
 	public String getToken() {
@@ -386,6 +335,14 @@ public class UserModel extends Sortable {
 
 	public void setUserIds(List<Integer> userIds) {
 		this.userIds = userIds;
+	}
+
+	public String getMatchLogo() {
+		return matchLogo;
+	}
+
+	public void setMatchLogo(String matchLogo) {
+		this.matchLogo = matchLogo;
 	}
 }
 

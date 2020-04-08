@@ -45,9 +45,6 @@
 			<if test="email != null">
 				AND email = #{email}
 			</if>
-			<if test="countryId != null">
-				AND country_id = #{countryId}
-			</if>
 	    </where>
 	</sql>
 

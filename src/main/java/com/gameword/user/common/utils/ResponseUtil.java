@@ -39,7 +39,7 @@ public class ResponseUtil {
     }
 
     public static Result error() {
-        return new Result(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "系统异常, 请稍后重试");
+        return new Result(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
     }
 
     public static Result error(String msg) {

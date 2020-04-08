@@ -1,21 +1,16 @@
 package com.gameword.user.common.api;
 
 import com.gameword.user.common.service.IAttachmentService;
-import com.gameword.user.common.utils.MailSender;
 import com.gameword.user.common.utils.MessageUtil;
 import com.gameword.user.common.utils.ResponseUtil;
 import com.gameword.user.common.utils.Result;
 import com.gameword.user.core.model.UserModel;
-import com.gameword.user.user.model.CityModel;
-import com.gameword.user.user.model.CountryModel;
 import com.gameword.user.user.model.VerifyCodeModel;
 import com.gameword.user.common.dto.QueryDto;
 import com.gameword.user.common.tools.RedisCache;
 import com.gameword.user.core.model.Attachment;
 import com.gameword.user.security.constants.SecurityConstant;
 import com.gameword.user.security.service.IUserService;
-import com.gameword.user.user.service.ICityService;
-import com.gameword.user.user.service.ICountryService;
 import com.gameword.user.user.service.IVerifyCodeService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -57,15 +52,6 @@ public class CommonController {
 
     @Autowired
     private IUserService userService;
-
-    @Autowired
-    private MailSender mailSender;
-
-    @Autowired
-    private ICountryService countryService;
-
-    @Autowired
-    private ICityService cityService;
 
     @RequestMapping(value = "/uploadFile", method = { RequestMethod.POST })
     @ResponseBody
@@ -224,6 +210,7 @@ public class CommonController {
         }
     }
 
+<<<<<<< HEAD
     /**
      * 发送验证码
      *
@@ -324,4 +311,6 @@ public class CommonController {
         }
     }
 
+=======
+>>>>>>> 2f3889bc48fbcc0119570bbd17fa0fb8baa73f31
 }

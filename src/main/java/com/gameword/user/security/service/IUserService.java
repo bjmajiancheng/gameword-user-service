@@ -51,6 +51,4 @@ public interface IUserService extends IBaseService<UserModel> {
     public List<Integer> findByNickName(String nickName);
 
     public PageInfo<UserModel> selectByUserIds(List<Integer> integers, Integer pageNum, Integer pageSize);
-
-    public UserModel findUserByEmail(String email);
 }

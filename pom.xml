@@ -314,18 +314,6 @@
       <version>1.9.13</version>
     </dependency>
 
-    <!-- email jar -->
-    <dependency>
-      <groupId>javax.mail</groupId>
-      <artifactId>javax.mail-api</artifactId>
-      <version>1.5.2</version>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.mail</groupId>
-      <artifactId>dsn</artifactId>
-      <version>1.5.2</version>
-    </dependency>
-
 
     <!-- Velocity视图所需jar -->
     <dependency>
