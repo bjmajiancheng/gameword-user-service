@@ -310,11 +310,8 @@ public class CommonController {
     @ResponseBody
     @RequestMapping(value = "/cityList", method = RequestMethod.POST)
     public Result cityList(@RequestBody QueryDto queryDto) {
+
         try {
-
-
-            CityModel cityModel = new CityModel();
-
             List<CityModel> cityModels = cityService.find(Collections.singletonMap("countryId", queryDto.getCountryId()));
 
             return ResponseUtil.success(Collections.singletonMap("citys", cityModels));
