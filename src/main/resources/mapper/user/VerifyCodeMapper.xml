@@ -7,7 +7,8 @@
 
     <resultMap id="VerifyCode" type="com.gameword.user.user.model.VerifyCodeModel">
         <result property="id" column="id"/>
-        <result property="mobilePhone" column="mobile_phone"/>
+		<result property="mobilePhone" column="mobile_phone"/>
+		<result property="email" column="email"/>
         <result property="content" column="content"/>
         <result property="verifyCode" column="verify_code"/>
         <result property="ctime" column="c_time"/>
@@ -16,7 +17,7 @@
 	<!-- 用于select查询公用抽取的列 -->
 	<sql id="columns">
 	    <![CDATA[
-        id ,mobile_phone ,content ,verify_code ,c_time 
+        id ,mobile_phone ,email, content ,verify_code ,c_time
 	    ]]>
 	</sql>
 

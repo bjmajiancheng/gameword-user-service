@@ -29,6 +29,9 @@ public class VerifyCodeModel extends Sortable {
 	@Column(name = "mobile_phone")
 	private String mobilePhone;//"手机号码"
 
+	@Column(name = "email")
+	private String email;//"邮箱"
+
 	@Column(name = "content")
 	private String content;//"短信内容"
 
@@ -55,7 +58,15 @@ public class VerifyCodeModel extends Sortable {
 	public String getMobilePhone() {
 		return this.mobilePhone;
 	}
-		
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public void setContent(String content) {
 		this.content = content;
 	}

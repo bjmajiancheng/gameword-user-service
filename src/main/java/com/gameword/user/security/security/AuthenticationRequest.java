@@ -6,6 +6,8 @@ public class AuthenticationRequest {
 
     private String username;
 
+    private String email;
+
     private String mobilePhone;
 
     private String password;
@@ -55,6 +57,14 @@ public class AuthenticationRequest {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getMobilePhone() {

@@ -106,7 +106,6 @@ public class UserServiceImpl extends BaseService<UserModel> implements IUserServ
     @Override
     public UserModel findUserByUserId(int userId) {
         UserModel userModel = userMapper.findUserByUserId(userId);
-        userModel.setPassword("");
         return userModel;
     }
 
@@ -135,6 +134,15 @@ public class UserServiceImpl extends BaseService<UserModel> implements IUserServ
         }
 
         return userMapper.findUserByMobilePhone(mobilePhone);
+    }
+
+
+    public UserModel findUserByEmail(String email) {
+        if(StringUtils.isEmpty(email)) {
+            return null;
+        }
+
+        return userMapper.findUserByEmail(email);
     }
 
 

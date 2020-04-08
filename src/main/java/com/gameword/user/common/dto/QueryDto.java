@@ -36,7 +36,7 @@ public class QueryDto implements Serializable {
 
     private String content;//内容
 
-    private Integer type;//类型
+    private Integer type;//类型 1:注册验证码, 2:其他验证码
 
     private String verifyCode;//验证码
 
@@ -53,6 +53,8 @@ public class QueryDto implements Serializable {
     private String other;
 
     private Integer platform;
+
+    private Integer countryId;
 
     public Integer getId() {
         return id;
@@ -219,4 +221,13 @@ public class QueryDto implements Serializable {
     public void setPlatform(Integer platform) {
         this.platform = platform;
     }
+
+    public Integer getCountryId() {
+        return countryId;
+    }
+
+    public void setCountryId(Integer countryId) {
+        this.countryId = countryId;
+    }
+
 }
