@@ -66,8 +66,8 @@ public class UserModel extends Sortable {
 	@Column(name = "agency_name")
 	private String agencyName;//"机构/学校名称"
 
-	@Column(name = "desc")
-	private String desc;//"个人简介（一段文字）"
+	@Column(name = "description")
+	private String description;//"个人简介（一段文字）"
 
 	@Column(name = "head_image")
 	private String headImage;//"头像（照片）"
@@ -236,12 +236,12 @@ public class UserModel extends Sortable {
 		return this.agencyName;
 	}
 		
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public String getDesc() {
-		return this.desc;
+	public String getDescription() {
+		return this.description;
 	}
 		
 	public void setHeadImage(String headImage) {
