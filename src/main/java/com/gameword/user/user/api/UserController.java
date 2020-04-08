@@ -511,8 +511,7 @@ public class UserController {
     public Result register(HttpServletRequest request, @RequestBody UserModel userModel) {
 
         try {
-            if (StringUtils.isEmpty(
-                    userModel.getVerifyCode())) {
+            /*if (StringUtils.isEmpty(userModel.getVerifyCode())) {
                 return ResponseUtil.error("请输入验证码");
             }
             if (StringUtils
@@ -523,7 +522,7 @@ public class UserController {
                 }
             } else {
                 return ResponseUtil.error("验证码不存在或已过期");
-            }
+            }*/
             UserModel userInfo = userService.findUserByMobilePhone(userModel.getMobilePhone());
             if (userInfo != null) {
                 return ResponseUtil.error("手机号已使用, 请更换手机号.");
