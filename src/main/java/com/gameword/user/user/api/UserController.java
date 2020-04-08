@@ -522,6 +522,7 @@ public class UserController {
                 }
             } else {
                 return ResponseUtil.error("验证码不存在或已过期");
+
             }*/
             UserModel userInfo = userService.findUserByMobilePhone(userModel.getMobilePhone());
             if (userInfo != null) {
