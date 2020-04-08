@@ -24,49 +24,56 @@ import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.*;
+
 import com.gameword.user.user.dao.*;
 import com.gameword.user.user.service.*;
 
 /**
- * @author  davdian
+ * @author davdian
  * @version 1.0
  * @since 1.0
  */
 
 @Service("cityService")
-public class CityServiceImpl extends BaseService<CityModel> implements ICityService{
-	@Autowired
-	private CityMapper cityMapper;
-	
-	@Override
-	public CityModel findById(Integer id) {
-		if(id == null) {
-			return null;
-		}
-		return cityMapper.findById(id);
-	}
+public class CityServiceImpl extends BaseService<CityModel> implements ICityService {
 
+    @Autowired
+    private CityMapper cityMapper;
 
-	public List<CityModel> find(Map<String, Object> param) {
-		return cityMapper.find(param);
-	}
+    @Override
+    public CityModel findById(Integer id) {
+        if (id == null) {
+            return null;
+        }
+        return cityMapper.findById(id);
+    }
 
-	@Override
-	public PageInfo<CityModel> selectByFilterAndPage(CityModel cityModel, int pageNum,
-		int pageSize) {
-		PageHelper.startPage(pageNum, pageSize);
-		List<CityModel> list = this.selectByFilter(cityModel);
-		return new PageInfo<>(list);
-	}
+    public List<CityModel> find(Map<String, Object> param) {
+        return cityMapper.find(param);
+    }
 
-	@Override
-	public List<CityModel> selectByFilter(CityModel cityModel) {
-		Example example = new Example(CityModel.class);
-		Example.Criteria criteria = example.createCriteria();
+    @Override
+    public PageInfo<CityModel> selectByFilterAndPage(CityModel cityModel, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<CityModel> list = this.selectByFilter(cityModel);
+        return new PageInfo<>(list);
+    }
 
-		if(StringUtils.isNotEmpty(cityModel.getSortWithOutOrderBy())) {
-			example.setOrderByClause(cityModel.getSortWithOutOrderBy());
-		}
-		return getMapper().selectByExample(example);
-	}
+    @Override
+    public List<CityModel> selectByFilter(CityModel cityModel) {
+        Example example = new Example(CityModel.class);
+        Example.Criteria criteria = example.createCriteria();
+
+        if(cityModel.getCountryId() != null) {
+            criteria.andEqualTo("countryId", cityModel.getCountryId());
+        }
+
+        criteria.andEqualTo("isDel", 0);
+        criteria.andEqualTo("isOnline", 1);
+
+        if (StringUtils.isNotEmpty(cityModel.getSortWithOutOrderBy())) {
+            example.setOrderByClause(cityModel.getSortWithOutOrderBy());
+        }
+        return getMapper().selectByExample(example);
+    }
 }
