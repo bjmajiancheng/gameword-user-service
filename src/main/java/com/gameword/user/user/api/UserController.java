@@ -551,18 +551,11 @@ public class UserController {
                     userModel.getUserName(), userPassMappingModel.getPassword());
             usernamePasswordAuthenticationToken.setDetails(new HttpAuthenticationDetails());
 
-            Authentication authentication = null;
-            try {
-                authentication = this.authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-                if (authentication == null) {
-                    return HttpResponseUtil.error("未检测到验证信息");
-                }
-            } catch (InternalAuthenticationServiceException failed) {
-                logger.error("An internal error occurred while trying to authenticate the user.", failed);
-                return HttpResponseUtil.error(failed.getMessage());
-            } catch (AuthenticationException failed) {
-                return HttpResponseUtil.error(failed.getMessage());
+            Authentication authentication = this.authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+            if (authentication == null) {
+                return HttpResponseUtil.error("未检测到验证信息");
             }
+
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
             /*UserDetails userDetails = (UserDetails) redisCache
