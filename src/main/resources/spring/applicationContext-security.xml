@@ -66,6 +66,7 @@
         <intercept-url pattern="/api/user/resetPassword" access="permitAll"/>
 
         <intercept-url pattern="/api/common/**" access="permitAll"/>
+        <intercept-url pattern="/api/feedback/saveFeedback" access="permitAll"/>
 
         <intercept-url pattern="/api/station/detail" access="permitAll"/>
         <intercept-url pattern="/api/city/list" access="permitAll"/>

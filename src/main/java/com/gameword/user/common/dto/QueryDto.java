@@ -56,6 +56,10 @@ public class QueryDto implements Serializable {
 
     private Integer countryId;
 
+    private Integer pageNum;//第几页 默认1
+
+    private Integer pageSize;//每页条数 默认15
+
     public Integer getId() {
         return id;
     }
@@ -216,7 +220,9 @@ public class QueryDto implements Serializable {
         this.other = other;
     }
 
-    public Integer getPlatform(){return platform;}
+    public Integer getPlatform() {
+        return platform;
+    }
 
     public void setPlatform(Integer platform) {
         this.platform = platform;
@@ -230,4 +236,26 @@ public class QueryDto implements Serializable {
         this.countryId = countryId;
     }
 
+    public Integer getPageNum() {
+        if (pageNum == null) {
+            return 1;
+        }
+
+        return pageNum;
+    }
+
+    public void setPageNum(Integer pageNum) {
+        this.pageNum = pageNum;
+    }
+
+    public Integer getPageSize() {
+        if (pageSize == null) {
+            return 15;
+        }
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
 }

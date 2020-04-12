@@ -8,6 +8,7 @@ import com.gameword.user.common.utils.Result;
 import com.gameword.user.core.model.UserModel;
 import com.gameword.user.user.model.CityModel;
 import com.gameword.user.user.model.CountryModel;
+import com.gameword.user.user.model.SystemVersionModel;
 import com.gameword.user.user.model.VerifyCodeModel;
 import com.gameword.user.common.dto.QueryDto;
 import com.gameword.user.common.tools.RedisCache;
@@ -16,7 +17,9 @@ import com.gameword.user.security.constants.SecurityConstant;
 import com.gameword.user.security.service.IUserService;
 import com.gameword.user.user.service.ICityService;
 import com.gameword.user.user.service.ICountryService;
+import com.gameword.user.user.service.ISystemVersionService;
 import com.gameword.user.user.service.IVerifyCodeService;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,6 +69,9 @@ public class CommonController {
 
     @Autowired
     private ICityService cityService;
+
+    @Autowired
+    private ISystemVersionService systemVersionService;
 
     @RequestMapping(value = "/uploadFile", method = { RequestMethod.POST })
     @ResponseBody
@@ -315,6 +321,35 @@ public class CommonController {
             List<CityModel> cityModels = cityService.find(Collections.singletonMap("countryId", queryDto.getCountryId()));
 
             return ResponseUtil.success(Collections.singletonMap("citys", cityModels));
+        } catch(Exception e) {
+            e.printStackTrace();
+
+            return ResponseUtil.error();
+        }
+    }
+
+    /**
+     * 最新版本
+     *
+     * @param queryDto
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/lastVersion", method = RequestMethod.POST)
+    public Result lastVersion(@RequestBody QueryDto queryDto) {
+
+        try {
+            List<SystemVersionModel> systemVersions = systemVersionService.selectByFilter(new SystemVersionModel());
+            Map<String, SystemVersionModel> systemVersionMap = new HashMap<String, SystemVersionModel>();
+
+            if(CollectionUtils.isNotEmpty(systemVersions)) {
+                for(SystemVersionModel systemVersion : systemVersions) {
+                    systemVersionMap.put(systemVersion.getAppType(), systemVersion);
+                }
+            }
+
+            return ResponseUtil.success(systemVersionMap);
+
         } catch(Exception e) {
             e.printStackTrace();
 
