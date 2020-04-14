@@ -20,7 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /**
  * Created by majiancheng on 2020/4/12.
  */
-@Controller("/api/feedback")
+@Controller
+@RequestMapping("/api/feedback")
 public class FeedbackController {
 
     @Autowired
