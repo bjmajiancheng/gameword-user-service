@@ -8,7 +8,7 @@
 package com.gameword.user.user.service;
 
 import com.gameword.user.common.baseservice.IBaseService;
-import com.gameword.user.user.model.LabelModel;
+import com.gameword.user.user.model.CompanyLabelModel;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import java.util.*;
@@ -21,17 +21,15 @@ import com.gameword.user.user.service.*;
  * @since 1.0
  */
 
-public interface ILabelService extends IBaseService<LabelModel> {
+public interface ICompanyLabelService extends IBaseService<CompanyLabelModel> {
 
-	public LabelModel findById(Integer id);
+	public CompanyLabelModel findById(Integer id);
 
-	public List<LabelModel> find(Map<String, Object> param);
+	public List<CompanyLabelModel> find(Map<String, Object> param);
 
-	public PageInfo<LabelModel> selectByFilterAndPage(LabelModel labelModel, int pageNum, int pageSize);
+	public PageInfo<CompanyLabelModel> selectByFilterAndPage(CompanyLabelModel companyLabelModel, int pageNum,
+			int pageSize);
 
-	public List<LabelModel> selectByFilter(LabelModel labelModel);
+	public List<CompanyLabelModel> selectByFilter(CompanyLabelModel companyLabelModel);
 
-	public List<LabelModel> findByCompanyId(Integer companyId);
-
-	public List<LabelModel> findByCityId(Integer cityId);
 }

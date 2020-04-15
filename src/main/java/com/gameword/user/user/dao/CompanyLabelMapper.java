@@ -6,7 +6,7 @@
  */
 
 package com.gameword.user.user.dao;
-import com.gameword.user.user.model.LabelModel;
+import com.gameword.user.user.model.CompanyLabelModel;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -20,13 +20,10 @@ import com.gameword.user.user.service.*;
  * @since 1.0
  */
 
-public interface LabelMapper extends Mapper<LabelModel> {
+public interface CompanyLabelMapper extends Mapper<CompanyLabelModel> {
 
-	public List<LabelModel> find(Map<String, Object> param);
+	public List<CompanyLabelModel> find(Map<String, Object> param);
 
-	public LabelModel findById(@Param("id") Integer id);
+	public CompanyLabelModel findById(@Param("id") Integer id);
 
-	public List<LabelModel> findByCompanyId(@Param("companyId")Integer companyId);
-
-	public List<LabelModel> findByCityId(@Param("cityId")Integer cityId);
 }

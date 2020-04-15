@@ -17,7 +17,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.gameword.user.user.model.LabelModel;
+import com.gameword.user.user.model.CompanyLabelModel;
 import tk.mybatis.mapper.entity.Example;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -33,60 +33,40 @@ import com.gameword.user.user.service.*;
  * @since 1.0
  */
 
-@Service("labelService")
-public class LabelServiceImpl extends BaseService<LabelModel> implements ILabelService{
+@Service("companyLabelService")
+public class CompanyLabelServiceImpl extends BaseService<CompanyLabelModel> implements ICompanyLabelService{
 	@Autowired
-	private LabelMapper labelMapper;
+	private CompanyLabelMapper companyLabelMapper;
 	
 	@Override
-	public LabelModel findById(Integer id) {
+	public CompanyLabelModel findById(Integer id) {
 		if(id == null) {
 			return null;
 		}
-		return labelMapper.findById(id);
+		return companyLabelMapper.findById(id);
 	}
 
 
-	public List<LabelModel> find(Map<String, Object> param) {
-		return labelMapper.find(param);
+	public List<CompanyLabelModel> find(Map<String, Object> param) {
+		return companyLabelMapper.find(param);
 	}
 
 	@Override
-	public PageInfo<LabelModel> selectByFilterAndPage(LabelModel labelModel, int pageNum,
+	public PageInfo<CompanyLabelModel> selectByFilterAndPage(CompanyLabelModel companyLabelModel, int pageNum,
 		int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
-		List<LabelModel> list = this.selectByFilter(labelModel);
+		List<CompanyLabelModel> list = this.selectByFilter(companyLabelModel);
 		return new PageInfo<>(list);
 	}
 
 	@Override
-	public List<LabelModel> selectByFilter(LabelModel labelModel) {
-		Example example = new Example(LabelModel.class);
+	public List<CompanyLabelModel> selectByFilter(CompanyLabelModel companyLabelModel) {
+		Example example = new Example(CompanyLabelModel.class);
 		Example.Criteria criteria = example.createCriteria();
 
-		if(StringUtils.isNotEmpty(labelModel.getSortWithOutOrderBy())) {
-			example.setOrderByClause(labelModel.getSortWithOutOrderBy());
+		if(StringUtils.isNotEmpty(companyLabelModel.getSortWithOutOrderBy())) {
+			example.setOrderByClause(companyLabelModel.getSortWithOutOrderBy());
 		}
 		return getMapper().selectByExample(example);
 	}
-
-
-	public List<LabelModel> findByCompanyId(Integer companyId) {
-		if(companyId == null || companyId == 0) {
-			return Collections.emptyList();
-		}
-
-		return labelMapper.findByCompanyId(companyId);
-	}
-
-
-	public List<LabelModel> findByCityId(Integer cityId) {
-		if(cityId == null || cityId == 0) {
-			return Collections.emptyList();
-		}
-
-		return labelMapper.findByCityId(cityId);
-	}
-
-
 }

@@ -56,6 +56,10 @@ public class QueryDto implements Serializable {
 
     private Integer countryId;
 
+    private Integer labelId;//标签ID
+
+    private Integer companyId;//公司ID
+
     private Integer pageNum;//第几页 默认1
 
     private Integer pageSize;//每页条数 默认15
@@ -234,6 +238,22 @@ public class QueryDto implements Serializable {
 
     public void setCountryId(Integer countryId) {
         this.countryId = countryId;
+    }
+
+    public Integer getLabelId() {
+        return labelId;
+    }
+
+    public void setLabelId(Integer labelId) {
+        this.labelId = labelId;
+    }
+
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
     }
 
     public Integer getPageNum() {

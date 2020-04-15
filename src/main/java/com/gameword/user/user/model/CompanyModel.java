@@ -8,11 +8,13 @@
 package com.gameword.user.user.model;
 
 import com.gameword.user.common.handler.Sortable;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.persistence.*;
 
@@ -47,12 +49,6 @@ public class CompanyModel extends Sortable {
 	@Column(name = "en_desc")
 	private String enDesc;//"英文简介"
 
-	@Column(name = "cn_label_id")
-	private Integer cnLabelId;//"中文标签"
-
-	@Column(name = "en_label_id")
-	private Integer enLabelId;//"英文标签"
-
 	@Column(name = "c_time")
 	private Date ctime;//"创建时间"
 
@@ -60,6 +56,12 @@ public class CompanyModel extends Sortable {
 	private Date utime;//"更新时间"
 
 	//columns END
+
+	@Autowired
+	private List<String> cnLabelNames;
+
+	@Autowired
+	private List<String> enLabelNames;
 		
 	public void setId(Integer id) {
 		this.id = id;
@@ -117,22 +119,6 @@ public class CompanyModel extends Sortable {
 		return this.enDesc;
 	}
 		
-	public void setCnLabelId(Integer cnLabelId) {
-		this.cnLabelId = cnLabelId;
-	}
-
-	public Integer getCnLabelId() {
-		return this.cnLabelId;
-	}
-		
-	public void setEnLabelId(Integer enLabelId) {
-		this.enLabelId = enLabelId;
-	}
-
-	public Integer getEnLabelId() {
-		return this.enLabelId;
-	}
-		
 	public void setCtime(Date ctime) {
 		this.ctime = ctime;
 	}
@@ -149,5 +135,20 @@ public class CompanyModel extends Sortable {
 		return this.utime;
 	}
 
+	public List<String> getCnLabelNames() {
+		return cnLabelNames;
+	}
+
+	public void setCnLabelNames(List<String> cnLabelNames) {
+		this.cnLabelNames = cnLabelNames;
+	}
+
+	public List<String> getEnLabelNames() {
+		return enLabelNames;
+	}
+
+	public void setEnLabelNames(List<String> enLabelNames) {
+		this.enLabelNames = enLabelNames;
+	}
 }
 

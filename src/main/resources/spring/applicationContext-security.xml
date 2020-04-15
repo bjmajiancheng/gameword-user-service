@@ -70,7 +70,7 @@
         <intercept-url pattern="/api/help/**" access="permitAll"/>
 
         <intercept-url pattern="/api/station/detail" access="permitAll"/>
-        <intercept-url pattern="/api/city/list" access="permitAll"/>
+        <intercept-url pattern="/api/city/**" access="permitAll"/>
         <intercept-url pattern="/api/contact/addContact" access="permitAll"/>
 
         <intercept-url pattern="/api/advertise/info" access="permitAll"/>

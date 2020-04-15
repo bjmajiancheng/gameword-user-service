@@ -42,6 +42,22 @@
 		        id = #{id} 
 	    ]]>
 	</select>
+
+	<select id="findByCompanyId" resultMap="Label">
+		SELECT
+			l.label_name as label_name, l.language as language
+		FROM d_label l
+		INNER JOIN d_company_label cl ON l.id = cl.label_id
+		WHERE cl.company_id = #{companyId}
+	</select>
+
+	<select id="findByCityId" resultMap="Label">
+		SELECT l.id as id, l.label_name as label_name, l.language as language
+		FROM d_label l
+		INNER JOIN d_company_label cl ON l.id = cl.label_id
+		INNER JOIN d_company c ON c.id = cl.company_id
+		WHERE c.city_id = #{cityId}
+	</select>
 	
 </mapper>
 

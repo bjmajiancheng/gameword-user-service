@@ -13,8 +13,6 @@
         <result property="enName" column="en_name"/>
         <result property="cnDesc" column="cn_desc"/>
         <result property="enDesc" column="en_desc"/>
-        <result property="cnLabelId" column="cn_label_id"/>
-        <result property="enLabelId" column="en_label_id"/>
         <result property="ctime" column="c_time"/>
         <result property="utime" column="u_time"/>
     </resultMap>
@@ -22,7 +20,7 @@
 	<!-- 用于select查询公用抽取的列 -->
 	<sql id="columns">
 	    <![CDATA[
-        id ,city_id ,company_logo ,cn_name ,en_name ,cn_desc ,en_desc ,cn_label_id ,en_label_id ,c_time ,u_time 
+        id ,city_id ,company_logo ,cn_name ,en_name ,cn_desc ,en_desc ,c_time ,u_time
 	    ]]>
 	</sql>
 
