@@ -68,14 +68,6 @@ public class CompanyServiceImpl extends BaseService<CompanyModel> implements ICo
 			criteria.andEqualTo("cityId", companyModel.getCityId());
 		}
 
-		if(companyModel.getCnLabelId() != null) {
-			criteria.andEqualTo("cnLabelId", companyModel.getCnLabelId());
-		}
-
-		if(companyModel.getEnLabelId() != null) {
-			criteria.andEqualTo("enLabelId", companyModel.getEnLabelId());
-		}
-
 		if(StringUtils.isNotEmpty(companyModel.getCnName())) {
 			criteria.andLike("cnName", "%" + companyModel.getCnName() + "%");
 		}
