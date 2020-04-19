@@ -880,6 +880,25 @@ public class UserController {
         }
     }
 
+
+    @ResponseBody
+    @RequestMapping( value = "/info", method = RequestMethod.POST)
+    public  Result info(@RequestBody QueryDto queryDto){
+        try {
+            UserModel userModel = userService.findById(SecurityUtil.getCurrentUserId());
+
+            if (userModel == null) {
+                return ResponseUtil.error("找不到该用户信息");
+            }
+
+            return ResponseUtil.success(userModel);
+        } catch(Exception e) {
+            e.printStackTrace();
+
+            return ResponseUtil.error("系统异常, 请稍后重试。");
+        }
+    }
+
     @ResponseBody
     @RequestMapping(value = "/userDetail", method = RequestMethod.POST)
     public Result userDetail(@RequestBody QueryDto queryDto) {
