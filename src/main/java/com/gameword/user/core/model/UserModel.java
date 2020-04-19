@@ -76,8 +76,11 @@ public class UserModel extends Sortable {
 	@Column(name = "invite_code")
 	private String inviteCode;//"邀请码"
 
-	@Column(name = "balance")
-	private BigDecimal balance;//"余额"
+	@Column(name = "cn_balance")
+	private BigDecimal cnBalance;//"人民币余额"
+
+	@Column(name = "en_balance")
+	private BigDecimal enBalance;//"美元余额"
 
 	@Column(name = "register_time")
 	private Date registerTime;//"注册时间"
@@ -260,15 +263,23 @@ public class UserModel extends Sortable {
 	public String getInviteCode() {
 		return this.inviteCode;
 	}
-		
-	public void setBalance(BigDecimal balance) {
-		this.balance = balance;
+
+	public BigDecimal getCnBalance() {
+		return cnBalance;
 	}
 
-	public BigDecimal getBalance() {
-		return this.balance;
+	public void setCnBalance(BigDecimal cnBalance) {
+		this.cnBalance = cnBalance;
 	}
-		
+
+	public BigDecimal getEnBalance() {
+		return enBalance;
+	}
+
+	public void setEnBalance(BigDecimal enBalance) {
+		this.enBalance = enBalance;
+	}
+
 	public void setRegisterTime(Date registerTime) {
 		this.registerTime = registerTime;
 	}
