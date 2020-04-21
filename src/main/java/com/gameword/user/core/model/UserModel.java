@@ -128,6 +128,9 @@ public class UserModel extends Sortable {
 	@Transient
 	private List<Integer> userIds;
 
+	@Transient
+	private Integer hasPay = 1;//本月是否已支付 0：未支付，1：已支付
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -398,6 +401,14 @@ public class UserModel extends Sortable {
 
 	public void setUserIds(List<Integer> userIds) {
 		this.userIds = userIds;
+	}
+
+	public Integer getHasPay() {
+		return hasPay;
+	}
+
+	public void setHasPay(Integer hasPay) {
+		this.hasPay = hasPay;
 	}
 }
 
