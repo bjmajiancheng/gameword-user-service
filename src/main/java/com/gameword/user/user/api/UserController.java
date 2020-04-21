@@ -688,9 +688,9 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
     public Result updatePassword(@RequestBody QueryDto queryDto) {
-        if (StringUtils.isEmpty(queryDto.getVerifyCode())) {
+        /*if (StringUtils.isEmpty(queryDto.getVerifyCode())) {
             return ResponseUtil.error("请输入验证码");
-        }
+        }*/
 
         try {
             /*if (StringUtils
