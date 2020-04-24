@@ -64,6 +64,8 @@ public class QueryDto implements Serializable {
 
     private Integer pageSize;//每页条数 默认15
 
+    private Integer isAgree;//是否同意（1：同意，2：不同意）
+
     public Integer getId() {
         return id;
     }
@@ -277,5 +279,13 @@ public class QueryDto implements Serializable {
 
     public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public Integer getIsAgree() {
+        return isAgree;
+    }
+
+    public void setIsAgree(Integer isAgree) {
+        this.isAgree = isAgree;
     }
 }
