@@ -31,4 +31,5 @@ public interface ICountryService extends IBaseService<CountryModel> {
 
 	public List<CountryModel> selectByFilter(CountryModel countryModel);
 
+	public Map<Integer,CountryModel> findMapByCountryIds(List<Integer> ids);
 }

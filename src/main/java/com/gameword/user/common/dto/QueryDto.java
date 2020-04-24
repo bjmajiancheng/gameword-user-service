@@ -66,6 +66,8 @@ public class QueryDto implements Serializable {
 
     private Integer isAgree;//是否同意（1：同意，2：不同意）
 
+    private Integer friendUserId;//好友用户ID
+
     public Integer getId() {
         return id;
     }
@@ -287,5 +289,13 @@ public class QueryDto implements Serializable {
 
     public void setIsAgree(Integer isAgree) {
         this.isAgree = isAgree;
+    }
+
+    public Integer getFriendUserId() {
+        return friendUserId;
+    }
+
+    public void setFriendUserId(Integer friendUserId) {
+        this.friendUserId = friendUserId;
     }
 }

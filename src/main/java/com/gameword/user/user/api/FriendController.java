@@ -12,9 +12,21 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.gameword.user.common.dto.QueryDto;
+import com.gameword.user.common.utils.ResponseUtil;
+import com.gameword.user.common.utils.Result;
+import com.gameword.user.core.model.UserModel;
+import com.gameword.user.security.service.IUserService;
+import com.gameword.user.security.utils.SecurityUtil;
+import com.gameword.user.user.model.CityModel;
+import com.gameword.user.user.model.CountryModel;
+import com.github.pagehelper.PageInfo;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.gameword.user.user.model.FriendModel;
 
@@ -35,4 +47,130 @@ public class FriendController {
 	@Autowired
 	private IFriendService friendService;
 
+	@Autowired
+	private IUserService userService;
+
+	@Autowired
+	private ICountryService countryService;
+
+	@Autowired
+	private ICityService cityService;
+
+	@ResponseBody
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public Result list(FriendModel friendModel,
+			@RequestParam(value = "page", required = false, defaultValue = "1") int pageNum,
+			@RequestParam(value = "rows", required = false, defaultValue = "15") int pageSize) {
+
+		Integer currUserId = SecurityUtil.getCurrentUserId();
+
+		if(currUserId == null || currUserId == 0) {
+			return ResponseUtil.error("当前用户未登录, 请先登录账号");
+		}
+
+		try {
+			friendModel.setUserId(currUserId);
+			List<FriendModel> friends = friendService.selectByFilter(friendModel);
+			if(CollectionUtils.isNotEmpty(friends)) {
+
+				List<Integer> friendUserIds = new ArrayList<Integer>();
+				for(FriendModel tmpFriend : friends) {
+					friendUserIds.add(tmpFriend.getFriendUserId());
+				}
+
+				Map<Integer, UserModel> userMap = userService.findUserMapByUserIds(friendUserIds);
+				Set<Integer> countryIds = new HashSet<>();
+				Set<Integer> cityIds = new HashSet<>();
+
+				if(MapUtils.isNotEmpty(userMap)) {
+					for(UserModel userModel : userMap.values()) {
+						countryIds.add(userModel.getCountryId());
+						cityIds.add(userModel.getCityId());
+					}
+				}
+
+				Map<Integer, CountryModel> countryMap = countryService.findMapByCountryIds(new ArrayList<Integer>(countryIds));
+				Map<Integer, CityModel> cityMap = cityService.findMapByCityIds(new ArrayList<Integer>(cityIds));
+
+				for(FriendModel tmpFriend : friends) {
+					UserModel tmpUser = userMap.get(tmpFriend.getFriendUserId());
+					if(tmpUser != null) {
+						tmpFriend.setFriendHeadImage(tmpUser.getHeadImage());
+						tmpFriend.setFriendNickName(tmpUser.getNickName());
+
+						CountryModel tmpCountry = countryMap.get(tmpUser.getCountryId());
+						CityModel tmpCity = cityMap.get(tmpUser.getCityId());
+
+						if(tmpCountry != null) {
+							tmpFriend.setFriendCountryCnName(tmpCountry.getCountryCnName());
+							tmpFriend.setFriendCountryEnName(tmpCountry.getCountryEnName());
+						}
+
+						if(tmpCity != null) {
+							tmpFriend.setFriendCityCnName(tmpCity.getCityCn());
+							tmpFriend.setFriendCityEnName(tmpCity.getCityEn());
+						}
+					}
+				}
+
+			}
+
+			return ResponseUtil.success(Collections.singletonMap("friends", friends));
+		} catch(Exception e) {
+			e.printStackTrace();
+
+			return ResponseUtil.error();
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/addFriend", method = RequestMethod.GET)
+	public Result addFriend(@RequestBody QueryDto queryDto) {
+
+		Integer currUserId = SecurityUtil.getCurrentUserId();
+
+		try {
+			FriendModel friendModel = new FriendModel();
+			friendModel.setUserId(currUserId);
+			friendModel.setFriendUserId(queryDto.getFriendUserId());
+
+			if(CollectionUtils.isNotEmpty(friendService.selectByFilter(friendModel))) {
+				return ResponseUtil.error("已添加该好友, 禁止重复添加好友");
+			}
+
+			int saveCnt = friendService.saveNotNull(friendModel);
+
+			return ResponseUtil.success();
+		} catch(Exception e) {
+			e.printStackTrace();
+
+			return ResponseUtil.error();
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/delFriend", method = RequestMethod.GET)
+	public Result delFriend(@RequestBody QueryDto queryDto) {
+
+		Integer currUserId = SecurityUtil.getCurrentUserId();
+
+		try {
+			FriendModel friendModel = new FriendModel();
+			friendModel.setUserId(currUserId);
+			friendModel.setFriendUserId(queryDto.getFriendUserId());
+			List<FriendModel> friendModels = friendService.selectByFilter(friendModel);
+			if(CollectionUtils.isEmpty(friendModels)) {
+				return ResponseUtil.error("未添加该好友, 无法删除");
+			}
+
+			friendModel = friendModels.get(0);
+			friendService.delete(friendModel);
+
+			return ResponseUtil.success();
+		} catch(Exception e) {
+			e.printStackTrace();
+
+			return ResponseUtil.error();
+		}
+	}
 }

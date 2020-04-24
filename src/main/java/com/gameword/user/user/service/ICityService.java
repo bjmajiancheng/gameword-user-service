@@ -31,4 +31,5 @@ public interface ICityService extends IBaseService<CityModel> {
 
 	public List<CityModel> selectByFilter(CityModel cityModel);
 
+	public Map<Integer,CityModel> findMapByCityIds(List<Integer> ids);
 }

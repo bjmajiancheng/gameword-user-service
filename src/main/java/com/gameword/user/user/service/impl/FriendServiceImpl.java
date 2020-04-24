@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.gameword.user.common.baseservice.impl.BaseService;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,6 +63,14 @@ public class FriendServiceImpl extends BaseService<FriendModel> implements IFrie
 	public List<FriendModel> selectByFilter(FriendModel friendModel) {
 		Example example = new Example(FriendModel.class);
 		Example.Criteria criteria = example.createCriteria();
+
+		if(friendModel.getUserId() != null) {
+			criteria.andEqualTo("userId", friendModel.getUserId());
+		}
+
+		if(friendModel.getFriendUserId() != null) {
+			criteria.andEqualTo("friendUserId", friendModel.getFriendUserId());
+		}
 
 		if(StringUtils.isNotEmpty(friendModel.getSortWithOutOrderBy())) {
 			example.setOrderByClause(friendModel.getSortWithOutOrderBy());

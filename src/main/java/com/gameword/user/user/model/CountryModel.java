@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.persistence.*;
 
@@ -52,6 +53,9 @@ public class CountryModel extends Sortable {
 	private Date utime;//"更新时间"
 
 	//columns END
+
+	@Transient
+	private List<Integer> ids;
 		
 	public void setId(Integer id) {
 		this.id = id;
@@ -117,5 +121,12 @@ public class CountryModel extends Sortable {
 		return this.utime;
 	}
 
+	public List<Integer> getIds() {
+		return ids;
+	}
+
+	public void setIds(List<Integer> ids) {
+		this.ids = ids;
+	}
 }
 

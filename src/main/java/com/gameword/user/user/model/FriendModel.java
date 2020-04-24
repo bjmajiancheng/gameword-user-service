@@ -41,8 +41,25 @@ public class FriendModel extends Sortable {
 
 	@Column(name = "u_time")
 	private Date utime;//"更新时间"
-
 	//columns END
+
+	@Transient
+	private String friendNickName = "";//朋友昵称
+
+	@Transient
+	private String friendHeadImage = "";//朋友头图
+
+	@Transient
+	private String friendCityCnName = "";//城市中文名称
+
+	@Transient
+	private String friendCityEnName = "";//城市英文名称
+
+	@Transient
+	private String friendCountryCnName = "";//国家中文名称
+
+	@Transient
+	private String friendCountryEnName = "";//国家英文名称
 		
 	public void setId(Integer id) {
 		this.id = id;
@@ -84,5 +101,52 @@ public class FriendModel extends Sortable {
 		return this.utime;
 	}
 
+	public String getFriendNickName() {
+		return friendNickName;
+	}
+
+	public void setFriendNickName(String friendNickName) {
+		this.friendNickName = friendNickName;
+	}
+
+	public String getFriendHeadImage() {
+		return friendHeadImage;
+	}
+
+	public void setFriendHeadImage(String friendHeadImage) {
+		this.friendHeadImage = friendHeadImage;
+	}
+
+	public String getFriendCityCnName() {
+		return friendCityCnName;
+	}
+
+	public void setFriendCityCnName(String friendCityCnName) {
+		this.friendCityCnName = friendCityCnName;
+	}
+
+	public String getFriendCityEnName() {
+		return friendCityEnName;
+	}
+
+	public void setFriendCityEnName(String friendCityEnName) {
+		this.friendCityEnName = friendCityEnName;
+	}
+
+	public String getFriendCountryCnName() {
+		return friendCountryCnName;
+	}
+
+	public void setFriendCountryCnName(String friendCountryCnName) {
+		this.friendCountryCnName = friendCountryCnName;
+	}
+
+	public String getFriendCountryEnName() {
+		return friendCountryEnName;
+	}
+
+	public void setFriendCountryEnName(String friendCountryEnName) {
+		this.friendCountryEnName = friendCountryEnName;
+	}
 }
 

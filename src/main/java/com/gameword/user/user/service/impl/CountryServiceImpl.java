@@ -64,9 +64,30 @@ public class CountryServiceImpl extends BaseService<CountryModel> implements ICo
 		Example example = new Example(CountryModel.class);
 		Example.Criteria criteria = example.createCriteria();
 
+		if(CollectionUtils.isNotEmpty(countryModel.getIds())) {
+			criteria.andIn("id", countryModel.getIds());
+		}
+
 		if(StringUtils.isNotEmpty(countryModel.getSortWithOutOrderBy())) {
 			example.setOrderByClause(countryModel.getSortWithOutOrderBy());
 		}
 		return getMapper().selectByExample(example);
+	}
+
+
+	public Map<Integer,CountryModel> findMapByCountryIds(List<Integer> ids) {
+		if(CollectionUtils.isEmpty(ids)) {
+			return Collections.emptyMap();
+		}
+
+		List<CountryModel> countrys = this.find(Collections.singletonMap("ids", ids));
+		Map<Integer, CountryModel> countryMap = new HashMap<>();
+		if(CollectionUtils.isNotEmpty(countrys)) {
+			for(CountryModel countryModel : countrys) {
+				countryMap.put(countryModel.getId(), countryModel);
+			}
+		}
+
+		return countryMap;
 	}
 }
