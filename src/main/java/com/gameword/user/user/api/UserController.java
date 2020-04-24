@@ -782,7 +782,7 @@ public class UserController {
 
         try {
             int currUserId = SecurityUtil.getCurrentUserId();
-            if (userModel.getId() != currUserId) {
+            if (userModel.getId() != null && userModel.getId() != currUserId) {
                 return ResponseUtil.error("无权限修改其他用户详细信息");
             }
 
@@ -797,6 +797,7 @@ public class UserController {
                 userPassMappingService.insert(userPassMappingModel);
             }
 
+            userModel.setId(currUserId);
             int updateCnt = userService.updateNotNull(userModel);
 
             UserModel userDetailInfo = getUserDetailInfo(userModel.getId());
