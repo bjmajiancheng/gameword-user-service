@@ -66,7 +66,7 @@ public class UserModel extends Sortable {
 	@Column(name = "agency_name")
 	private String agencyName;//"机构/学校名称"
 
-	@Column(name = "description")
+	@Column(name = "user_desc")
 	private String userDesc;//"个人简介（一段文字）"
 
 	@Column(name = "head_image")
