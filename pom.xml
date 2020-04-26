@@ -454,6 +454,11 @@
       <version>1.9.13</version>
     </dependency>
 
+    <dependency>
+      <groupId>cn.rongcloud.im</groupId>
+      <artifactId>server-sdk-java</artifactId>
+      <version>3.1.6</version>
+    </dependency>
 
   </dependencies>
 

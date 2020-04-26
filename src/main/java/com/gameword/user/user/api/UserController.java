@@ -778,8 +778,8 @@ public class UserController {
     private UserModel getUserDetailInfo(Integer id) {
         UserModel userModel = userService.findById(id);
 
+        //生成融云Token信息
         if(StringUtils.isEmpty(userModel.getRongyunToken())) {
-            //生成融云Token信息
             String rongyunToken = userService.generRongyunToken(userModel.getId(), userModel.getNickName(), userModel.getHeadImage());
 
             userModel.setRongyunToken(rongyunToken);
