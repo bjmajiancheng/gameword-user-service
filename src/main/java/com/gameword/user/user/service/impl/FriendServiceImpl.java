@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.gameword.user.common.baseservice.impl.BaseService;
+import com.gameword.user.common.utils.Pinyin4jUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -76,5 +77,27 @@ public class FriendServiceImpl extends BaseService<FriendModel> implements IFrie
 			example.setOrderByClause(friendModel.getSortWithOutOrderBy());
 		}
 		return getMapper().selectByExample(example);
+	}
+
+
+	public Map<String, List<FriendModel>> generKeyWordFriendMap(List<FriendModel> friendModels) {
+
+		if(CollectionUtils.isEmpty(friendModels)) {
+			return Collections.emptyMap();
+		}
+
+		Collections.sort(friendModels, (o1, o2) -> o1.getFriendNickName().compareTo(o2.getFriendNickName()));
+
+		Map<String, List<FriendModel>> friendMap = new LinkedHashMap<String, List<FriendModel>>();
+		for(FriendModel tmpFriend : friendModels) {
+			String keyword = Pinyin4jUtil.getPinYinFirstChar(tmpFriend.getFriendNickName());
+
+			List<FriendModel> tmpFriends = friendMap.getOrDefault(keyword, new ArrayList<FriendModel>());
+			tmpFriends.add(tmpFriend);
+
+			friendMap.put(keyword, tmpFriends);
+ 		}
+
+		return friendMap;
 	}
 }

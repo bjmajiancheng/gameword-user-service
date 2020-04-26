@@ -72,7 +72,6 @@ public class FriendController {
 			friendModel.setUserId(currUserId);
 			List<FriendModel> friends = friendService.selectByFilter(friendModel);
 			if(CollectionUtils.isNotEmpty(friends)) {
-
 				List<Integer> friendUserIds = new ArrayList<Integer>();
 				for(FriendModel tmpFriend : friends) {
 					friendUserIds.add(tmpFriend.getFriendUserId());
@@ -115,7 +114,7 @@ public class FriendController {
 
 			}
 
-			return ResponseUtil.success(Collections.singletonMap("friends", friends));
+			return ResponseUtil.success(Collections.singletonMap("friends", friendService.generKeyWordFriendMap(friends)));
 		} catch(Exception e) {
 			e.printStackTrace();
 
