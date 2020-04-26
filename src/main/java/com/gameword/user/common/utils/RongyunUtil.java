@@ -17,20 +17,45 @@ public class RongyunUtil implements Serializable{
 
     private static final long serialVersionUID = 1440763827618391064L;
 
-    @Value("${rongyun.appKey}")
     private String appKey;
 
-    @Value("${rongyun.appSecret}")
     private String appSecret;
 
-    @Value("${rongyun.api}")
     private String api;
 
     private RongCloud rongCloud;
 
+    public String getAppKey() {
+        return appKey;
+    }
+
+    public void setAppKey(String appKey) {
+        this.appKey = appKey;
+    }
+
+    public String getAppSecret() {
+        return appSecret;
+    }
+
+    public void setAppSecret(String appSecret) {
+        this.appSecret = appSecret;
+    }
+
+    public String getApi() {
+        return api;
+    }
+
+    public void setApi(String api) {
+        this.api = api;
+    }
+
+    public void setRongCloud(RongCloud rongCloud) {
+        this.rongCloud = rongCloud;
+    }
+
     private RongCloud getRongCloud() {
         if(this.rongCloud == null) {
-            this.rongCloud = RongCloud.getInstance(this.appKey, this.appSecret);
+            this.rongCloud = RongCloud.getInstance(this.getAppKey(), this.getAppSecret());
         }
 
         return this.rongCloud;

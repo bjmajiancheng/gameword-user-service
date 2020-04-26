@@ -41,6 +41,10 @@
 
     <bean id="ailSender" class="com.gameword.user.common.utils.MailSender" />
 
-    <bean id="rongyunUtil" class="com.gameword.user.common.utils.RongyunUtil" />
+    <bean id="rongyunUtil" class="com.gameword.user.common.utils.RongyunUtil">
+        <property name="appKey" value="${rongyun.appKey}" />
+        <property name="appSecret" value="${rongyun.appSecret}" />
+        <property name="api" value="${rongyun.api}" />
+    </bean>
 
 </beans>
