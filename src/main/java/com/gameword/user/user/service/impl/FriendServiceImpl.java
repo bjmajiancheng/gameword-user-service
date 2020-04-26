@@ -86,7 +86,7 @@ public class FriendServiceImpl extends BaseService<FriendModel> implements IFrie
 			return Collections.emptyMap();
 		}
 
-		Collections.sort(friendModels, (o1, o2) -> o1.getFriendNickName().compareTo(o2.getFriendNickName()));
+		Collections.sort(friendModels, (o1, o2) -> o1.getFriendNickName().toUpperCase().compareTo(o2.getFriendNickName().toUpperCase()));
 
 		Map<String, List<FriendModel>> friendMap = new LinkedHashMap<String, List<FriendModel>>();
 		for(FriendModel tmpFriend : friendModels) {

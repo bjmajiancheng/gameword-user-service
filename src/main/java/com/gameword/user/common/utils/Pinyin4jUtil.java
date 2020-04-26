@@ -40,9 +40,17 @@ public class Pinyin4jUtil {
             if (pinyinArray != null) {
                 return String.valueOf(pinyinArray[0].charAt(0)).toUpperCase();
             } else {
-                return "#";
+                if((word >= 'A' && word <= 'Z') || (word >= 'a' && word <= 'z')) {
+                    return String.valueOf(word).toUpperCase();
+                }
             }
         }
         return "#";
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getPinYinFirstChar("Kk"));
+        System.out.println(getPinYinFirstChar("hah\\n哈哈"));
+        System.out.println(getPinYinFirstChar("哈哈"));
     }
 }
