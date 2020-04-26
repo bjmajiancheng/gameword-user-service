@@ -26,6 +26,7 @@
 		<result property="cnBalance" column="cn_balance"/>
 		<result property="enBalance" column="en_balance"/>
 		<result property="registerTime" column="register_time"/>
+		<result property="rongyunToken" column="rongyun_token"/>
 		<result property="status" column="status"/>
 		<result property="enabled" column="enabled"/>
 		<result property="lastLoginIp" column="last_login_ip"/>
@@ -41,13 +42,13 @@
 	<!-- 用于select查询公用抽取的列 -->
 	<sql id="columns">
 		<![CDATA[
-        id , user_name, user_type ,mobile_phone ,email ,country_id ,city_id ,last_name ,first_name ,birthday ,sex ,nick_name ,agency_name ,user_desc ,head_image ,invite_code ,cn_balance, en_balance ,register_time ,status ,enabled ,last_login_ip ,last_login_time ,account_non_locked ,account_non_expired ,credentials_non_expired ,last_password_reset ,c_time ,u_time
+        id , user_name, user_type ,mobile_phone ,email ,country_id ,city_id ,last_name ,first_name ,birthday ,sex ,nick_name ,agency_name ,user_desc ,head_image ,invite_code ,cn_balance, en_balance ,register_time , rongyun_token, status ,enabled ,last_login_ip ,last_login_time ,account_non_locked ,account_non_expired ,credentials_non_expired ,last_password_reset ,c_time ,u_time
 	    ]]>
 	</sql>
 
 	<sql id="passwordColumns">
 		<![CDATA[
-        id , user_name, user_type ,mobile_phone ,email ,password ,country_id ,city_id ,last_name ,first_name ,birthday ,sex ,nick_name ,agency_name ,user_desc ,head_image ,invite_code , cn_balance, en_balance,register_time ,status ,enabled ,last_login_ip ,last_login_time ,account_non_locked ,account_non_expired ,credentials_non_expired ,last_password_reset ,c_time ,u_time
+        id , user_name, user_type ,mobile_phone ,email ,password ,country_id ,city_id ,last_name ,first_name ,birthday ,sex ,nick_name ,agency_name ,user_desc ,head_image ,invite_code , cn_balance, en_balance,register_time , rongyun_token, status ,enabled ,last_login_ip ,last_login_time ,account_non_locked ,account_non_expired ,credentials_non_expired ,last_password_reset ,c_time ,u_time
 	    ]]>
 	</sql>
 

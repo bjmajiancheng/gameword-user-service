@@ -1,11 +1,13 @@
 package com.gameword.user.security.service.impl;
 
 import com.gameword.user.common.baseservice.impl.BaseService;
+import com.gameword.user.common.utils.RongyunUtil;
 import com.gameword.user.core.dao.UserMapper;
 import com.gameword.user.core.model.UserModel;
 import com.gameword.user.security.service.IUserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import io.rong.models.response.TokenResult;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class UserServiceImpl extends BaseService<UserModel> implements IUserServ
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private RongyunUtil rongyunUtil;
 
     /**
      * 根据登录名获取用户信息
@@ -143,6 +148,31 @@ public class UserServiceImpl extends BaseService<UserModel> implements IUserServ
         }
 
         return userMapper.findUserByEmail(email);
+    }
+
+    /**
+     * 生成融云Token
+     *
+     * @param userId
+     * @param nickName
+     * @param headImage
+     * @return
+     */
+    public String generRongyunToken(Integer userId, String nickName, String headImage) {
+
+        //生成融云token
+        TokenResult tokenResult = rongyunUtil.register(userId, nickName, headImage);
+        if(tokenResult.getCode() == 200) {
+            UserModel userModel = new UserModel();
+            userModel.setId(userId);
+            userModel.setRongyunToken(tokenResult.getToken());
+
+            this.updateNotNull(userModel);
+
+            return tokenResult.getToken();
+        }
+
+        return "";
     }
 
 

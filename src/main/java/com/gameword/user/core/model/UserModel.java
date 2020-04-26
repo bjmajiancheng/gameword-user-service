@@ -84,6 +84,9 @@ public class UserModel extends Sortable {
 	@Column(name = "register_time")
 	private Date registerTime;//"注册时间"
 
+	@Column(name = "rongyun_token")
+	private String rongyunToken;//"融云Token"
+
 	@Column(name = "status")
 	private Integer status;//"状态 0：正常，1：禁用"
 
@@ -289,7 +292,15 @@ public class UserModel extends Sortable {
 	public Date getRegisterTime() {
 		return this.registerTime;
 	}
-		
+
+	public String getRongyunToken() {
+		return rongyunToken;
+	}
+
+	public void setRongyunToken(String rongyunToken) {
+		this.rongyunToken = rongyunToken;
+	}
+
 	public void setStatus(Integer status) {
 		this.status = status;
 	}

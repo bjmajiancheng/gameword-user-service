@@ -41,5 +41,6 @@
 
     <bean id="ailSender" class="com.gameword.user.common.utils.MailSender" />
 
+    <bean id="rongyunUtil" class="com.gameword.user.common.utils.RongyunUtil" />
 
 </beans>

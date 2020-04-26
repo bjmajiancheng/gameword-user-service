@@ -15,6 +15,7 @@ import com.gameword.user.security.security.HttpAuthenticationDetails;
 import com.gameword.user.security.service.IUserService;
 import com.gameword.user.security.utils.TokenUtils;
 import com.gameword.user.user.model.UserPassMappingModel;
+import io.rong.models.response.TokenResult;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -64,6 +65,9 @@ public class UserController {
 
     @Autowired
     private IUserPassMappingService userPassMappingService;
+
+    @Autowired
+    private RongyunUtil rongyunUtil;
 
 
     @ResponseBody
@@ -542,6 +546,9 @@ public class UserController {
 
             int insertCnt = userService.saveNotNull(userModel);
 
+            //生成融云Token信息
+            String rongyunToken = userService.generRongyunToken(userModel.getId(), userModel.getNickName(), userModel.getHeadImage());
+
             UserPassMappingModel userPassMappingModel = new UserPassMappingModel();
             userPassMappingModel.setPassword(password);
             userPassMappingModel.setPasswordEncode(passwordEncode);
@@ -574,6 +581,7 @@ public class UserController {
 
             UserModel userDetailInfo = getUserDetailInfo(userModel.getId());
             userDetailInfo.setToken(token);
+            userDetailInfo.setRongyunToken(rongyunToken);
 
             return ResponseUtil.success(userDetailInfo);
 
@@ -620,6 +628,9 @@ public class UserController {
             userModel.setUserName(userModel.getMobilePhone());
 
             int updateCnt = userService.updateNotNull(userModel);
+
+            //生成融云Token信息
+            String rongyunToken = userService.generRongyunToken(userModel.getId(), userModel.getNickName(), userModel.getHeadImage());
 
 
             return ResponseUtil.success("补全信息成功");
@@ -767,6 +778,13 @@ public class UserController {
     private UserModel getUserDetailInfo(Integer id) {
         UserModel userModel = userService.findById(id);
 
+        if(StringUtils.isEmpty(userModel.getRongyunToken())) {
+            //生成融云Token信息
+            String rongyunToken = userService.generRongyunToken(userModel.getId(), userModel.getNickName(), userModel.getHeadImage());
+
+            userModel.setRongyunToken(rongyunToken);
+        }
+
         return userModel;
     }
 
@@ -799,6 +817,9 @@ public class UserController {
 
             userModel.setId(currUserId);
             int updateCnt = userService.updateNotNull(userModel);
+
+            //生成融云Token信息
+            String rongyunToken = userService.generRongyunToken(userModel.getId(), userModel.getNickName(), userModel.getHeadImage());
 
             UserModel userDetailInfo = getUserDetailInfo(userModel.getId());
 

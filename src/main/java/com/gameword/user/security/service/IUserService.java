@@ -3,6 +3,7 @@ package com.gameword.user.security.service;
 import com.gameword.user.core.model.UserModel;
 import com.gameword.user.common.baseservice.IBaseService;
 import com.github.pagehelper.PageInfo;
+import io.rong.models.response.TokenResult;
 
 import java.util.Date;
 import java.util.List;
@@ -53,4 +54,7 @@ public interface IUserService extends IBaseService<UserModel> {
     public PageInfo<UserModel> selectByUserIds(List<Integer> integers, Integer pageNum, Integer pageSize);
 
     public UserModel findUserByEmail(String email);
+
+    public String generRongyunToken(Integer userId, String nickName, String headImage);
+
 }
