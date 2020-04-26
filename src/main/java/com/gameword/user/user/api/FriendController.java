@@ -57,10 +57,8 @@ public class FriendController {
 	private ICityService cityService;
 
 	@ResponseBody
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public Result list(FriendModel friendModel,
-			@RequestParam(value = "page", required = false, defaultValue = "1") int pageNum,
-			@RequestParam(value = "rows", required = false, defaultValue = "15") int pageSize) {
+	@RequestMapping(value = "/list", method = RequestMethod.POST)
+	public Result list(@RequestBody QueryDto queryDto) {
 
 		Integer currUserId = SecurityUtil.getCurrentUserId();
 
@@ -69,6 +67,7 @@ public class FriendController {
 		}
 
 		try {
+			FriendModel friendModel = new FriendModel();
 			friendModel.setUserId(currUserId);
 			List<FriendModel> friends = friendService.selectByFilter(friendModel);
 			if(CollectionUtils.isNotEmpty(friends)) {
