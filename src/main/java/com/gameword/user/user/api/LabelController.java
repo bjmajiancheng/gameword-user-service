@@ -29,7 +29,7 @@ import com.gameword.user.user.service.*;
  */
 
 @Controller
-@RequestMapping(value = "/label")
+@RequestMapping(value = "/api/label")
 public class LabelController {
 
 	@Autowired

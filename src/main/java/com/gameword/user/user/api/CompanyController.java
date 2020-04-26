@@ -29,7 +29,7 @@ import com.gameword.user.user.service.*;
  */
 
 @Controller
-@RequestMapping(value = "/company")
+@RequestMapping(value = "/api/company")
 public class CompanyController {
 
 	@Autowired

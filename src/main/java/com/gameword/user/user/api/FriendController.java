@@ -41,7 +41,7 @@ import com.gameword.user.user.service.*;
  */
 
 @Controller
-@RequestMapping(value = "/friend")
+@RequestMapping(value = "/api/friend")
 public class FriendController {
 
 	@Autowired

@@ -39,7 +39,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 
 @Controller
-@RequestMapping(value = "/message")
+@RequestMapping(value = "/api/message")
 public class MessageController {
 
 	@Autowired
