@@ -1,15 +1,19 @@
 package com.gameword.user.security.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.gameword.user.common.baseservice.impl.BaseService;
 import com.gameword.user.common.utils.RongyunUtil;
 import com.gameword.user.core.dao.UserMapper;
 import com.gameword.user.core.model.UserModel;
+import com.gameword.user.security.api.TokenController;
 import com.gameword.user.security.service.IUserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.rong.models.response.TokenResult;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -21,6 +25,8 @@ import java.util.*;
  */
 @Service("userService")
 public class UserServiceImpl extends BaseService<UserModel> implements IUserService {
+
+    private final static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserMapper userMapper;
@@ -169,7 +175,13 @@ public class UserServiceImpl extends BaseService<UserModel> implements IUserServ
 
             this.updateNotNull(userModel);
 
+            logger.info("生成融云token: userId:{}, nickName:{}, headImage:{}, rongyunToken:{}.", userId, nickName,
+                    headImage, tokenResult.getToken());
+
             return tokenResult.getToken();
+        } else {
+            logger.warn("生成融云token异常: userId:{}, nickName:{}, headImage:{}, tokenResult:{}.", userId, nickName,
+                    headImage, JSON.toJSONString(tokenResult));
         }
 
         return "";
