@@ -168,6 +168,8 @@ public class UserServiceImpl extends BaseService<UserModel> implements IUserServ
 
         //生成融云token
         TokenResult tokenResult = rongyunUtil.register(userId, nickName, headImage);
+
+        System.out.println(String.format("tokenResult: %s.", JSON.toJSONString(tokenResult)));
         if(tokenResult.getCode() == 200) {
             UserModel userModel = new UserModel();
             userModel.setId(userId);
