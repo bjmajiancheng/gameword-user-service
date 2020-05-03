@@ -15,6 +15,14 @@ public class CommonUtil {
         return String.valueOf(obj);
     }
 
+    public static String defaultString(String str, String defaultVal) {
+        if(str == null || "".equals(str)) {
+            return defaultVal;
+        }
+
+        return str;
+    }
+
     public static Integer defaultInteger(Object obj, Integer defaultVal) {
         if(obj == null) {
             return defaultVal;
