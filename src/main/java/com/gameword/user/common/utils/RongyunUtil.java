@@ -71,6 +71,9 @@ public class RongyunUtil implements Serializable{
      */
     public TokenResult register(Integer userId, String nickName, String headImage) {
         try {
+            nickName = CommonUtil.defaultNickName(nickName);
+            headImage = CommonUtil.defaultHeadImage(headImage);
+
             UserModel user = generUserModel(userId, nickName, headImage);
 
             return getRongCloud().user.register(user);

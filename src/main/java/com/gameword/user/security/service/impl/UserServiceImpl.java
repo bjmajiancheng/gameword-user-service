@@ -182,8 +182,8 @@ public class UserServiceImpl extends BaseService<UserModel> implements IUserServ
 
             return tokenResult.getToken();
         } else {
-            logger.warn("生成融云token异常: userId:{}, nickName:{}, headImage:{}, tokenResult:{}.", userId, nickName,
-                    headImage, JSON.toJSONString(tokenResult));
+            System.out.println(String.format("生成融云token异常: userId:%d, nickName:%s, headImage:%s, tokenResult:%s.", userId, nickName,
+                    headImage, JSON.toJSONString(tokenResult)));
         }
 
         return "";
