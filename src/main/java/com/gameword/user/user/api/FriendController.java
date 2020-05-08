@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.gameword.user.common.dto.QueryDto;
+import com.gameword.user.common.utils.Pinyin4jUtil;
 import com.gameword.user.common.utils.ResponseUtil;
 import com.gameword.user.common.utils.Result;
 import com.gameword.user.core.model.UserModel;
@@ -114,6 +115,74 @@ public class FriendController {
 			}
 
 			return ResponseUtil.success(Collections.singletonMap("friends", friendService.generKeyWordFriendMap(friends)));
+		} catch(Exception e) {
+			e.printStackTrace();
+
+			return ResponseUtil.error();
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/friendList", method = RequestMethod.POST)
+	public Result friendList(@RequestBody QueryDto queryDto) {
+
+		Integer currUserId = SecurityUtil.getCurrentUserId();
+
+		if(currUserId == null || currUserId == 0) {
+			return ResponseUtil.error("当前用户未登录, 请先登录账号");
+		}
+
+		try {
+			FriendModel friendModel = new FriendModel();
+			friendModel.setUserId(currUserId);
+			List<FriendModel> friends = friendService.selectByFilter(friendModel);
+			if(CollectionUtils.isNotEmpty(friends)) {
+				List<Integer> friendUserIds = new ArrayList<Integer>();
+				for(FriendModel tmpFriend : friends) {
+					friendUserIds.add(tmpFriend.getFriendUserId());
+				}
+
+				Map<Integer, UserModel> userMap = userService.findUserMapByUserIds(friendUserIds);
+				Set<Integer> countryIds = new HashSet<>();
+				Set<Integer> cityIds = new HashSet<>();
+
+				if(MapUtils.isNotEmpty(userMap)) {
+					for(UserModel userModel : userMap.values()) {
+						countryIds.add(userModel.getCountryId());
+						cityIds.add(userModel.getCityId());
+					}
+				}
+
+				Map<Integer, CountryModel> countryMap = countryService.findMapByCountryIds(new ArrayList<Integer>(countryIds));
+				Map<Integer, CityModel> cityMap = cityService.findMapByCityIds(new ArrayList<Integer>(cityIds));
+
+				for(FriendModel tmpFriend : friends) {
+					UserModel tmpUser = userMap.get(tmpFriend.getFriendUserId());
+					if(tmpUser != null) {
+						tmpFriend.setFriendHeadImage(tmpUser.getHeadImage());
+						tmpFriend.setFriendNickName(tmpUser.getNickName());
+
+						CountryModel tmpCountry = countryMap.get(tmpUser.getCountryId());
+						CityModel tmpCity = cityMap.get(tmpUser.getCityId());
+
+						if(tmpCountry != null) {
+							tmpFriend.setFriendCountryCnName(tmpCountry.getCountryCnName());
+							tmpFriend.setFriendCountryEnName(tmpCountry.getCountryEnName());
+						}
+
+						if(tmpCity != null) {
+							tmpFriend.setFriendCityCnName(tmpCity.getCityCn());
+							tmpFriend.setFriendCityEnName(tmpCity.getCityEn());
+						}
+					}
+
+					String keyword = Pinyin4jUtil.getPinYinFirstChar(tmpFriend.getFriendNickName());
+					tmpFriend.setFirstCharPinyin(keyword);
+				}
+
+			}
+
+			return ResponseUtil.success(Collections.singletonMap("friends", friends));
 		} catch(Exception e) {
 			e.printStackTrace();
 

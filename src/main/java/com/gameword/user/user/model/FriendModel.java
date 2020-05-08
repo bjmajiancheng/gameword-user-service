@@ -60,6 +60,9 @@ public class FriendModel extends Sortable {
 
 	@Transient
 	private String friendCountryEnName = "";//国家英文名称
+
+	@Transient
+	private String firstCharPinyin = "";//首字母
 		
 	public void setId(Integer id) {
 		this.id = id;
@@ -147,6 +150,14 @@ public class FriendModel extends Sortable {
 
 	public void setFriendCountryEnName(String friendCountryEnName) {
 		this.friendCountryEnName = friendCountryEnName;
+	}
+
+	public String getFirstCharPinyin() {
+		return firstCharPinyin;
+	}
+
+	public void setFirstCharPinyin(String firstCharPinyin) {
+		this.firstCharPinyin = firstCharPinyin;
 	}
 }
 
