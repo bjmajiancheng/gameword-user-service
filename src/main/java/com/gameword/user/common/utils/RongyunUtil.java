@@ -1,13 +1,16 @@
 package com.gameword.user.common.utils;
 
 import io.rong.RongCloud;
+import io.rong.methods.chatroom.Chatroom;
 import io.rong.methods.user.User;
 import io.rong.models.*;
-import io.rong.models.response.TokenResult;
-import io.rong.models.response.UserResult;
+import io.rong.models.chatroom.ChatroomMember;
+import io.rong.models.chatroom.ChatroomModel;
+import io.rong.models.response.*;
 import io.rong.models.user.UserModel;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.io.Reader;
 import java.io.Serializable;
 
 /**
@@ -134,56 +137,154 @@ public class RongyunUtil implements Serializable{
                 .setPortrait(headImage);
     }
 
+    /**
+     * 创建聊天室
+     *
+     * @param id
+     * @param name
+     * @return
+     */
+    public ResponseResult createChatroom(String id, String name) {
+        try {
+            ChatroomModel[] chatrooms = {
+                    new ChatroomModel().setId(id).setName(name)
+            };
+
+            ResponseResult result = getRongCloud().chatroom.create(chatrooms);
+
+            return result;
+        } catch(Exception e) {
+            e.printStackTrace();
+
+            return null;
+        }
+    }
+
+    /**
+     * 销毁聊天室
+     * @param id
+     * @return
+     */
+    public ResponseResult destoryChatroom(String id) {
+        try {
+            ChatroomModel chatroomModel = new ChatroomModel()
+                    .setId(id);
+
+            ResponseResult result = getRongCloud().chatroom.destroy(chatroomModel);
+
+            return result;
+        } catch(Exception e) {
+            e.printStackTrace();
+
+            return null;
+        }
+    }
+
+    /**
+     * 获取聊天室用户信息
+     * @param id
+     * @return
+     */
+    public ChatroomUserQueryResult chatroomUsers(String id) {
+        try {
+            ChatroomModel chatroomModel = new ChatroomModel()
+                    .setId(id)
+                    .setCount(500)
+                    .setOrder(1);
+
+            ChatroomUserQueryResult chatroomQueryUserResult = getRongCloud().chatroom.get(chatroomModel);
+
+            return chatroomQueryUserResult;
+        } catch(Exception e) {
+            e.printStackTrace();
+
+            return null;
+        }
+    }
+
+    /**
+     * 校验群空间是否存在某用户
+     *
+     * @param id
+     * @param userId
+     * @return
+     */
+    public boolean checkChatRoomUser(String id, String userId) {
+        try {
+            ChatroomMember member = new ChatroomMember()
+                    .setId(id)
+                    .setChatroomId(userId);
+
+            CheckChatRoomUserResult checkMemberResult = getRongCloud().chatroom.isExist(member);
+
+            return checkMemberResult.isInChrm;
+        } catch(Exception e) {
+            e.printStackTrace();
+
+            return false;
+        }
+    }
+
     public static void main(String[] args) throws Exception {
 
         RongCloud rongCloud = RongCloud.getInstance("p5tvi9dspqek4", "YQ0XwWL6t6Mjcv");
-        // 自定义 api 地址方式
-        // RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret,api);
-        // 使用 百度 HTTPDNS 获取最快的 IP 地址进行连接
-        // BaiduHttpDNSUtil.setHostTypeIp("account_id", "secret", rongCloud.getApiHostType());
 
-        // 设置连接超时时间
-        // rongCloud.getApiHostType().setConnectTimeout(10000);
-        // 设置读取超时时间
-        // rongCloud.getApiHostType().setReadTimeout(10000);
-        // 获取备用域名List
-        // List<HostType> hosttypes = rongCloud.getApiHostListBackUp();
-        // 设置连接、读取超时时间
-        // for (HostType hosttype : hosttypes) {
-        //     hosttype.setConnectTimeout(10000);
-        //     hosttype.setReadTimeout(10000);
-        // }
 
-        User User = rongCloud.user;
+        Chatroom chatroom = rongCloud.chatroom;
 
         /**
-         * API 文档: http://www.rongcloud.cn/docs/server_sdk_api/user/user.html#register
+         * API 文档: http://www.rongcloud.cn/docs/server_sdk_api/chatroom/chatroom.html#create
          *
-         * 注册用户，生成用户在融云的唯一身份标识 Token
-         */
-        UserModel user = new UserModel()
-                .setId("123123")
-                .setName("肖恩")
-                .setPortrait("http://www.rongcloud.cn/images/logo123.png");
-        TokenResult result = User.register(user);
-        System.out.println("getToken:  " + result.toString());
+         * 创建聊天室
+         *
+         * */
+        ChatroomModel[] chatrooms = {
+                new ChatroomModel().setId("chatroomId1").setName("chatroomName1"),
+                new ChatroomModel().setId("chatroomId2").setName("chatroomName2")
+        };
+        ResponseResult result = chatroom.create(chatrooms);
+
+        System.out.println("create:  " + result.toString());
 
         /**
          *
-         * API 文档: http://www.rongcloud.cn/docs/server_sdk_api/user/user.html#refresh
+         * API 文档: http://www.rongcloud.cn/docs/server_sdk_api/chatroom/chatroom.html#destory
+         * 销毁聊天室
          *
-         * 刷新用户信息方法
-         */
-        io.rong.models.Result refreshResult = User.update(user);
-        System.out.println("refresh:  " + refreshResult.toString());
+         * */
+        ChatroomModel chatroomModel = new ChatroomModel()
+                .setId("d7ec7a8b8d8546c98b0973417209a548");
+
+        //ResponseResult chatroomDestroyResult = chatroom.destroy(chatroomModel);
+        //System.out.println("destroy:  " + chatroomDestroyResult.toString());
+
 
         /**
          *
-         * API 文档: http://www.rongcloud.cn/docs/server_sdk_api/user/user.html#get
+         * API 文档: http://www.rongcloud.cn/docs/server_sdk_api/chatroom/chatroom.html#getMembers
+         * 查询聊天室成员demo
          *
-         * 查询用户信息方法
-         */
-        UserResult userResult = User.get(user);
-        System.out.println("getUserInfo:  " + userResult.toString());
+         * */
+
+        chatroomModel = new ChatroomModel()
+                .setId("chatroomId1")
+                .setCount(500)
+                .setOrder(1);
+
+        ChatroomUserQueryResult chatroomQueryUserResult = chatroom.get(chatroomModel);
+        System.out.println("queryUser:  " + chatroomQueryUserResult.toString());
+
+        /**
+         *
+         * API 文档: http://www.rongcloud.cn/docs/server_sdk_api/chatroom/chatroom.html#isExist
+         * 查询聊天室成员是否存在
+         *
+         * */
+        ChatroomMember member = new ChatroomMember()
+                .setId("76894")
+                .setChatroomId("76891");
+
+        CheckChatRoomUserResult checkMemberResult = chatroom.isExist(member);
+        System.out.println("checkChatroomUserResult:  " + checkMemberResult.isInChrm);
     }
 }

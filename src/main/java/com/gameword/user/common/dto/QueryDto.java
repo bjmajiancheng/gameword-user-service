@@ -68,6 +68,10 @@ public class QueryDto implements Serializable {
 
     private Integer friendUserId;//好友用户ID
 
+    private String chatroomId;//房间ID
+
+    private String chatroomName;//房间名称
+
     public Integer getId() {
         return id;
     }
@@ -297,5 +301,21 @@ public class QueryDto implements Serializable {
 
     public void setFriendUserId(Integer friendUserId) {
         this.friendUserId = friendUserId;
+    }
+
+    public String getChatroomId() {
+        return chatroomId;
+    }
+
+    public void setChatroomId(String chatroomId) {
+        this.chatroomId = chatroomId;
+    }
+
+    public String getChatroomName() {
+        return chatroomName;
+    }
+
+    public void setChatroomName(String chatroomName) {
+        this.chatroomName = chatroomName;
     }
 }

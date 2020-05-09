@@ -138,6 +138,13 @@ public class UserServiceImpl extends BaseService<UserModel> implements IUserServ
         return userModelMap;
     }
 
+    public List<UserModel> findByUserIds(List<Integer> userIds) {
+        if(CollectionUtils.isEmpty(userIds)) {
+            return Collections.emptyList();
+        }
+        return userMapper.find(Collections.singletonMap("userIds", userIds));
+    }
+
 
     public UserModel findUserByMobilePhone(String mobilePhone) {
         if(StringUtils.isEmpty(mobilePhone)) {

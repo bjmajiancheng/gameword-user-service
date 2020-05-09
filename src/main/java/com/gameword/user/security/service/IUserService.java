@@ -41,6 +41,8 @@ public interface IUserService extends IBaseService<UserModel> {
 
     public Map<Integer, UserModel> findUserMapByUserIds(List<Integer> userIds);
 
+    public List<UserModel> findByUserIds(List<Integer> userIds);
+
     public UserModel findUserByMobilePhone(String mobilePhone);
 
     public UserModel findUserByThirdInfo(String thirdId, Integer thirdType);
