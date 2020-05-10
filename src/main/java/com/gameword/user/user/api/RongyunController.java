@@ -11,6 +11,7 @@ import io.rong.models.chatroom.ChatroomMember;
 import io.rong.models.response.ChatroomUserQueryResult;
 import io.rong.models.response.ResponseResult;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,6 +46,10 @@ public class RongyunController {
     @ResponseBody
     @RequestMapping(value = "/createChatroom", method = RequestMethod.POST)
     public Result createChatroom(@RequestBody QueryDto queryDto) {
+        if(StringUtils.isEmpty(queryDto.getChatroomId()) || StringUtils.isEmpty(queryDto.getChatroomName())) {
+            return ResponseUtil.error("房间ID或者房间名称不能为空");
+        }
+
         try {
             ResponseResult result = rongyunUtil.createChatroom(queryDto.getChatroomId(), queryDto.getChatroomName());
 
@@ -65,6 +70,10 @@ public class RongyunController {
     @ResponseBody
     @RequestMapping(value = "/destoryChatroom", method = RequestMethod.POST)
     public Result destoryChatroom(@RequestBody QueryDto queryDto) {
+        if(StringUtils.isEmpty(queryDto.getChatroomId())) {
+            return ResponseUtil.error("房间ID不能为空");
+        }
+
         try {
             ResponseResult result = rongyunUtil.destoryChatroom(queryDto.getChatroomId());
 
@@ -85,6 +94,10 @@ public class RongyunController {
     @ResponseBody
     @RequestMapping(value = "/chatroomUsers", method = RequestMethod.POST)
     public Result chatroomUsers(@RequestBody QueryDto queryDto) {
+        if(StringUtils.isEmpty(queryDto.getChatroomId())) {
+            return ResponseUtil.error("房间ID不能为空");
+        }
+
         try {
             ChatroomUserQueryResult result = rongyunUtil.chatroomUsers(queryDto.getChatroomId());
             List<ChatroomMember> chatroomMembers = result.getMembers();
@@ -116,6 +129,10 @@ public class RongyunController {
     @ResponseBody
     @RequestMapping(value = "/checkChatRoomUser", method = RequestMethod.POST)
     public Result checkChatRoomUser(@RequestBody QueryDto queryDto) {
+        if(StringUtils.isEmpty(queryDto.getChatroomId()) || queryDto.getUserId() == null) {
+            return ResponseUtil.error("房间ID或用户ID不能为空");
+        }
+
         try {
             boolean isInChrm = rongyunUtil.checkChatRoomUser(queryDto.getChatroomId(), String.valueOf(queryDto.getUserId()));
 
