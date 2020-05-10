@@ -542,7 +542,7 @@ public class UserController {
             userModel.setCredentialsNonExpired(true);
             userModel.setEnabled(true);
             userModel.setLastPasswordReset(new Date());
-            userModel.setUserType(4);
+            userModel.setUserType(0);
 
             int insertCnt = userService.saveNotNull(userModel);
 
