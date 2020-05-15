@@ -84,7 +84,9 @@ public class MessageController {
 
 			int updateCnt = messageService.updateNotNull(messageModel);
 
-			return ResponseUtil.success();
+			MessageModel tmpMessage = messageService.findById(queryDto.getId());
+
+			return ResponseUtil.success(Collections.singletonMap("message", tmpMessage));
 		} catch(Exception e) {
 			e.printStackTrace();
 
