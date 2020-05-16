@@ -58,16 +58,16 @@ public class CompanyModel extends Sortable {
 
 	//columns END
 
-	@Autowired
+	@Transient
 	private List<String> cnLabelNames;
 
-	@Autowired
+	@Transient
 	private List<String> enLabelNames;
 
-	@Autowired
+	@Transient
 	private String cityCnName;
 
-	@Autowired
+	@Transient
 	private String cityEnName;
 
 	public void setId(Integer id) {
