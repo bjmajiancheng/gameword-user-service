@@ -63,7 +63,13 @@ public class CompanyModel extends Sortable {
 
 	@Autowired
 	private List<String> enLabelNames;
-		
+
+	@Autowired
+	private String cityCnName;
+
+	@Autowired
+	private String cityEnName;
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -150,6 +156,22 @@ public class CompanyModel extends Sortable {
 
 	public void setEnLabelNames(List<String> enLabelNames) {
 		this.enLabelNames = enLabelNames;
+	}
+
+	public void setCityCnName(String cityCnName) {
+		this.cityCnName = cityCnName;
+	}
+
+	public String getCityCnName() {
+		return cityCnName;
+	}
+
+	public void setCityEnName(String cityEnName) {
+		this.cityEnName = cityEnName;
+	}
+
+	public String getCityEnName() {
+		return cityEnName;
 	}
 }
 

@@ -112,8 +112,13 @@ public class CityController {
                 return ResponseUtil.error();
             }
 
-            CompanyLabelModel companyLabelModel = new CompanyLabelModel();
-            companyLabelModel.setCompanyId(queryDto.getCompanyId());
+            CityModel cityModel = cityService.findById(companyModel.getCityId());
+            if(cityModel != null) {
+                companyModel.setCityCnName(cityModel.getCityCn());
+                companyModel.setCityEnName(cityModel.getCityEn());
+            }
+            /*CompanyLabelModel companyLabelModel = new CompanyLabelModel();
+            companyLabelModel.setCompanyId(queryDto.getCompanyId());*/
 
             List<LabelModel> labelModels = labelService.findByCompanyId(queryDto.getCompanyId());
             if(CollectionUtils.isNotEmpty(labelModels)) {
@@ -127,6 +132,9 @@ public class CityController {
                         enLabelNames.add(labelModel.getLabelName());
                     }
                 }
+
+                companyModel.setCnLabelNames(cnLabelNames);
+                companyModel.setEnLabelNames(enLabelNames);
             }
 
             return ResponseUtil.success(Collections.singletonMap("company", companyModel));
