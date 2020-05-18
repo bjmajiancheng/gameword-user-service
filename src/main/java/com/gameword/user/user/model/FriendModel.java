@@ -63,6 +63,18 @@ public class FriendModel extends Sortable {
 
 	@Transient
 	private String firstCharPinyin = "";//首字母
+
+	@Transient
+	private String friendCountryFlag = "";//国旗
+
+	@Transient
+	private String friendUserDesc = "";//个人简介
+
+	@Transient
+	private Integer friendSex = 0;//性别
+
+	@Transient
+	private String friendAgencyName = "";//学校机构
 		
 	public void setId(Integer id) {
 		this.id = id;
@@ -158,6 +170,38 @@ public class FriendModel extends Sortable {
 
 	public void setFirstCharPinyin(String firstCharPinyin) {
 		this.firstCharPinyin = firstCharPinyin;
+	}
+
+	public String getFriendCountryFlag() {
+		return friendCountryFlag;
+	}
+
+	public void setFriendCountryFlag(String friendCountryFlag) {
+		this.friendCountryFlag = friendCountryFlag;
+	}
+
+	public String getFriendUserDesc() {
+		return friendUserDesc;
+	}
+
+	public void setFriendUserDesc(String friendUserDesc) {
+		this.friendUserDesc = friendUserDesc;
+	}
+
+	public Integer getFriendSex() {
+		return friendSex;
+	}
+
+	public void setFriendSex(Integer friendSex) {
+		this.friendSex = friendSex;
+	}
+
+	public String getFriendAgencyName() {
+		return friendAgencyName;
+	}
+
+	public void setFriendAgencyName(String friendAgencyName) {
+		this.friendAgencyName = friendAgencyName;
 	}
 }
 

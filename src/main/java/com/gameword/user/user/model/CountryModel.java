@@ -40,6 +40,12 @@ public class CountryModel extends Sortable {
 	@Column(name = "code")
 	private String code;//"国家代码值"
 
+	@Column(name = "is_del")
+	private Integer isDel;//是否删除
+
+	@Column(name = "country_flag")
+	private String countryFlag;//国旗
+
 	@Column(name = "create_user_id")
 	private Integer createUserId;//"创建人"
 
@@ -88,7 +94,23 @@ public class CountryModel extends Sortable {
 	public String getCode() {
 		return this.code;
 	}
-		
+
+	public Integer getIsDel() {
+		return isDel;
+	}
+
+	public void setIsDel(Integer isDel) {
+		this.isDel = isDel;
+	}
+
+	public String getCountryFlag() {
+		return countryFlag;
+	}
+
+	public void setCountryFlag(String countryFlag) {
+		this.countryFlag = countryFlag;
+	}
+
 	public void setCreateUserId(Integer createUserId) {
 		this.createUserId = createUserId;
 	}

@@ -10,6 +10,8 @@
         <result property="countryCnName" column="country_cn_name"/>
         <result property="countryEnName" column="country_en_name"/>
         <result property="code" column="code"/>
+		<result property="isDel" column="is_del"/>
+		<result property="countryFlag" column="country_flag"/>
         <result property="createUserId" column="create_user_id"/>
         <result property="updateUserId" column="update_user_id"/>
         <result property="ctime" column="c_time"/>
@@ -19,7 +21,7 @@
 	<!-- 用于select查询公用抽取的列 -->
 	<sql id="columns">
 	    <![CDATA[
-        id ,country_cn_name ,country_en_name ,code ,create_user_id ,update_user_id ,c_time ,u_time 
+        id ,country_cn_name ,country_en_name ,code ,is_del, country_flag, create_user_id ,update_user_id ,c_time ,u_time
 	    ]]>
 	</sql>
 

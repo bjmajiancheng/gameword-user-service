@@ -63,7 +63,7 @@ public class FriendController {
 
 		Integer currUserId = SecurityUtil.getCurrentUserId();
 
-		if(currUserId == null || currUserId == 0) {
+		if(currUserId == 0) {
 			return ResponseUtil.error("当前用户未登录, 请先登录账号");
 		}
 
@@ -161,6 +161,9 @@ public class FriendController {
 					if(tmpUser != null) {
 						tmpFriend.setFriendHeadImage(tmpUser.getHeadImage());
 						tmpFriend.setFriendNickName(tmpUser.getNickName());
+						tmpFriend.setFriendSex(tmpUser.getSex());
+						tmpFriend.setFriendAgencyName(tmpUser.getAgencyName());
+						tmpFriend.setFriendUserDesc(tmpUser.getUserDesc());
 
 						CountryModel tmpCountry = countryMap.get(tmpUser.getCountryId());
 						CityModel tmpCity = cityMap.get(tmpUser.getCityId());
@@ -168,6 +171,7 @@ public class FriendController {
 						if(tmpCountry != null) {
 							tmpFriend.setFriendCountryCnName(tmpCountry.getCountryCnName());
 							tmpFriend.setFriendCountryEnName(tmpCountry.getCountryEnName());
+							tmpFriend.setFriendCountryFlag(tmpCountry.getCountryFlag());
 						}
 
 						if(tmpCity != null) {
