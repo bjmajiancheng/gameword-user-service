@@ -72,6 +72,8 @@ public class QueryDto implements Serializable {
 
     private String chatroomName;//房间名称
 
+    private String noteName;//备注
+
     public Integer getId() {
         return id;
     }
@@ -317,5 +319,13 @@ public class QueryDto implements Serializable {
 
     public void setChatroomName(String chatroomName) {
         this.chatroomName = chatroomName;
+    }
+
+    public String getNoteName() {
+        return noteName;
+    }
+
+    public void setNoteName(String noteName) {
+        this.noteName = noteName;
     }
 }

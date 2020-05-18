@@ -32,4 +32,6 @@ public interface IFriendService extends IBaseService<FriendModel> {
 	public List<FriendModel> selectByFilter(FriendModel friendModel);
 
 	public Map<String, List<FriendModel>> generKeyWordFriendMap(List<FriendModel> friendModels);
+
+	public int updateNoteName(Integer userId, Integer friendUserId, String noteName);
 }

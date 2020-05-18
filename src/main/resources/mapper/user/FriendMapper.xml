@@ -8,7 +8,8 @@
     <resultMap id="Friend" type="com.gameword.user.user.model.FriendModel">
         <result property="id" column="id"/>
         <result property="userId" column="user_id"/>
-        <result property="friendUserId" column="friend_user_id"/>
+		<result property="friendUserId" column="friend_user_id"/>
+		<result property="noteName" column="note_name"/>
         <result property="ctime" column="c_time"/>
         <result property="utime" column="u_time"/>
     </resultMap>
@@ -39,6 +40,10 @@
 		        id = #{id} 
 	    ]]>
 	</select>
+
+	<update id="updateNoteName">
+		UPDATE d_friend SET note_name = #{noteName} WHERE user_id = #{userId} AND friend_user_id = #{friendUserId}
+	</update>
 	
 </mapper>
 

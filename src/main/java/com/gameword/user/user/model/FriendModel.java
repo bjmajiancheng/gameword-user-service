@@ -36,6 +36,9 @@ public class FriendModel extends Sortable {
 	@Column(name = "friend_user_id")
 	private Integer friendUserId;//"好友ID"
 
+	@Column(name = "note_name")
+	private String noteName;//"备注名称"
+
 	@Column(name = "c_time")
 	private Date ctime;//"创建时间"
 
@@ -99,7 +102,15 @@ public class FriendModel extends Sortable {
 	public Integer getFriendUserId() {
 		return this.friendUserId;
 	}
-		
+
+	public String getNoteName() {
+		return noteName;
+	}
+
+	public void setNoteName(String noteName) {
+		this.noteName = noteName;
+	}
+
 	public void setCtime(Date ctime) {
 		this.ctime = ctime;
 	}

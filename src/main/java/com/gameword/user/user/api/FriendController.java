@@ -25,6 +25,7 @@ import com.gameword.user.user.model.CountryModel;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -195,7 +196,7 @@ public class FriendController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/addFriend", method = RequestMethod.GET)
+	@RequestMapping(value = "/addFriend", method = RequestMethod.POST)
 	public Result addFriend(@RequestBody QueryDto queryDto) {
 
 		Integer currUserId = SecurityUtil.getCurrentUserId();
@@ -220,7 +221,7 @@ public class FriendController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/delFriend", method = RequestMethod.GET)
+	@RequestMapping(value = "/delFriend", method = RequestMethod.POST)
 	public Result delFriend(@RequestBody QueryDto queryDto) {
 
 		Integer currUserId = SecurityUtil.getCurrentUserId();
@@ -236,6 +237,27 @@ public class FriendController {
 
 			friendModel = friendModels.get(0);
 			friendService.delete(friendModel);
+
+			return ResponseUtil.success();
+		} catch(Exception e) {
+			e.printStackTrace();
+
+			return ResponseUtil.error();
+		}
+	}
+	@ResponseBody
+	@RequestMapping(value = "/noteUser", method = RequestMethod.POST)
+	public Result noteUser(@RequestBody QueryDto queryDto) {
+		Integer friendUserId = queryDto.getUserId();
+		String noteName = queryDto.getNoteName();
+		if(friendUserId == null || StringUtils.isEmpty(noteName)) {
+			return ResponseUtil.error("请填写好友备注信息");
+		}
+
+		try {
+			Integer userId = SecurityUtil.getCurrentUserId();
+
+			int updateCnt = friendService.updateNoteName(userId, friendUserId, noteName);
 
 			return ResponseUtil.success();
 		} catch(Exception e) {

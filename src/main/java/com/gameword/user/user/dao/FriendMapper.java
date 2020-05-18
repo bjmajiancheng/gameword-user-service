@@ -26,4 +26,6 @@ public interface FriendMapper extends Mapper<FriendModel> {
 
 	public FriendModel findById(@Param("id") Integer id);
 
+	public int updateNoteName(@Param("userId")Integer userId, @Param("friendUserId")Integer friendUserId,
+			@Param("noteName")String noteName);
 }

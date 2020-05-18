@@ -100,4 +100,13 @@ public class FriendServiceImpl extends BaseService<FriendModel> implements IFrie
 
 		return friendMap;
 	}
+
+
+	public int updateNoteName(Integer userId, Integer friendUserId, String noteName) {
+		if(userId == null || friendUserId == null) {
+			return 0;
+		}
+
+		return friendMapper.updateNoteName(userId, friendUserId, noteName);
+	}
 }
