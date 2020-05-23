@@ -6,19 +6,13 @@ import com.gameword.user.common.utils.MessageUtil;
 import com.gameword.user.common.utils.ResponseUtil;
 import com.gameword.user.common.utils.Result;
 import com.gameword.user.core.model.UserModel;
-import com.gameword.user.user.model.CityModel;
-import com.gameword.user.user.model.CountryModel;
-import com.gameword.user.user.model.SystemVersionModel;
-import com.gameword.user.user.model.VerifyCodeModel;
+import com.gameword.user.user.model.*;
 import com.gameword.user.common.dto.QueryDto;
 import com.gameword.user.common.tools.RedisCache;
 import com.gameword.user.core.model.Attachment;
 import com.gameword.user.security.constants.SecurityConstant;
 import com.gameword.user.security.service.IUserService;
-import com.gameword.user.user.service.ICityService;
-import com.gameword.user.user.service.ICountryService;
-import com.gameword.user.user.service.ISystemVersionService;
-import com.gameword.user.user.service.IVerifyCodeService;
+import com.gameword.user.user.service.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -72,6 +66,9 @@ public class CommonController {
 
     @Autowired
     private ISystemVersionService systemVersionService;
+
+    @Autowired
+    private IRegionService regionService;
 
     @RequestMapping(value = "/uploadFile", method = { RequestMethod.POST })
     @ResponseBody
@@ -297,9 +294,9 @@ public class CommonController {
     public Result countryList(@RequestBody QueryDto queryDto) {
 
         try {
-            List<CountryModel> countryModels = countryService.find(Collections.emptyMap());
+            List<RegionModel> regionModels = regionService.find(Collections.singletonMap("parentId", 0));
 
-            return ResponseUtil.success(Collections.singletonMap("countrys", countryModels));
+            return ResponseUtil.success(Collections.singletonMap("countrys", regionModels));
         } catch(Exception e) {
             e.printStackTrace();
 
@@ -318,9 +315,9 @@ public class CommonController {
     public Result cityList(@RequestBody QueryDto queryDto) {
 
         try {
-            List<CityModel> cityModels = cityService.find(Collections.singletonMap("countryId", queryDto.getCountryId()));
+            List<RegionModel> regionModels = regionService.find(Collections.singletonMap("parentId", queryDto.getCountryId()));
 
-            return ResponseUtil.success(Collections.singletonMap("citys", cityModels));
+            return ResponseUtil.success(Collections.singletonMap("citys", regionModels));
         } catch(Exception e) {
             e.printStackTrace();
 
