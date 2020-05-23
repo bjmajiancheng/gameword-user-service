@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -69,6 +70,9 @@ public class CommonController {
 
     @Autowired
     private IRegionService regionService;
+
+    @Autowired
+    private IPriceConfService priceConfService;
 
     @RequestMapping(value = "/uploadFile", method = { RequestMethod.POST })
     @ResponseBody
@@ -346,6 +350,35 @@ public class CommonController {
             }
 
             return ResponseUtil.success(systemVersionMap);
+
+        } catch(Exception e) {
+            e.printStackTrace();
+
+            return ResponseUtil.error();
+        }
+    }
+
+    /**
+     * 最新版本
+     *
+     * @param queryDto
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/currPriceConf", method = RequestMethod.POST)
+    public Result currPriceConf(@RequestBody QueryDto queryDto) {
+        try {
+            List<PriceConfModel> priceConfModels = priceConfService.selectByFilter(new PriceConfModel());
+            PriceConfModel priceConfModel = null;
+            if(CollectionUtils.isNotEmpty(priceConfModels)) {
+                priceConfModel = priceConfModels.get(0);
+            } else {
+                priceConfModel = new PriceConfModel();
+                priceConfModel.setPriceEn(BigDecimal.ZERO);
+                priceConfModel.setPriceCn(BigDecimal.ZERO);
+            }
+
+            return ResponseUtil.success(Collections.singletonMap("priceConf", priceConfModel));
 
         } catch(Exception e) {
             e.printStackTrace();
