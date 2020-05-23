@@ -133,6 +133,12 @@ public class UserModel extends Sortable {
 	@Transient
 	private Integer hasPay = 1;//本月是否已支付 0：未支付，1：已支付
 
+	@Transient
+	private Date lastPaidDate = new Date();//最后支付时间
+
+	@Transient
+	private String payMessage = "";//支付提示信息
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -419,6 +425,22 @@ public class UserModel extends Sortable {
 
 	public void setHasPay(Integer hasPay) {
 		this.hasPay = hasPay;
+	}
+
+	public Date getLastPaidDate() {
+		return lastPaidDate;
+	}
+
+	public void setLastPaidDate(Date lastPaidDate) {
+		this.lastPaidDate = lastPaidDate;
+	}
+
+	public String getPayMessage() {
+		return payMessage;
+	}
+
+	public void setPayMessage(String payMessage) {
+		this.payMessage = payMessage;
 	}
 }
 

@@ -958,4 +958,22 @@ public class UserController {
             return ResponseUtil.error("系统异常, 请稍后重试。");
         }
     }
+    @ResponseBody
+    @RequestMapping(value = "/currUserPayStatus", method = RequestMethod.POST)
+    public Result currUserPayStatus(@RequestBody QueryDto queryDto) {
+        try {
+            int userId = SecurityUtil.getCurrentUserId();
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("userId", userId);
+            data.put("hasPay", 0);
+            data.put("lastPaidDate", "2020-04-04");
+            data.put("payMessage", "您最近支付的时间为2020-04-04, 支付信息已过期, 请重新支付");
+
+            return ResponseUtil.success(data);
+        } catch(Exception e) {
+            e.printStackTrace();
+
+            return ResponseUtil.error("系统异常, 请稍后重试。");
+        }
+    }
 }
