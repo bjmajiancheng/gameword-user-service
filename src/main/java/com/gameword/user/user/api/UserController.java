@@ -3,7 +3,9 @@ package com.gameword.user.user.api;
 import com.gameword.user.common.utils.*;
 import com.gameword.user.core.model.UserModel;
 import com.gameword.user.security.constants.SecurityConstant;
+import com.gameword.user.security.security.SecurityUser;
 import com.gameword.user.security.utils.SecurityUtil;
+import com.gameword.user.user.model.PaymentModel;
 import com.gameword.user.user.service.*;
 import com.github.pagehelper.PageInfo;
 import com.gameword.user.common.dto.QueryDto;
@@ -68,6 +70,9 @@ public class UserController {
 
     @Autowired
     private RongyunUtil rongyunUtil;
+
+    @Autowired
+    private IPaymentService paymentService;
 
 
     @ResponseBody
@@ -971,6 +976,42 @@ public class UserController {
 
             return ResponseUtil.success(data);
         } catch(Exception e) {
+            e.printStackTrace();
+
+            return ResponseUtil.error("系统异常, 请稍后重试。");
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/addPayment", method = RequestMethod.POST)
+    public Result addPayment(@RequestBody QueryDto queryDto) {
+        SecurityUser userModel = SecurityUtil.getCurrentSecurityUser();
+        if(userModel == null) {
+            return ResponseUtil.error("系统异常, 请稍后重试。");
+        }
+
+        try {
+
+            PaymentModel paymentModel = new PaymentModel();
+            paymentModel.setUserId(userModel.getId());
+            paymentModel.setPayMoney(queryDto.getPayMoney());
+            paymentModel.setPayTime(new Date());
+            paymentModel.setPayType(queryDto.getPayType());
+            paymentService.saveNotNull(paymentModel);
+
+            UserModel updateUserModel = new UserModel();
+            updateUserModel.setId(userModel.getId());
+            updateUserModel.setLastPaidDate(new Date());
+            if(queryDto.getPaymentType() == 1) {
+                updateUserModel.setCnBalance(queryDto.getPayMoney());
+            } else if(queryDto.getPaymentType() == 2) {
+                updateUserModel.setEnBalance(queryDto.getPayMoney());
+            }
+
+            userService.updateNotNull(updateUserModel);
+
+            return ResponseUtil.success();
+        } catch (Exception e) {
             e.printStackTrace();
 
             return ResponseUtil.error("系统异常, 请稍后重试。");

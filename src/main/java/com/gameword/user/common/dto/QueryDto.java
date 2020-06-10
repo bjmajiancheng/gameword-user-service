@@ -3,6 +3,7 @@ package com.gameword.user.common.dto;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * 公用查询类
@@ -73,6 +74,12 @@ public class QueryDto implements Serializable {
     private String chatroomName;//房间名称
 
     private String noteName;//备注
+
+    private Integer payType;//支付类型 1：微信，2：支付宝，3：PayPal，4：苹果支付
+
+    private BigDecimal payMoney;//支付金额
+
+    private Integer paymentType;//金额类型 1：人民币，2：美元
 
     public Integer getId() {
         return id;
@@ -327,5 +334,29 @@ public class QueryDto implements Serializable {
 
     public void setNoteName(String noteName) {
         this.noteName = noteName;
+    }
+
+    public Integer getPayType() {
+        return payType;
+    }
+
+    public void setPayType(Integer payType) {
+        this.payType = payType;
+    }
+
+    public BigDecimal getPayMoney() {
+        return payMoney;
+    }
+
+    public void setPayMoney(BigDecimal payMoney) {
+        this.payMoney = payMoney;
+    }
+
+    public Integer getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(Integer paymentType) {
+        this.paymentType = paymentType;
     }
 }
