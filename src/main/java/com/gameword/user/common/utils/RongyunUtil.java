@@ -26,6 +26,10 @@ public class RongyunUtil implements Serializable{
 
     private String api;
 
+    private String publicRoomId;
+
+    private String businessRoomId;
+
     private RongCloud rongCloud;
 
     public String getAppKey() {
@@ -50,6 +54,22 @@ public class RongyunUtil implements Serializable{
 
     public void setApi(String api) {
         this.api = api;
+    }
+
+    public String getPublicRoomId() {
+        return publicRoomId;
+    }
+
+    public void setPublicRoomId(String publicRoomId) {
+        this.publicRoomId = publicRoomId;
+    }
+
+    public String getBusinessRoomId() {
+        return businessRoomId;
+    }
+
+    public void setBusinessRoomId(String businessRoomId) {
+        this.businessRoomId = businessRoomId;
     }
 
     public void setRongCloud(RongCloud rongCloud) {

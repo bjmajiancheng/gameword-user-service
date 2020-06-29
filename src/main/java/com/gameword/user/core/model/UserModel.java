@@ -139,6 +139,9 @@ public class UserModel extends Sortable {
 	@Transient
 	private String payMessage = "";//支付提示信息
 
+	@Transient
+	private String roomId = "";//聊天室ID
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -441,6 +444,14 @@ public class UserModel extends Sortable {
 
 	public void setPayMessage(String payMessage) {
 		this.payMessage = payMessage;
+	}
+
+	public String getRoomId() {
+		return roomId;
+	}
+
+	public void setRoomId(String roomId) {
+		this.roomId = roomId;
 	}
 }
 

@@ -45,6 +45,8 @@
         <property name="appKey" value="${rongyun.appKey}" />
         <property name="appSecret" value="${rongyun.appSecret}" />
         <property name="api" value="${rongyun.api}" />
+        <property name="publicRoomId" value="${rongyun.publicRoomId}" />
+        <property name="businessRoomId" value="${rongyun.businessRoomId}" />
     </bean>
 
 </beans>
