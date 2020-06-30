@@ -790,7 +790,25 @@ public class UserController {
             userModel.setRongyunToken(rongyunToken);
         }
 
+        this.generUserRoomId(userModel);
+
         return userModel;
+    }
+
+    /**
+     * 生成用户聊天室
+     * @param userModel
+     */
+    private void generUserRoomId(UserModel userModel) {
+        if (userModel == null || userModel.getUserType() == null) {
+            return;
+        }
+
+        if (userModel.getUserType() == 1) {
+            userModel.setRoomId(rongyunUtil.getBusinessRoomId());
+        } else {
+            userModel.setRoomId(rongyunUtil.getPublicRoomId());
+        }
     }
 
     /**
@@ -918,6 +936,8 @@ public class UserController {
                 return ResponseUtil.error("找不到该用户信息");
             }
 
+            this.generUserRoomId(userModel);
+
             return ResponseUtil.success(userModel);
         } catch(Exception e) {
             e.printStackTrace();
@@ -932,6 +952,8 @@ public class UserController {
 
         try {
             UserModel userModel = userService.findById(queryDto.getUserId());
+
+            this.generUserRoomId(userModel);
 
             return ResponseUtil.success(userModel);
         } catch(Exception e) {
@@ -955,6 +977,8 @@ public class UserController {
                     userModel.setPassword(userPassMappingModel.getPassword());
                 }
             }
+
+            this.generUserRoomId(userModel);
 
             return ResponseUtil.success(userModel);
         } catch(Exception e) {
