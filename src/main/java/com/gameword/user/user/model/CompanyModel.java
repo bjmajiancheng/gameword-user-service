@@ -70,6 +70,15 @@ public class CompanyModel extends Sortable {
 	@Transient
 	private String cityEnName;
 
+	@Transient
+	private Integer countryId;
+
+	@Transient
+	private String countryCnName;
+
+	@Transient
+	private String countryEnName;
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -172,6 +181,30 @@ public class CompanyModel extends Sortable {
 
 	public String getCityEnName() {
 		return cityEnName;
+	}
+
+	public Integer getCountryId() {
+		return countryId;
+	}
+
+	public void setCountryId(Integer countryId) {
+		this.countryId = countryId;
+	}
+
+	public String getCountryCnName() {
+		return countryCnName;
+	}
+
+	public void setCountryCnName(String countryCnName) {
+		this.countryCnName = countryCnName;
+	}
+
+	public String getCountryEnName() {
+		return countryEnName;
+	}
+
+	public void setCountryEnName(String countryEnName) {
+		this.countryEnName = countryEnName;
 	}
 }
 

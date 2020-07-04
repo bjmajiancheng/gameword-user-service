@@ -8,10 +8,7 @@ import com.gameword.user.core.model.UserModel;
 import com.gameword.user.security.constants.SecurityConstant;
 import com.gameword.user.security.utils.SecurityUtil;
 import com.gameword.user.user.model.*;
-import com.gameword.user.user.service.ICityService;
-import com.gameword.user.user.service.ICompanyLabelService;
-import com.gameword.user.user.service.ICompanyService;
-import com.gameword.user.user.service.ILabelService;
+import com.gameword.user.user.service.*;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -22,10 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by majiancheng on 2020/3/9.
@@ -45,6 +39,9 @@ public class CityController {
 
     @Autowired
     private ICompanyLabelService companyLabelService;
+
+    @Autowired
+    private ICountryService countryService;
 
     /**
      * 城市列表
@@ -93,7 +90,35 @@ public class CityController {
             } else if(queryDto.getLanguage() == 2) {
                 companyModel.setEnName(queryDto.getQueryStr());
             }
+
             PageInfo<CompanyModel> pageInfo = companyService.selectByFilterAndPage(companyModel, queryDto.getPageNum(), queryDto.getPageSize());
+            if (CollectionUtils.isNotEmpty(pageInfo.getList())) {
+                List<Integer> cityIds = new ArrayList<>();
+                List<Integer> countryIds = new ArrayList<>();
+                for (CompanyModel tmpCompany : pageInfo.getList()) {
+                    cityIds.add(tmpCompany.getCityId());
+                }
+
+                Map<Integer, CityModel> cityMap = cityService.findMapByCityIds(cityIds);
+                for (CompanyModel tmpCompany : pageInfo.getList()) {
+                    CityModel cityModel = cityMap.get(tmpCompany.getCityId());
+
+                    if (cityModel != null) {
+                        tmpCompany.setCountryId(cityModel.getCountryId());
+                        countryIds.add(cityModel.getCountryId());
+                    }
+                }
+
+                Map<Integer, CountryModel> countryMap = countryService.findMapByCountryIds(countryIds);
+                for (CompanyModel tmpCompany : pageInfo.getList()) {
+                    CountryModel countryModel = countryMap.get(tmpCompany.getCountryId());
+
+                    if (countryModel != null) {
+                        tmpCompany.setCountryCnName(countryModel.getCountryCnName());
+                        tmpCompany.setCountryEnName(countryModel.getCountryEnName());
+                    }
+                }
+            }
 
             return ResponseUtil.success(PageConvertUtil.grid(pageInfo));
         } catch (Exception e) {
