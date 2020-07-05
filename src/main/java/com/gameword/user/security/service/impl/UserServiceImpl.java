@@ -146,6 +146,11 @@ public class UserServiceImpl extends BaseService<UserModel> implements IUserServ
     }
 
 
+    public List<UserModel> find(Map<String, Object> param) {
+        return userMapper.find(param);
+    }
+
+
     public UserModel findUserByMobilePhone(String mobilePhone) {
         if(StringUtils.isEmpty(mobilePhone)) {
             return null;

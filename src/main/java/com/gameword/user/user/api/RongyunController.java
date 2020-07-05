@@ -19,9 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by majiancheng on 2020/5/9.
@@ -109,7 +107,16 @@ public class RongyunController {
                     userIds.add(Integer.valueOf(chatroomMember.getId()));
                 }
 
-                userModels = userService.findByUserIds(userIds);
+                Map<String, Object> param = new HashMap<String, Object>();
+                if (StringUtils.isNotBlank(queryDto.getNickName())) {
+                    param.put("nickName", "%" + queryDto.getNickName() + "%");
+                }
+                param.put("userIds", userIds);
+                if (CollectionUtils.isNotEmpty(userIds)) {
+                    userModels = userService.find(param);
+                } else {
+                    userModels = Collections.emptyList();
+                }
             }
 
             return ResponseUtil.success(Collections.singletonMap("userModels", userModels));
