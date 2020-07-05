@@ -138,7 +138,7 @@ public class FriendController {
 			friendModel.setUserId(currUserId);
 			List<FriendModel> friends = friendService.selectByFilter(friendModel);
 			if(CollectionUtils.isNotEmpty(friends)) {
-				List<Integer> friendUserIds = new ArrayList<Integer>();
+				List<Integer> friendUserIds = new ArrayList<>();
 				for(FriendModel tmpFriend : friends) {
 					friendUserIds.add(tmpFriend.getFriendUserId());
 				}
@@ -154,8 +154,8 @@ public class FriendController {
 					}
 				}
 
-				Map<Integer, CountryModel> countryMap = countryService.findMapByCountryIds(new ArrayList<Integer>(countryIds));
-				Map<Integer, CityModel> cityMap = cityService.findMapByCityIds(new ArrayList<Integer>(cityIds));
+				Map<Integer, CountryModel> countryMap = countryService.findMapByCountryIds(new ArrayList<>(countryIds));
+				Map<Integer, CityModel> cityMap = cityService.findMapByCityIds(new ArrayList<>(cityIds));
 
 				for(FriendModel tmpFriend : friends) {
 					UserModel tmpUser = userMap.get(tmpFriend.getFriendUserId());

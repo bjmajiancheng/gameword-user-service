@@ -1,16 +1,23 @@
 package com.gameword.user.user.api;
 
 import com.gameword.user.common.dto.QueryDto;
-import com.gameword.user.common.utils.PageConvertUtil;
-import com.gameword.user.common.utils.ResponseUtil;
-import com.gameword.user.common.utils.Result;
-import com.gameword.user.common.utils.RongyunUtil;
+import com.gameword.user.common.utils.*;
 import com.gameword.user.core.model.UserModel;
 import com.gameword.user.security.service.IUserService;
+import com.gameword.user.security.utils.SecurityUtil;
+import com.gameword.user.user.dto.ChatroomUserDto;
+import com.gameword.user.user.model.CityModel;
+import com.gameword.user.user.model.CountryModel;
+import com.gameword.user.user.model.FriendModel;
+import com.gameword.user.user.service.ICityService;
+import com.gameword.user.user.service.ICountryService;
+import com.gameword.user.user.service.IFriendService;
+import io.rong.methods.chatroom.Chatroom;
 import io.rong.models.chatroom.ChatroomMember;
 import io.rong.models.response.ChatroomUserQueryResult;
 import io.rong.models.response.ResponseResult;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,6 +41,15 @@ public class RongyunController {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private ICountryService countryService;
+
+    @Autowired
+    private ICityService cityService;
+
+    @Autowired
+    private IFriendService friendService;
 
     /**
      * 创建聊天室
@@ -100,14 +116,14 @@ public class RongyunController {
             ChatroomUserQueryResult result = rongyunUtil.chatroomUsers(queryDto.getChatroomId());
             List<ChatroomMember> chatroomMembers = result.getMembers();
 
-            List<UserModel> userModels = new ArrayList<UserModel>();
+            List<UserModel> userModels = new ArrayList<>();
             if(CollectionUtils.isNotEmpty(chatroomMembers)) {
-                List<Integer> userIds = new ArrayList<Integer>();
+                List<Integer> userIds = new ArrayList<>();
                 for(ChatroomMember chatroomMember : chatroomMembers) {
                     userIds.add(Integer.valueOf(chatroomMember.getId()));
                 }
 
-                Map<String, Object> param = new HashMap<String, Object>();
+                Map<String, Object> param = new HashMap<>();
                 if (StringUtils.isNotBlank(queryDto.getNickName())) {
                     param.put("nickName", "%" + queryDto.getNickName() + "%");
                 }
@@ -119,7 +135,63 @@ public class RongyunController {
                 }
             }
 
-            return ResponseUtil.success(Collections.singletonMap("userModels", userModels));
+            List<ChatroomUserDto> roomUsers = new ArrayList<>();
+            if(CollectionUtils.isNotEmpty(userModels)) {
+                List<Integer> userIds = new ArrayList<>();
+
+                Set<Integer> countryIds = new HashSet<>();
+                Set<Integer> cityIds = new HashSet<>();
+
+                for(UserModel tmpUser : userModels) {
+                    userIds.add(tmpUser.getId());
+
+                    countryIds.add(tmpUser.getCountryId());
+                    cityIds.add(tmpUser.getCityId());
+                }
+
+                Map<Integer, CountryModel> countryMap = countryService.findMapByCountryIds(new ArrayList<>(countryIds));
+                Map<Integer, CityModel> cityMap = cityService.findMapByCityIds(new ArrayList<>(cityIds));
+
+                List<FriendModel> friendModels = friendService.find(Collections.singletonMap("userId", SecurityUtil.getCurrentUserId()));
+                Map<Integer, FriendModel> friendMap = new HashMap<>();
+                if (CollectionUtils.isNotEmpty(friendModels)) {
+                    for (FriendModel friend : friendModels) {
+                        friendMap.put(friend.getFriendUserId(), friend);
+                    }
+                }
+
+                for(UserModel tmpUser : userModels) {
+                    ChatroomUserDto roomUser = new ChatroomUserDto();
+                    roomUser.setHeadImage(tmpUser.getHeadImage())
+                            .setNickName(tmpUser.getNickName())
+                            .setSex(tmpUser.getSex())
+                            .setAgencyName(tmpUser.getAgencyName())
+                            .setUserDesc(tmpUser.getUserDesc());
+
+                    CountryModel tmpCountry = countryMap.get(tmpUser.getCountryId());
+                    CityModel tmpCity = cityMap.get(tmpUser.getCityId());
+                    FriendModel tmpFriend = friendMap.get(tmpUser.getId());
+
+                    if(tmpCountry != null) {
+                        roomUser.setCountryCnName(tmpCountry.getCountryCnName());
+                        roomUser.setCountryEnName(tmpCountry.getCountryEnName());
+                        roomUser.setCountryFlag(tmpCountry.getCountryFlag());
+                    }
+
+                    if(tmpCity != null) {
+                        roomUser.setCityCnName(tmpCity.getCityCn());
+                        roomUser.setCityEnName(tmpCity.getCityEn());
+                    }
+
+                    if(tmpFriend != null) {
+                        roomUser.setNoteName(tmpFriend.getNoteName());
+                    }
+
+                    roomUsers.add(roomUser);
+                }
+            }
+
+            return ResponseUtil.success(Collections.singletonMap("roomUsers", roomUsers));
         } catch(Exception e) {
             e.printStackTrace();
 

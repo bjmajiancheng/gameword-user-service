@@ -23,6 +23,9 @@
 
 	<sql id="findWhere">
 	    <where>
+	    	<if test="userId != null">
+				AND user_id = #{userId}
+			</if>
 	    </where>
 	</sql>
 
