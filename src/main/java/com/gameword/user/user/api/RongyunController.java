@@ -162,7 +162,8 @@ public class RongyunController {
 
                 for(UserModel tmpUser : userModels) {
                     ChatroomUserDto roomUser = new ChatroomUserDto();
-                    roomUser.setHeadImage(tmpUser.getHeadImage())
+                    roomUser.setUserId(tmpUser.getId())
+                            .setHeadImage(tmpUser.getHeadImage())
                             .setNickName(tmpUser.getNickName())
                             .setSex(tmpUser.getSex())
                             .setAgencyName(tmpUser.getAgencyName())
