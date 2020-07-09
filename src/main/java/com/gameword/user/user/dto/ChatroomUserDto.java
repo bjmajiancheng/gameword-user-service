@@ -35,6 +35,12 @@ public class ChatroomUserDto implements Serializable {
 
     private String countryFlag;
 
+    private int isFriend;
+
+    private int isBlock;
+
+    private int isAdmin;
+
     public String getNoteName() {
         return noteName;
     }
@@ -140,6 +146,33 @@ public class ChatroomUserDto implements Serializable {
 
     public ChatroomUserDto setCountryFlag(String countryFlag) {
         this.countryFlag = countryFlag;
+        return this;
+    }
+
+    public Integer getIsFriend() {
+        return isFriend;
+    }
+
+    public ChatroomUserDto setIsFriend(int isFriend) {
+        this.isFriend = isFriend;
+        return this;
+    }
+
+    public Integer getIsBlock() {
+        return isBlock;
+    }
+
+    public ChatroomUserDto setIsBlock(int isBlock) {
+        this.isBlock = isBlock;
+        return this;
+    }
+
+    public Integer getIsAdmin() {
+        return isAdmin;
+    }
+
+    public ChatroomUserDto setIsAdmin(int isAdmin) {
+        this.isAdmin = isAdmin;
         return this;
     }
 }

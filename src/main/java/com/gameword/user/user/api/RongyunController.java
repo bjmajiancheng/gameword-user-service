@@ -15,6 +15,7 @@ import com.gameword.user.user.service.IFriendService;
 import io.rong.methods.chatroom.Chatroom;
 import io.rong.models.chatroom.ChatroomMember;
 import io.rong.models.response.ChatroomUserQueryResult;
+import io.rong.models.response.ListBlockChatroomUserResult;
 import io.rong.models.response.ResponseResult;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
@@ -116,6 +117,11 @@ public class RongyunController {
             ChatroomUserQueryResult result = rongyunUtil.chatroomUsers(queryDto.getChatroomId());
             List<ChatroomMember> chatroomMembers = result.getMembers();
 
+            ListBlockChatroomUserResult blockUserRes = rongyunUtil.blockUsers(queryDto.getChatroomId());
+            List<ChatroomMember> blockMembers = blockUserRes.getMembers();
+            Map<String, ChatroomMember> blockMemberMap = new HashMap<>();
+            blockMembers.forEach(e -> blockMemberMap.put(e.getId(), e));
+
             List<UserModel> userModels = new ArrayList<>();
             if(CollectionUtils.isNotEmpty(chatroomMembers)) {
                 List<Integer> userIds = new ArrayList<>();
@@ -152,13 +158,7 @@ public class RongyunController {
                 Map<Integer, CountryModel> countryMap = countryService.findMapByCountryIds(new ArrayList<>(countryIds));
                 Map<Integer, CityModel> cityMap = cityService.findMapByCityIds(new ArrayList<>(cityIds));
 
-                List<FriendModel> friendModels = friendService.find(Collections.singletonMap("userId", SecurityUtil.getCurrentUserId()));
-                Map<Integer, FriendModel> friendMap = new HashMap<>();
-                if (CollectionUtils.isNotEmpty(friendModels)) {
-                    for (FriendModel friend : friendModels) {
-                        friendMap.put(friend.getFriendUserId(), friend);
-                    }
-                }
+                Map<Integer, FriendModel> friendMap = friendService.findMapByUserId(SecurityUtil.getCurrentUserId());
 
                 for(UserModel tmpUser : userModels) {
                     ChatroomUserDto roomUser = new ChatroomUserDto();
@@ -172,6 +172,7 @@ public class RongyunController {
                     CountryModel tmpCountry = countryMap.get(tmpUser.getCountryId());
                     CityModel tmpCity = cityMap.get(tmpUser.getCityId());
                     FriendModel tmpFriend = friendMap.get(tmpUser.getId());
+                    ChatroomMember blockMember = blockMemberMap.get(String.valueOf(tmpUser.getId()));
 
                     if(tmpCountry != null) {
                         roomUser.setCountryCnName(tmpCountry.getCountryCnName());
@@ -186,6 +187,11 @@ public class RongyunController {
 
                     if(tmpFriend != null) {
                         roomUser.setNoteName(tmpFriend.getNoteName());
+                        roomUser.setIsFriend(1);
+                    }
+
+                    if(blockMember != null) {
+                        roomUser.setIsBlock(1);
                     }
 
                     roomUsers.add(roomUser);

@@ -109,4 +109,18 @@ public class FriendServiceImpl extends BaseService<FriendModel> implements IFrie
 
 		return friendMapper.updateNoteName(userId, friendUserId, noteName);
 	}
+
+	public Map<Integer, FriendModel> findMapByUserId(Integer userId) {
+		if(userId == null) {
+			return Collections.emptyMap();
+		}
+
+		Map<Integer, FriendModel> friendModelMap = new HashMap<>();
+		List<FriendModel> friendModels = friendMapper.find(Collections.singletonMap("userId", userId));
+		if (CollectionUtils.isNotEmpty(friendModels)) {
+			friendModels.forEach(e -> friendModelMap.put(e.getFriendUserId(), e));
+		}
+
+		return friendModelMap;
+	}
 }

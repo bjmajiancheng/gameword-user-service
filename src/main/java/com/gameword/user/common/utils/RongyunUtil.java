@@ -223,6 +223,23 @@ public class RongyunUtil implements Serializable{
     }
 
     /**
+     * 获取禁言用户信息
+     *
+     * @param id
+     */
+    public ListBlockChatroomUserResult blockUsers(String id) {
+        try {
+            ListBlockChatroomUserResult blockChatroomUser = getRongCloud().chatroom.block.getList(id);
+
+            return blockChatroomUser;
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return null;
+        }
+    }
+
+    /**
      * 校验群空间是否存在某用户
      *
      * @param id
