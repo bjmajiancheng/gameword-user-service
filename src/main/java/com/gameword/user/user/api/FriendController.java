@@ -13,7 +13,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.alibaba.fastjson.JSON;
 import com.gameword.user.common.dto.QueryDto;
+import com.gameword.user.common.utils.JPushUtil;
 import com.gameword.user.common.utils.Pinyin4jUtil;
 import com.gameword.user.common.utils.ResponseUtil;
 import com.gameword.user.common.utils.Result;
@@ -22,6 +24,7 @@ import com.gameword.user.security.service.IUserService;
 import com.gameword.user.security.utils.SecurityUtil;
 import com.gameword.user.user.model.CityModel;
 import com.gameword.user.user.model.CountryModel;
+import com.gameword.user.user.model.MessageModel;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
@@ -57,6 +60,12 @@ public class FriendController {
 
 	@Autowired
 	private ICityService cityService;
+
+	@Autowired
+	private IMessageService messageService;
+
+	@Autowired
+	private JPushUtil jPushUtil;
 
 	@ResponseBody
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
@@ -210,7 +219,19 @@ public class FriendController {
 				return ResponseUtil.error("已添加该好友, 禁止重复添加好友");
 			}
 
-			int saveCnt = friendService.saveNotNull(friendModel);
+			MessageModel messageModel = new MessageModel();
+			messageModel.setUserId(queryDto.getFriendUserId());
+			messageModel.setMessageName("添加好友");
+			messageModel.setMessageContent("添加您为好友，是否同意？");
+			messageModel.setMessageType(1);
+			messageModel.setMessageUrl(JSON.toJSONString(friendModel));
+
+			int saveCnt = messageService.saveNotNull(messageModel);
+
+			//极光推送消息
+			jPushUtil.sendMessage(queryDto.getFriendUserId(), messageModel.getMessageName(), messageModel.getMessageContent());
+
+			/*int saveCnt = friendService.saveNotNull(friendModel);*/
 
 			return ResponseUtil.success();
 		} catch(Exception e) {

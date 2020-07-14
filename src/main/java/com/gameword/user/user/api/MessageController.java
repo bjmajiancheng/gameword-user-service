@@ -13,10 +13,15 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.alibaba.fastjson.JSON;
 import com.gameword.user.common.dto.QueryDto;
+import com.gameword.user.common.utils.JPushUtil;
 import com.gameword.user.common.utils.PageConvertUtil;
 import com.gameword.user.common.utils.ResponseUtil;
 import com.gameword.user.common.utils.Result;
+import com.gameword.user.core.model.UserModel;
+import com.gameword.user.security.service.IUserService;
+import com.gameword.user.user.model.FriendModel;
 import com.gameword.user.user.model.HelpModel;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +49,15 @@ public class MessageController {
 
 	@Autowired
 	private IMessageService messageService;
+
+	@Autowired
+	private IFriendService friendService;
+
+	@Autowired
+	private IUserService userService;
+
+	@Autowired
+	private JPushUtil jPushUtil;
 
 	/**
 	 * 消息列表
@@ -81,10 +95,28 @@ public class MessageController {
 			MessageModel messageModel = new MessageModel();
 			messageModel.setId(queryDto.getId());
 			messageModel.setIsAgree(queryDto.getIsAgree());
+			messageModel.setIsRead(1);
 
 			int updateCnt = messageService.updateNotNull(messageModel);
 
 			MessageModel tmpMessage = messageService.findById(queryDto.getId());
+
+			FriendModel friendModel = JSON.parseObject(tmpMessage.getMessageUrl(), FriendModel.class);
+			//1：同意， 2：不同意
+			if (queryDto.getIsAgree() == 1) {
+				int saveCnt = friendService.saveNotNull(friendModel);
+			}
+
+			UserModel userModel = userService.findById(friendModel.getFriendUserId());
+
+			MessageModel message = new MessageModel();
+			message.setMessageName("添加好友");
+			message.setMessageContent(String.format("%s %s添加您为好友", userModel.getNickName(), (queryDto.getIsAgree() == 1) ? "已同意": "已拒绝"));
+			message.setMessageType(2);
+			message.setUserId(friendModel.getUserId());
+			int saveCnt = messageService.saveNotNull(message);
+
+			jPushUtil.sendMessage(friendModel.getUserId(), message.getMessageName(), message.getMessageContent());
 
 			return ResponseUtil.success(Collections.singletonMap("message", tmpMessage));
 		} catch(Exception e) {

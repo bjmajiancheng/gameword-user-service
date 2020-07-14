@@ -49,4 +49,15 @@
         <property name="businessRoomId" value="${rongyun.businessRoomId}" />
     </bean>
 
+    <!-- 极光推送客户端 -->
+    <bean id="jPushClient" class="cn.jpush.api.JPushClient">
+        <constructor-arg name="masterSecret" value="${jpush.masterSecret}"/>
+        <constructor-arg name="appKey" value="${jpush.appKey}"/>
+    </bean>
+
+    <bean id="jPushUtil" class="com.gameword.user.common.utils.JPushUtil">
+        <constructor-arg name="jPushClient" ref="jPushClient" />
+        <constructor-arg name="apnsProduction" value="${jpush.apnsProduction}" />
+    </bean>
+
 </beans>
