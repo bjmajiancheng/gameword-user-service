@@ -102,10 +102,10 @@ public class JPushUtil implements Serializable {
     }
 
     public static void main(String[] args) {
-        JPushClient jPushClient = new JPushClient("a2a521af82fafd7d63ec094e", "9b1dbf6a02bdb51ea6bf269a");
+        JPushClient jPushClient = new JPushClient("66dbf63cf9758d0ae220ff42", "c60890e77b03380b321ae79b");
 
         JPushUtil jPushUtil = new JPushUtil(jPushClient, false);
-        jPushUtil.sendMessage(42, "test title", "test msg.");
+        jPushUtil.sendMessage(5, "好嘿呦", "好嘿呦.");
     }
 
 }
