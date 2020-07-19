@@ -21,9 +21,11 @@ import com.gameword.user.common.utils.ResponseUtil;
 import com.gameword.user.common.utils.Result;
 import com.gameword.user.core.model.UserModel;
 import com.gameword.user.security.service.IUserService;
+import com.gameword.user.security.utils.SecurityUtil;
 import com.gameword.user.user.model.FriendModel;
 import com.gameword.user.user.model.HelpModel;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -70,6 +72,7 @@ public class MessageController {
 	public Result list(@RequestBody QueryDto queryDto) {
 		try {
 			MessageModel messageModel = new MessageModel();
+			messageModel.setUserId(SecurityUtil.getCurrentUserId());
 			messageModel.setSort_("c_time_asc");
 
 			PageInfo<MessageModel> pageInfo = messageService.selectByFilterAndPage(messageModel, queryDto.getPageNum(), queryDto.getPageSize());
@@ -122,6 +125,61 @@ public class MessageController {
 		} catch(Exception e) {
 			e.printStackTrace();
 
+			return ResponseUtil.error();
+		}
+	}
+
+	/**
+	 * 消息读取
+	 *
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/readMessage", method = RequestMethod.POST)
+	public Result readMessage(@RequestBody QueryDto queryDto) {
+		try {
+			Integer messageId = queryDto.getId();
+			MessageModel messageModel = messageService.findById(messageId);
+			if (messageModel == null) {
+				return ResponseUtil.error("消息为空，请传递正确的消息ID。");
+			}
+
+			MessageModel updateMessage = new MessageModel();
+			updateMessage.setId(messageId);
+			updateMessage.setIsRead(1);
+			messageService.updateNotNull(updateMessage);
+
+			return ResponseUtil.success();
+		} catch(Exception e) {
+			e.printStackTrace();
+			return ResponseUtil.error();
+		}
+	}
+
+	/**
+	 * 消息读取
+	 *
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/readAll", method = RequestMethod.POST)
+	public Result readAll(@RequestBody QueryDto queryDto) {
+		try {
+			int userId = SecurityUtil.getCurrentUserId();
+			MessageModel messageModel = new MessageModel();
+			messageModel.setUserId(userId);
+			List<MessageModel> messageModels = messageService.selectByFilter(messageModel);
+			if (CollectionUtils.isNotEmpty(messageModels)) {
+				for (MessageModel tmpMessage : messageModels) {
+					tmpMessage.setIsRead(1);
+
+					messageService.updateNotNull(tmpMessage);
+				}
+			}
+
+			return ResponseUtil.success();
+		} catch(Exception e) {
+			e.printStackTrace();
 			return ResponseUtil.error();
 		}
 	}

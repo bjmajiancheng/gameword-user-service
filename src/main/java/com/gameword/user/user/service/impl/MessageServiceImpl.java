@@ -64,6 +64,10 @@ public class MessageServiceImpl extends BaseService<MessageModel> implements IMe
 		Example example = new Example(MessageModel.class);
 		Example.Criteria criteria = example.createCriteria();
 
+		if (messageModel.getUserId() != null) {
+			criteria.andEqualTo("userId", messageModel.getUserId());
+		}
+
 		if(StringUtils.isNotEmpty(messageModel.getSortWithOutOrderBy())) {
 			example.setOrderByClause(messageModel.getSortWithOutOrderBy());
 		}
