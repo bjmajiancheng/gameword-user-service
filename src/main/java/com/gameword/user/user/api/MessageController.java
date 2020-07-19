@@ -77,6 +77,37 @@ public class MessageController {
 
 			PageInfo<MessageModel> pageInfo = messageService.selectByFilterAndPage(messageModel, queryDto.getPageNum(), queryDto.getPageSize());
 
+			List<MessageModel> messages = pageInfo.getList();
+			if (CollectionUtils.isNotEmpty(messages)) {
+				List<Integer> userIds = new ArrayList<>();
+				for (MessageModel message : messages) {
+					if (message.getMessageType() == 1) {
+						FriendModel friendModel = JSON.parseObject(message.getMessageUrl(), FriendModel.class);
+						if (friendModel == null) {
+							continue;
+						}
+
+						userIds.add(friendModel.getUserId());
+					}
+				}
+
+				Map<Integer, UserModel> userMap = userService.findUserMapByUserIds(userIds);
+				for (MessageModel message : messages) {
+					if (message.getMessageType() == 1) {
+						FriendModel friendModel = JSON.parseObject(message.getMessageUrl(), FriendModel.class);
+						if (friendModel == null) {
+							continue;
+						}
+						UserModel userModel = userMap.get(friendModel.getUserId());
+						if (userModel == null) {
+							continue;
+						}
+
+						message.setHeadImage(userModel.getHeadImage());
+					}
+				}
+			}
+
 			return ResponseUtil.success(PageConvertUtil.grid(pageInfo));
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -105,6 +136,11 @@ public class MessageController {
 			MessageModel tmpMessage = messageService.findById(queryDto.getId());
 
 			FriendModel friendModel = JSON.parseObject(tmpMessage.getMessageUrl(), FriendModel.class);
+
+			if (friendModel == null) {
+				return ResponseUtil.error();
+			}
+
 			//1：同意， 2：不同意
 			if (queryDto.getIsAgree() == 1) {
 				int saveCnt = friendService.saveNotNull(friendModel);

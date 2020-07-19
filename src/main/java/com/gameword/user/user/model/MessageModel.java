@@ -55,7 +55,10 @@ public class MessageModel extends Sortable {
 	private Date ctime;//"创建时间"
 
 	//columns END
-		
+
+	@Transient
+	private String headImage;
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -128,5 +131,12 @@ public class MessageModel extends Sortable {
 		return this.ctime;
 	}
 
+	public String getHeadImage() {
+		return headImage;
+	}
+
+	public void setHeadImage(String headImage) {
+		this.headImage = headImage;
+	}
 }
 
