@@ -54,7 +54,7 @@ public class PaymentServiceImpl extends BaseService<PaymentModel> implements IPa
 	@Override
 	public PageInfo<PaymentModel> selectByFilterAndPage(PaymentModel paymentModel, int pageNum,
 		int pageSize) {
-		PageHelper.startPage(pageNum, pageSize);
+		PageHelper.startPage(pageNum, pageSize, true, false, null);
 		List<PaymentModel> list = this.selectByFilter(paymentModel);
 		return new PageInfo<>(list);
 	}

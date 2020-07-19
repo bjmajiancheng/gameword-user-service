@@ -54,7 +54,7 @@ public class PriceConfServiceImpl extends BaseService<PriceConfModel> implements
 	@Override
 	public PageInfo<PriceConfModel> selectByFilterAndPage(PriceConfModel priceConfModel, int pageNum,
 		int pageSize) {
-		PageHelper.startPage(pageNum, pageSize);
+		PageHelper.startPage(pageNum, pageSize, true, false, null);
 		List<PriceConfModel> list = this.selectByFilter(priceConfModel);
 		return new PageInfo<>(list);
 	}

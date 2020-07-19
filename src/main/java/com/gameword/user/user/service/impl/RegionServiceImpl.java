@@ -54,7 +54,7 @@ public class RegionServiceImpl extends BaseService<RegionModel> implements IRegi
 	@Override
 	public PageInfo<RegionModel> selectByFilterAndPage(RegionModel regionModel, int pageNum,
 		int pageSize) {
-		PageHelper.startPage(pageNum, pageSize);
+		PageHelper.startPage(pageNum, pageSize, true, false, null);
 		List<RegionModel> list = this.selectByFilter(regionModel);
 		return new PageInfo<>(list);
 	}

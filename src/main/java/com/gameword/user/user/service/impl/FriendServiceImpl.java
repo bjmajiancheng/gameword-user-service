@@ -55,7 +55,7 @@ public class FriendServiceImpl extends BaseService<FriendModel> implements IFrie
 	@Override
 	public PageInfo<FriendModel> selectByFilterAndPage(FriendModel friendModel, int pageNum,
 		int pageSize) {
-		PageHelper.startPage(pageNum, pageSize);
+		PageHelper.startPage(pageNum, pageSize, true, false, null);
 		List<FriendModel> list = this.selectByFilter(friendModel);
 		return new PageInfo<>(list);
 	}

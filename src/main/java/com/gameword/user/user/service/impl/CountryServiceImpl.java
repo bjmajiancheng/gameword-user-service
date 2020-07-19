@@ -54,7 +54,7 @@ public class CountryServiceImpl extends BaseService<CountryModel> implements ICo
 	@Override
 	public PageInfo<CountryModel> selectByFilterAndPage(CountryModel countryModel, int pageNum,
 		int pageSize) {
-		PageHelper.startPage(pageNum, pageSize);
+		PageHelper.startPage(pageNum, pageSize, true, false, null);
 		List<CountryModel> list = this.selectByFilter(countryModel);
 		return new PageInfo<>(list);
 	}

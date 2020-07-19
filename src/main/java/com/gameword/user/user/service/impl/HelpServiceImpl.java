@@ -54,7 +54,7 @@ public class HelpServiceImpl extends BaseService<HelpModel> implements IHelpServ
 	@Override
 	public PageInfo<HelpModel> selectByFilterAndPage(HelpModel helpModel, int pageNum,
 		int pageSize) {
-		PageHelper.startPage(pageNum, pageSize);
+		PageHelper.startPage(pageNum, pageSize, true, false, null);
 		List<HelpModel> list = this.selectByFilter(helpModel);
 		return new PageInfo<>(list);
 	}

@@ -54,7 +54,7 @@ public class CompanyLabelServiceImpl extends BaseService<CompanyLabelModel> impl
 	@Override
 	public PageInfo<CompanyLabelModel> selectByFilterAndPage(CompanyLabelModel companyLabelModel, int pageNum,
 		int pageSize) {
-		PageHelper.startPage(pageNum, pageSize);
+		PageHelper.startPage(pageNum, pageSize, true, false, null);
 		List<CompanyLabelModel> list = this.selectByFilter(companyLabelModel);
 		return new PageInfo<>(list);
 	}

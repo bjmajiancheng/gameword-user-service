@@ -54,7 +54,7 @@ public class LabelServiceImpl extends BaseService<LabelModel> implements ILabelS
 	@Override
 	public PageInfo<LabelModel> selectByFilterAndPage(LabelModel labelModel, int pageNum,
 		int pageSize) {
-		PageHelper.startPage(pageNum, pageSize);
+		PageHelper.startPage(pageNum, pageSize, true, false, null);
 		List<LabelModel> list = this.selectByFilter(labelModel);
 		return new PageInfo<>(list);
 	}

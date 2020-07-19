@@ -54,7 +54,7 @@ public class CityServiceImpl extends BaseService<CityModel> implements ICityServ
 
     @Override
     public PageInfo<CityModel> selectByFilterAndPage(CityModel cityModel, int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
+        PageHelper.startPage(pageNum, pageSize, true, false, null);
         List<CityModel> list = this.selectByFilter(cityModel);
         return new PageInfo<>(list);
     }

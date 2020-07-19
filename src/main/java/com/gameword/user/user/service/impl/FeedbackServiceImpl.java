@@ -54,7 +54,7 @@ public class FeedbackServiceImpl extends BaseService<FeedbackModel> implements I
 	@Override
 	public PageInfo<FeedbackModel> selectByFilterAndPage(FeedbackModel feedbackModel, int pageNum,
 		int pageSize) {
-		PageHelper.startPage(pageNum, pageSize);
+		PageHelper.startPage(pageNum, pageSize, true, false, null);
 		List<FeedbackModel> list = this.selectByFilter(feedbackModel);
 		return new PageInfo<>(list);
 	}

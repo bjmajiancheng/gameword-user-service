@@ -54,7 +54,7 @@ public class StationServiceImpl extends BaseService<StationModel> implements ISt
 	@Override
 	public PageInfo<StationModel> selectByFilterAndPage(StationModel stationModel, int pageNum,
 		int pageSize) {
-		PageHelper.startPage(pageNum, pageSize);
+		PageHelper.startPage(pageNum, pageSize, true, false, null);
 		List<StationModel> list = this.selectByFilter(stationModel);
 		return new PageInfo<>(list);
 	}

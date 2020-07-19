@@ -54,7 +54,7 @@ public class AdvertisementServiceImpl extends BaseService<AdvertisementModel> im
 	@Override
 	public PageInfo<AdvertisementModel> selectByFilterAndPage(AdvertisementModel advertisementModel, int pageNum,
 		int pageSize) {
-		PageHelper.startPage(pageNum, pageSize);
+		PageHelper.startPage(pageNum, pageSize, true, false, null);
 		List<AdvertisementModel> list = this.selectByFilter(advertisementModel);
 		return new PageInfo<>(list);
 	}

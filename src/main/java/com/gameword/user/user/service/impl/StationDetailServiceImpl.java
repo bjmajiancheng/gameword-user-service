@@ -54,7 +54,7 @@ public class StationDetailServiceImpl extends BaseService<StationDetailModel> im
 	@Override
 	public PageInfo<StationDetailModel> selectByFilterAndPage(StationDetailModel stationDetailModel, int pageNum,
 		int pageSize) {
-		PageHelper.startPage(pageNum, pageSize);
+		PageHelper.startPage(pageNum, pageSize, true, false, null);
 		List<StationDetailModel> list = this.selectByFilter(stationDetailModel);
 		return new PageInfo<>(list);
 	}
