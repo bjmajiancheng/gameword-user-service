@@ -144,6 +144,11 @@ public class MessageController {
 			//1：同意， 2：不同意
 			if (queryDto.getIsAgree() == 1) {
 				int saveCnt = friendService.saveNotNull(friendModel);
+
+				FriendModel ownFriendModel = new FriendModel();
+				ownFriendModel.setUserId(friendModel.getFriendUserId());
+				ownFriendModel.setFriendUserId(friendModel.getUserId());
+				friendService.saveNotNull(ownFriendModel);
 			}
 
 			UserModel userModel = userService.findById(friendModel.getFriendUserId());
