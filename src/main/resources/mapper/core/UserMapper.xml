@@ -70,7 +70,7 @@
 				AND qq_id = #{qqId}
 			</if>
 			<if test="nickName != null">
-				AND nick_name LIKE ${nickName}
+				AND nick_name LIKE '${nickName}'
 			</if>
 			<if test="realName != null">
 				AND real_name = #{realName}
