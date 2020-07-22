@@ -118,6 +118,7 @@ public class CommonController {
             HashMap<String, String> extMap = new HashMap<String, String>();
             extMap.put(dirName, "gif,jpg,jpeg,png,bmp");
 
+            logger.info("update Image fileName:{}.", file.getOriginalFilename());
             Attachment attachment = attachmentService
                     .uploadFileAttachement(request, file, dirName, maxSize, extMap, IMAGE);
             return ResponseUtil.success(attachment);
