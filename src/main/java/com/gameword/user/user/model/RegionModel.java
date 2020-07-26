@@ -42,7 +42,7 @@ public class RegionModel extends Sortable {
 	private Boolean regionType;//"regionType"
 
 	//columns END
-		
+
 	public void setId(Integer id) {
 		this.id = id;
 	}

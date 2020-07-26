@@ -1,10 +1,7 @@
 package com.gameword.user.common.api;
 
 import com.gameword.user.common.service.IAttachmentService;
-import com.gameword.user.common.utils.MailSender;
-import com.gameword.user.common.utils.MessageUtil;
-import com.gameword.user.common.utils.ResponseUtil;
-import com.gameword.user.common.utils.Result;
+import com.gameword.user.common.utils.*;
 import com.gameword.user.core.model.UserModel;
 import com.gameword.user.user.model.*;
 import com.gameword.user.common.dto.QueryDto;
@@ -300,6 +297,25 @@ public class CommonController {
 
         try {
             List<RegionModel> regionModels = regionService.find(Collections.singletonMap("parentId", 0));
+            if (CollectionUtils.isNotEmpty(regionModels)) {
+                regionModels.sort(new Comparator<RegionModel>() {
+                    @Override
+                    public int compare(RegionModel o1, RegionModel o2) {
+                        String o1CnNamePinyin = JPinyinUtils.covertToPinyinString(o1.getRegionCnName());
+                        String o1EnNamePinyin = JPinyinUtils.covertToPinyinString(o1.getRegionEnName());
+
+                        String o2CnNamePinyin = JPinyinUtils.covertToPinyinString(o2.getRegionCnName());
+                        String o2EnNamePinyin = JPinyinUtils.covertToPinyinString(o2.getRegionEnName());
+                        if(queryDto.getLanguage() == 1) {
+                            return o1CnNamePinyin.compareTo(o2CnNamePinyin);
+                        } else if(queryDto.getLanguage() == 2) {
+                            return o1EnNamePinyin.compareTo(o2EnNamePinyin);
+                        }
+
+                        return 0;
+                    }
+                });
+            }
 
             return ResponseUtil.success(Collections.singletonMap("countrys", regionModels));
         } catch(Exception e) {
@@ -321,6 +337,25 @@ public class CommonController {
 
         try {
             List<RegionModel> regionModels = regionService.find(Collections.singletonMap("parentId", queryDto.getCountryId()));
+            if (CollectionUtils.isNotEmpty(regionModels)) {
+                regionModels.sort(new Comparator<RegionModel>() {
+                    @Override
+                    public int compare(RegionModel o1, RegionModel o2) {
+                        String o1CnNamePinyin = JPinyinUtils.covertToPinyinString(o1.getRegionCnName());
+                        String o1EnNamePinyin = JPinyinUtils.covertToPinyinString(o1.getRegionEnName());
+
+                        String o2CnNamePinyin = JPinyinUtils.covertToPinyinString(o2.getRegionCnName());
+                        String o2EnNamePinyin = JPinyinUtils.covertToPinyinString(o2.getRegionEnName());
+                        if(queryDto.getLanguage() == 1) {
+                            return o1CnNamePinyin.compareTo(o2CnNamePinyin);
+                        } else if(queryDto.getLanguage() == 2) {
+                            return o1EnNamePinyin.compareTo(o2EnNamePinyin);
+                        }
+
+                        return 0;
+                    }
+                });
+            }
 
             return ResponseUtil.success(Collections.singletonMap("citys", regionModels));
         } catch(Exception e) {

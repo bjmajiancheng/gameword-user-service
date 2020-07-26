@@ -1,5 +1,6 @@
 package com.gameword.user.common.utils;
 
+import com.gameword.user.common.api.CommonController;
 import io.rong.RongCloud;
 import io.rong.methods.chatroom.Chatroom;
 import io.rong.methods.user.User;
@@ -8,6 +9,8 @@ import io.rong.models.chatroom.ChatroomMember;
 import io.rong.models.chatroom.ChatroomModel;
 import io.rong.models.response.*;
 import io.rong.models.user.UserModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.io.Reader;
@@ -31,6 +34,8 @@ public class RongyunUtil implements Serializable{
     private String businessRoomId;
 
     private RongCloud rongCloud;
+
+    private final static Logger logger = LoggerFactory.getLogger(RongyunUtil.class);
 
     public String getAppKey() {
         return appKey;
@@ -236,6 +241,41 @@ public class RongyunUtil implements Serializable{
             e.printStackTrace();
 
             return null;
+        }
+    }
+
+    /**
+     * 修改用户是否禁言
+     *
+     * @param id
+     * @param userId
+     * @return
+     */
+    public boolean updateBlockUser(String id, String userId, int blockType) {
+        ChatroomMember[] members = {
+                new ChatroomMember().setId(userId)
+        };
+
+
+        ChatroomModel chatroomModel = new ChatroomModel()
+                .setId(id)
+                .setMembers(members)
+                .setMinute(Integer.MAX_VALUE);
+        try {
+            ResponseResult result = null;
+
+            if (blockType == 1) {
+                result = getRongCloud().chatroom.block.add(chatroomModel);
+            } else if(blockType == 0) {
+                result = getRongCloud().chatroom.block.remove(chatroomModel);
+            }
+
+            logger.info("update block user, result:{}.", result);
+            return true;
+        } catch(Exception e) {
+            e.printStackTrace();
+
+            return false;
         }
     }
 

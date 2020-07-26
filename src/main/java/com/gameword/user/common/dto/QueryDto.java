@@ -81,6 +81,8 @@ public class QueryDto implements Serializable {
 
     private Integer paymentType;//金额类型 1：人民币，2：美元
 
+    private Integer blockType;//是否禁言，1：是，0：否
+
     public Integer getId() {
         return id;
     }
@@ -358,5 +360,13 @@ public class QueryDto implements Serializable {
 
     public void setPaymentType(Integer paymentType) {
         this.paymentType = paymentType;
+    }
+
+    public Integer getBlockType() {
+        return blockType;
+    }
+
+    public void setBlockType(Integer blockType) {
+        this.blockType = blockType;
     }
 }

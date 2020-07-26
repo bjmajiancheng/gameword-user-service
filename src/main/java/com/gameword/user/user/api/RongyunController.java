@@ -229,4 +229,28 @@ public class RongyunController {
             return ResponseUtil.error();
         }
     }
+
+    /**
+     * 修改用户是否解禁状态
+     *
+     * @param queryDto
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/updateUserBlock", method = RequestMethod.POST)
+    public Result updateUserBlock(@RequestBody QueryDto queryDto) {
+        if (StringUtils.isBlank(queryDto.getChatroomId()) || queryDto.getUserId() == null) {
+            return ResponseUtil.error("聊天室ID和用户ID不能为空，请确定请求参数");
+        }
+
+        try {
+            boolean flag = rongyunUtil.updateBlockUser(queryDto.getChatroomId(), String.valueOf(queryDto.getUserId()), queryDto.getBlockType());
+
+            return ResponseUtil.success(Collections.singletonMap("blockType", queryDto.getBlockType()));
+        } catch(Exception e) {
+            e.printStackTrace();
+
+            return ResponseUtil.error();
+        }
+    }
 }
