@@ -142,6 +142,18 @@ public class UserModel extends Sortable {
 	@Transient
 	private String roomId = "";//聊天室ID
 
+	@Transient
+	private String countryCnName;
+
+	@Transient
+	private String countryEnName;
+
+	@Transient
+	private String cityCnName;
+
+	@Transient
+	private String cityEnName;
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -452,6 +464,38 @@ public class UserModel extends Sortable {
 
 	public void setRoomId(String roomId) {
 		this.roomId = roomId;
+	}
+
+	public String getCountryCnName() {
+		return countryCnName;
+	}
+
+	public void setCountryCnName(String countryCnName) {
+		this.countryCnName = countryCnName;
+	}
+
+	public String getCountryEnName() {
+		return countryEnName;
+	}
+
+	public void setCountryEnName(String countryEnName) {
+		this.countryEnName = countryEnName;
+	}
+
+	public String getCityCnName() {
+		return cityCnName;
+	}
+
+	public void setCityCnName(String cityCnName) {
+		this.cityCnName = cityCnName;
+	}
+
+	public String getCityEnName() {
+		return cityEnName;
+	}
+
+	public void setCityEnName(String cityEnName) {
+		this.cityEnName = cityEnName;
 	}
 }
 

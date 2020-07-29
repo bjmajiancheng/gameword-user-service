@@ -19,7 +19,7 @@ public class SecurityUtil {
         return userName;
     }
 
-    public static Integer getCurrentUserId() {
+    public static int getCurrentUserId() {
         if(SecurityContextHolder.getContext().getAuthentication() == null) {
             return 0;
         }

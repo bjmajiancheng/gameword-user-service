@@ -6,6 +6,7 @@ import com.gameword.user.security.constants.SecurityConstant;
 import com.gameword.user.security.security.SecurityUser;
 import com.gameword.user.security.utils.SecurityUtil;
 import com.gameword.user.user.model.PaymentModel;
+import com.gameword.user.user.model.RegionModel;
 import com.gameword.user.user.service.*;
 import com.github.pagehelper.PageInfo;
 import com.gameword.user.common.dto.QueryDto;
@@ -73,6 +74,9 @@ public class UserController {
 
     @Autowired
     private IPaymentService paymentService;
+
+    @Autowired
+    private IRegionService regionService;
 
 
     @ResponseBody
@@ -937,6 +941,24 @@ public class UserController {
             }
 
             this.generUserRoomId(userModel);
+
+            RegionModel country = regionService.findById(userModel.getCountryId());
+            RegionModel city = regionService.findById(userModel.getCityId());
+            if (country != null) {
+                userModel.setCountryCnName(country.getRegionCnName());
+                userModel.setCountryEnName(country.getRegionEnName());
+            }
+
+            if (city != null) {
+                userModel.setCityCnName(city.getRegionCnName());
+                userModel.setCityEnName(city.getRegionEnName());
+            }
+
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userModel.getUserName());
+            redisCache.set(SecurityConstant.USER_CACHE_PREFIX + userModel.getUserName(), userDetails, 10 * 12 * 30 * 24 * 60 * 60);
+
+            String token = this.tokenUtils.generateToken(userDetails);
+            userModel.setToken(token);
 
             return ResponseUtil.success(userModel);
         } catch(Exception e) {
