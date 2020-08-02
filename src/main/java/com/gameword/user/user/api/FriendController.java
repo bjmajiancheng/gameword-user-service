@@ -167,7 +167,7 @@ public class FriendController {
 				Map<Integer, CityModel> cityMap = cityService.findMapByCityIds(new ArrayList<>(cityIds));
 
 				for(FriendModel tmpFriend : friends) {
-					UserModel tmpUser = userMap.get(tmpFriend.getFriendUserId());
+					UserModel tmpUser = userMap.get(tmpFriend.getFriendUserId().intValue());
 					if(tmpUser != null) {
 						tmpFriend.setFriendHeadImage(tmpUser.getHeadImage());
 						tmpFriend.setFriendNickName(tmpUser.getNickName());
@@ -175,8 +175,8 @@ public class FriendController {
 						tmpFriend.setFriendAgencyName(tmpUser.getAgencyName());
 						tmpFriend.setFriendUserDesc(tmpUser.getUserDesc());
 
-						CountryModel tmpCountry = countryMap.get(tmpUser.getCountryId());
-						CityModel tmpCity = cityMap.get(tmpUser.getCityId());
+						CountryModel tmpCountry = countryMap.get(tmpUser.getCountryId().intValue());
+						CityModel tmpCity = cityMap.get(tmpUser.getCityId().intValue());
 
 						if(tmpCountry != null) {
 							tmpFriend.setFriendCountryCnName(tmpCountry.getCountryCnName());
