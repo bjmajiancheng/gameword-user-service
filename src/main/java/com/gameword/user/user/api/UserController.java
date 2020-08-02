@@ -840,6 +840,8 @@ public class UserController {
                 userPassMappingModel.setPassword(userModel.getPassword());
                 userPassMappingModel.setPasswordEncode(passwordEncode);
                 userPassMappingService.insert(userPassMappingModel);
+            } else {
+                userModel.setPassword(null);
             }
 
             userModel.setId(currUserId);

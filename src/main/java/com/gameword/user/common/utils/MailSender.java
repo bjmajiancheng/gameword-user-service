@@ -57,6 +57,7 @@ public class MailSender implements Serializable {
             // 如果需要身份认证，则创建一个密码验证器
             authenticator = new MailAuthenticator(mail.getUserName(), mail.getPassword());
         }
+
         // 根据邮件会话属性和密码验证器构造一个发送邮件的session
         Session sendMailSession = Session.getDefaultInstance(pro, authenticator);
         try {
@@ -216,7 +217,7 @@ public class MailSender implements Serializable {
         EmailDto mailInfo = new EmailDto();
         //mailInfo.setCCAddress("igameword@163.com");
         mailInfo.setMailServerHost("smtp.163.com");
-        mailInfo.setMailServerPort("25");
+        mailInfo.setMailServerPort("465");
         mailInfo.setValidate(true);
         mailInfo.setFromNickName("GW");
         mailInfo.setUserName("igameword@163.com"); // 实际发送者

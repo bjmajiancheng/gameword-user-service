@@ -1,5 +1,7 @@
 package com.gameword.user.common.dto;
 
+import com.sun.mail.util.MailSSLSocketFactory;
+
 import java.io.File;
 import java.security.GeneralSecurityException;
 import java.util.List;
@@ -43,14 +45,15 @@ public class EmailDto {
         props.put("mail.smtp.host", this.mailServerHost);
         props.put("mail.smtp.port", this.mailServerPort);
         props.put("mail.smtp.auth", validate ? "true" : "false");
+
         //SSL
-        /*MailSSLSocketFactory sf = new MailSSLSocketFactory();
+        MailSSLSocketFactory sf = new MailSSLSocketFactory();
         sf.setTrustAllHosts(true);
         props.put("mail.smtp.ssl.enable", "true");
         props.put("mail.smtp.ssl.socketFactory", sf);
         props.put("mail.smtp.socketFactory.fallback", "false");
         props.setProperty("mail.transport.protocol", "smtps");
-        props.put("mail.smtp.starttls.enable", "true");*/
+        props.put("mail.smtp.starttls.enable", "true");
         return props;
     }
 
