@@ -64,7 +64,7 @@ public class UserServiceImpl extends BaseService<UserModel> implements IUserServ
         List<UserModel> list = selectByFilter(userModel);
         if(CollectionUtils.isNotEmpty(list)) {
             for (UserModel user : list) {
-                user.setPassword("");
+                user.setPassword(null);
             }
         }
         return new PageInfo<>(list);
@@ -86,7 +86,7 @@ public class UserServiceImpl extends BaseService<UserModel> implements IUserServ
 
         if(CollectionUtils.isNotEmpty(list)) {
             for (UserModel user : list) {
-                user.setPassword("");
+                user.setPassword(null);
             }
         }
         return new PageInfo<>(list);
