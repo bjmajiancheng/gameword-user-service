@@ -214,15 +214,15 @@ public class MailSender implements Serializable {
     public static void main(String[] args) throws GeneralSecurityException, UnsupportedEncodingException {
         // 这个类主要是设置邮件
         EmailDto mailInfo = new EmailDto();
-        mailInfo.setCCAddress("xxxx@qq.com");
+        //mailInfo.setCCAddress("igameword@163.com");
         mailInfo.setMailServerHost("smtp.163.com");
         mailInfo.setMailServerPort("25");
         mailInfo.setValidate(true);
-        mailInfo.setFromNickName("xxx");
-        mailInfo.setUserName("xxx@163.com"); // 实际发送者
-        mailInfo.setPassword("xxx");// 您的邮箱密码/授权码
-        mailInfo.setFromAddress("xxx@163.com"); // 设置发送人邮箱地址
-        mailInfo.setToAddress("xxx@qq.com,xxx@qq.com"); // 设置接受者邮箱地址
+        mailInfo.setFromNickName("GW");
+        mailInfo.setUserName("igameword@163.com"); // 实际发送者
+        mailInfo.setPassword("QOWSJHROYONKRKKF");// 您的邮箱密码/授权码
+        mailInfo.setFromAddress("igameword@163.com"); // 设置发送人邮箱地址
+        mailInfo.setToAddress("bjmajiancheng@163.com"); // 设置接受者邮箱地址
         mailInfo.setSubject("【镁锭项目计划回归】按照这次的来。反馈");
         mailInfo.setContent("已完成！反馈。这次一定行！<table><tr><td>第一行第一列</td><td>第二行第二列</td></tr></table>");
 
