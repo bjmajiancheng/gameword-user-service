@@ -82,7 +82,7 @@ public class FriendController {
 			friendModel.setUserId(currUserId);
 			List<FriendModel> friends = friendService.selectByFilter(friendModel);
 			if(CollectionUtils.isNotEmpty(friends)) {
-				List<Integer> friendUserIds = new ArrayList<Integer>();
+				List<Integer> friendUserIds = new ArrayList<>();
 				for(FriendModel tmpFriend : friends) {
 					friendUserIds.add(tmpFriend.getFriendUserId());
 				}
@@ -98,21 +98,25 @@ public class FriendController {
 					}
 				}
 
-				Map<Integer, CountryModel> countryMap = countryService.findMapByCountryIds(new ArrayList<Integer>(countryIds));
-				Map<Integer, CityModel> cityMap = cityService.findMapByCityIds(new ArrayList<Integer>(cityIds));
+				Map<Integer, CountryModel> countryMap = countryService.findMapByCountryIds(new ArrayList<>(countryIds));
+				Map<Integer, CityModel> cityMap = cityService.findMapByCityIds(new ArrayList<>(cityIds));
 
 				for(FriendModel tmpFriend : friends) {
-					UserModel tmpUser = userMap.get(tmpFriend.getFriendUserId());
+					UserModel tmpUser = userMap.get(tmpFriend.getFriendUserId().intValue());
 					if(tmpUser != null) {
 						tmpFriend.setFriendHeadImage(tmpUser.getHeadImage());
 						tmpFriend.setFriendNickName(tmpUser.getNickName());
+						tmpFriend.setFriendSex(tmpUser.getSex());
+						tmpFriend.setFriendAgencyName(tmpUser.getAgencyName());
+						tmpFriend.setFriendUserDesc(tmpUser.getUserDesc());
 
-						CountryModel tmpCountry = countryMap.get(tmpUser.getCountryId());
-						CityModel tmpCity = cityMap.get(tmpUser.getCityId());
+						CountryModel tmpCountry = countryMap.get(tmpUser.getCountryId().intValue());
+						CityModel tmpCity = cityMap.get(tmpUser.getCityId().intValue());
 
 						if(tmpCountry != null) {
 							tmpFriend.setFriendCountryCnName(tmpCountry.getCountryCnName());
 							tmpFriend.setFriendCountryEnName(tmpCountry.getCountryEnName());
+							tmpFriend.setFriendCountryFlag(tmpCountry.getCountryFlag());
 						}
 
 						if(tmpCity != null) {
@@ -120,11 +124,14 @@ public class FriendController {
 							tmpFriend.setFriendCityEnName(tmpCity.getCityEn());
 						}
 					}
+
+					String keyword = Pinyin4jUtil.getPinYinFirstChar(tmpFriend.getFriendNickName());
+					tmpFriend.setFirstCharPinyin(keyword);
 				}
 
 			}
 
-			return ResponseUtil.success(Collections.singletonMap("friends", friendService.generKeyWordFriendMap(friends)));
+			return ResponseUtil.success(Collections.singletonMap("friends", friends));
 		} catch(Exception e) {
 			e.printStackTrace();
 

@@ -36,6 +36,7 @@ public class HelpController {
     public Result helpList(@RequestBody QueryDto queryDto) {
         try {
             HelpModel helpModel = new HelpModel();
+            helpModel.setIsDel(0);
             helpModel.setSort_("sort_asc");
 
             PageInfo<HelpModel> helpPage = helpService.selectByFilterAndPage(helpModel, queryDto.getPageNum(), queryDto.getPageSize());

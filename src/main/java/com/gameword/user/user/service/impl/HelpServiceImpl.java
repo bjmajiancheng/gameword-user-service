@@ -64,6 +64,10 @@ public class HelpServiceImpl extends BaseService<HelpModel> implements IHelpServ
 		Example example = new Example(HelpModel.class);
 		Example.Criteria criteria = example.createCriteria();
 
+		if (helpModel.getIsDel() != null) {
+			criteria.andEqualTo("isDel", helpModel.getIsDel());
+		}
+
 		if(StringUtils.isNotEmpty(helpModel.getSortWithOutOrderBy())) {
 			example.setOrderByClause(helpModel.getSortWithOutOrderBy());
 		}
