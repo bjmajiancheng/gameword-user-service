@@ -141,14 +141,20 @@ public class MessageController {
 				return ResponseUtil.error();
 			}
 
+
 			//1：同意， 2：不同意
 			if (queryDto.getIsAgree() == 1) {
-				int saveCnt = friendService.saveNotNull(friendModel);
+				List<FriendModel> friendModels = friendService.selectByFilter(friendModel);
 
-				FriendModel ownFriendModel = new FriendModel();
-				ownFriendModel.setUserId(friendModel.getFriendUserId());
-				ownFriendModel.setFriendUserId(friendModel.getUserId());
-				friendService.saveNotNull(ownFriendModel);
+				if (CollectionUtils.isEmpty(friendModels)) {
+					int saveCnt = friendService.saveNotNull(friendModel);
+
+					//申请人添加好友
+					FriendModel ownFriendModel = new FriendModel();
+					ownFriendModel.setUserId(friendModel.getFriendUserId());
+					ownFriendModel.setFriendUserId(friendModel.getUserId());
+					friendService.saveNotNull(ownFriendModel);
+				}
 			}
 
 			UserModel userModel = userService.findById(friendModel.getFriendUserId());
