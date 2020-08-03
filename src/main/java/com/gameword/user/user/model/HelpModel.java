@@ -32,8 +32,14 @@ public class HelpModel extends Sortable {
 	@Column(name = "help_title")
 	private String helpTitle;//"帮助标题"
 
+	@Column(name = "help_en_title")
+	private String helpEnTitle;//"帮助英文标题"
+
 	@Column(name = "help_content")
 	private String helpContent;//"帮助内容"
+
+	@Column(name = "help_en_content")
+	private String helpEnContent;//"帮助英文内容"
 
 	@Column(name = "sort")
 	private Integer sort;//"排序"
@@ -61,7 +67,15 @@ public class HelpModel extends Sortable {
 	public String getHelpTitle() {
 		return this.helpTitle;
 	}
-		
+
+	public String getHelpEnTitle() {
+		return helpEnTitle;
+	}
+
+	public void setHelpEnTitle(String helpEnTitle) {
+		this.helpEnTitle = helpEnTitle;
+	}
+
 	public void setHelpContent(String helpContent) {
 		this.helpContent = helpContent;
 	}
@@ -69,7 +83,15 @@ public class HelpModel extends Sortable {
 	public String getHelpContent() {
 		return this.helpContent;
 	}
-		
+
+	public String getHelpEnContent() {
+		return helpEnContent;
+	}
+
+	public void setHelpEnContent(String helpEnContent) {
+		this.helpEnContent = helpEnContent;
+	}
+
 	public void setSort(Integer sort) {
 		this.sort = sort;
 	}

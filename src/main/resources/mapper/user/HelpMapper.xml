@@ -7,8 +7,10 @@
 
     <resultMap id="Help" type="com.gameword.user.user.model.HelpModel">
         <result property="id" column="id"/>
-        <result property="helpTitle" column="help_title"/>
-        <result property="helpContent" column="help_content"/>
+		<result property="helpTitle" column="help_title"/>
+		<result property="helpEnTitle" column="help_en_title"/>
+		<result property="helpContent" column="help_content"/>
+		<result property="helpEnContent" column="help_en_content"/>
         <result property="sort" column="sort"/>
         <result property="isDel" column="is_del"/>
         <result property="ctime" column="c_time"/>
@@ -17,7 +19,7 @@
 	<!-- 用于select查询公用抽取的列 -->
 	<sql id="columns">
 	    <![CDATA[
-        id ,help_title ,help_content ,sort ,is_del ,c_time 
+        id ,help_title ,help_en_title, help_content , help_en_content, sort ,is_del ,c_time
 	    ]]>
 	</sql>
 
