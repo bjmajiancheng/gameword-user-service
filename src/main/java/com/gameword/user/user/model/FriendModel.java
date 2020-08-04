@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.persistence.*;
 
@@ -78,7 +79,10 @@ public class FriendModel extends Sortable {
 
 	@Transient
 	private String friendAgencyName = "";//学校机构
-		
+
+	@Transient
+	private List<Integer> friendUserIds;
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -213,6 +217,14 @@ public class FriendModel extends Sortable {
 
 	public void setFriendAgencyName(String friendAgencyName) {
 		this.friendAgencyName = friendAgencyName;
+	}
+
+	public void setFriendUserIds(List<Integer> friendUserIds) {
+		this.friendUserIds = friendUserIds;
+	}
+
+	public List<Integer> getFriendUserIds() {
+		return friendUserIds;
 	}
 }
 

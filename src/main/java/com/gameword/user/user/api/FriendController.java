@@ -79,6 +79,15 @@ public class FriendController {
 		try {
 			FriendModel friendModel = new FriendModel();
 			friendModel.setUserId(currUserId);
+			if (StringUtils.isNotEmpty(queryDto.getNickName())) {
+				List<Integer> userIds = userService.findByNickName("%" + queryDto.getNickName() + "%");
+				if (CollectionUtils.isEmpty(userIds)) {
+					userIds = Collections.singletonList(0);
+				}
+
+				friendModel.setFriendUserIds(userIds);
+			}
+
 			List<FriendModel> friends = friendService.selectByFilter(friendModel);
 			if(CollectionUtils.isNotEmpty(friends)) {
 				List<Integer> friendUserIds = new ArrayList<>();
@@ -156,6 +165,14 @@ public class FriendController {
 		try {
 			FriendModel friendModel = new FriendModel();
 			friendModel.setUserId(currUserId);
+			if (StringUtils.isNotEmpty(queryDto.getNickName())) {
+				List<Integer> userIds = userService.findByNickName("%" + queryDto.getNickName() + "%");
+				if (CollectionUtils.isEmpty(userIds)) {
+					userIds = Collections.singletonList(0);
+				}
+
+				friendModel.setFriendUserIds(userIds);
+			}
 			List<FriendModel> friends = friendService.selectByFilter(friendModel);
 			if(CollectionUtils.isNotEmpty(friends)) {
 				List<Integer> friendUserIds = new ArrayList<>();

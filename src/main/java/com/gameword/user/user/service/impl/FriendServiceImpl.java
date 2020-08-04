@@ -73,6 +73,10 @@ public class FriendServiceImpl extends BaseService<FriendModel> implements IFrie
 			criteria.andEqualTo("friendUserId", friendModel.getFriendUserId());
 		}
 
+		if (CollectionUtils.isNotEmpty(friendModel.getFriendUserIds())) {
+			criteria.andIn("friendUserId", friendModel.getFriendUserIds());
+		}
+
 		if(StringUtils.isNotEmpty(friendModel.getSortWithOutOrderBy())) {
 			example.setOrderByClause(friendModel.getSortWithOutOrderBy());
 		}
