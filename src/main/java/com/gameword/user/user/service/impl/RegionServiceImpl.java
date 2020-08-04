@@ -69,4 +69,18 @@ public class RegionServiceImpl extends BaseService<RegionModel> implements IRegi
 		}
 		return getMapper().selectByExample(example);
 	}
+
+	@Override
+	public Map<Integer, RegionModel> findMapByIds(List<Integer> ids) {
+		if (CollectionUtils.isEmpty(ids)) {
+			return Collections.emptyMap();
+		}
+
+		Map<Integer, RegionModel> regionMap = new HashMap<>();
+		for (RegionModel regionModel : this.find(Collections.singletonMap("ids", ids))) {
+			regionMap.put(regionModel.getId(), regionModel);
+		}
+
+		return regionMap;
+	}
 }

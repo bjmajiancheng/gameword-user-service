@@ -31,6 +31,12 @@
 			<if test="parentId != null">
 				AND parent_id = #{parentId}
 			</if>
+			<if test="ids != null">
+				AND id IN
+				<foreach collection="ids" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
 	    </where>
 	</sql>
 

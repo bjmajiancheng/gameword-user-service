@@ -22,9 +22,7 @@ import com.gameword.user.common.utils.Result;
 import com.gameword.user.core.model.UserModel;
 import com.gameword.user.security.service.IUserService;
 import com.gameword.user.security.utils.SecurityUtil;
-import com.gameword.user.user.model.CityModel;
-import com.gameword.user.user.model.CountryModel;
-import com.gameword.user.user.model.MessageModel;
+import com.gameword.user.user.model.*;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
@@ -32,8 +30,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import com.gameword.user.user.model.FriendModel;
 
 import java.util.*;
 import com.gameword.user.user.dao.*;
@@ -67,6 +63,9 @@ public class FriendController {
 	@Autowired
 	private JPushUtil jPushUtil;
 
+	@Autowired
+	private IRegionService regionService;
+
 	@ResponseBody
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	public Result list(@RequestBody QueryDto queryDto) {
@@ -90,6 +89,7 @@ public class FriendController {
 				Map<Integer, UserModel> userMap = userService.findUserMapByUserIds(friendUserIds);
 				Set<Integer> countryIds = new HashSet<>();
 				Set<Integer> cityIds = new HashSet<>();
+				Set<Integer> regionIds = new HashSet<>();
 
 				if(MapUtils.isNotEmpty(userMap)) {
 					for(UserModel userModel : userMap.values()) {
@@ -98,35 +98,39 @@ public class FriendController {
 					}
 				}
 
+				regionIds.addAll(countryIds);
+				regionIds.addAll(cityIds);
 				Map<Integer, CountryModel> countryMap = countryService.findMapByCountryIds(new ArrayList<>(countryIds));
-				Map<Integer, CityModel> cityMap = cityService.findMapByCityIds(new ArrayList<>(cityIds));
+				/*Map<Integer, CityModel> cityMap = cityService.findMapByCityIds(new ArrayList<>(cityIds));*/
+
+				Map<Integer, RegionModel> regionMap = regionService.findMapByIds(new ArrayList<>(regionIds));
 
 				for(FriendModel tmpFriend : friends) {
 					UserModel tmpUser = userMap.get(tmpFriend.getFriendUserId().intValue());
 					if(tmpUser != null) {
 						tmpFriend.setFriendHeadImage(tmpUser.getHeadImage());
 						tmpFriend.setFriendNickName(tmpUser.getNickName());
-						tmpFriend.setFriendSex(tmpUser.getSex());
 						tmpFriend.setFriendAgencyName(tmpUser.getAgencyName());
 						tmpFriend.setFriendUserDesc(tmpUser.getUserDesc());
 
-						CountryModel tmpCountry = countryMap.get(tmpUser.getCountryId().intValue());
-						CityModel tmpCity = cityMap.get(tmpUser.getCityId().intValue());
+						CountryModel tmpCountryModel = countryMap.get(tmpUser.getCountryId().intValue());
+						RegionModel tmpCountry = regionMap.get(tmpUser.getCountryId().intValue());
+						RegionModel tmpCity = regionMap.get(tmpUser.getCityId().intValue());
 
 						if(tmpCountry != null) {
-							tmpFriend.setFriendCountryCnName(tmpCountry.getCountryCnName());
-							tmpFriend.setFriendCountryEnName(tmpCountry.getCountryEnName());
-							tmpFriend.setFriendCountryFlag(tmpCountry.getCountryFlag());
+							tmpFriend.setFriendCountryCnName(tmpCountry.getRegionCnName());
+							tmpFriend.setFriendCountryEnName(tmpCountry.getRegionEnName());
+						}
+
+						if(tmpCountryModel != null) {
+							tmpFriend.setFriendCountryFlag(tmpCountryModel.getCountryFlag());
 						}
 
 						if(tmpCity != null) {
-							tmpFriend.setFriendCityCnName(tmpCity.getCityCn());
-							tmpFriend.setFriendCityEnName(tmpCity.getCityEn());
+							tmpFriend.setFriendCityCnName(tmpCity.getRegionCnName());
+							tmpFriend.setFriendCityEnName(tmpCity.getRegionEnName());
 						}
 					}
-
-					String keyword = Pinyin4jUtil.getPinYinFirstChar(tmpFriend.getFriendNickName());
-					tmpFriend.setFirstCharPinyin(keyword);
 				}
 
 			}

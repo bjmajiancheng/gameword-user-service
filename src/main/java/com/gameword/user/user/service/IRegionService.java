@@ -31,4 +31,6 @@ public interface IRegionService extends IBaseService<RegionModel> {
 
 	public List<RegionModel> selectByFilter(RegionModel regionModel);
 
+	public Map<Integer, RegionModel> findMapByIds(List<Integer> ids);
+
 }
