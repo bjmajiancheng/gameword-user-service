@@ -135,7 +135,7 @@ public class FriendController {
 
 			}
 
-			return ResponseUtil.success(Collections.singletonMap("friends", friends));
+			return ResponseUtil.success(Collections.singletonMap("friends", friendService.generKeyWordFriendMap(friends)));
 		} catch(Exception e) {
 			e.printStackTrace();
 
