@@ -190,9 +190,14 @@ public class FriendController {
 						cityIds.add(userModel.getCityId());
 					}
 				}
+				Set<Integer> regionIds = new HashSet<Integer>();
+				regionIds.addAll(countryIds);
+				regionIds.addAll(cityIds);
 
 				Map<Integer, CountryModel> countryMap = countryService.findMapByCountryIds(new ArrayList<>(countryIds));
-				Map<Integer, CityModel> cityMap = cityService.findMapByCityIds(new ArrayList<>(cityIds));
+				/*Map<Integer, CityModel> cityMap = cityService.findMapByCityIds(new ArrayList<>(cityIds));*/
+
+				Map<Integer, RegionModel> regionMap = regionService.findMapByIds(new ArrayList<>(regionIds));
 
 				for(FriendModel tmpFriend : friends) {
 					UserModel tmpUser = userMap.get(tmpFriend.getFriendUserId().intValue());
@@ -204,7 +209,7 @@ public class FriendController {
 						tmpFriend.setFriendUserDesc(tmpUser.getUserDesc());
 
 						CountryModel tmpCountry = countryMap.get(tmpUser.getCountryId().intValue());
-						CityModel tmpCity = cityMap.get(tmpUser.getCityId().intValue());
+						RegionModel tmpCity = regionMap.get(tmpUser.getCityId().intValue());
 
 						if(tmpCountry != null) {
 							tmpFriend.setFriendCountryCnName(tmpCountry.getCountryCnName());
@@ -213,8 +218,8 @@ public class FriendController {
 						}
 
 						if(tmpCity != null) {
-							tmpFriend.setFriendCityCnName(tmpCity.getCityCn());
-							tmpFriend.setFriendCityEnName(tmpCity.getCityEn());
+							tmpFriend.setFriendCityCnName(tmpCity.getRegionCnName());
+							tmpFriend.setFriendCityEnName(tmpCity.getRegionEnName());
 						}
 					}
 

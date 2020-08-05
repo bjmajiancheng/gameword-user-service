@@ -9,9 +9,11 @@ import com.gameword.user.user.dto.ChatroomUserDto;
 import com.gameword.user.user.model.CityModel;
 import com.gameword.user.user.model.CountryModel;
 import com.gameword.user.user.model.FriendModel;
+import com.gameword.user.user.model.RegionModel;
 import com.gameword.user.user.service.ICityService;
 import com.gameword.user.user.service.ICountryService;
 import com.gameword.user.user.service.IFriendService;
+import com.gameword.user.user.service.IRegionService;
 import io.rong.methods.chatroom.Chatroom;
 import io.rong.models.chatroom.ChatroomMember;
 import io.rong.models.response.ChatroomUserQueryResult;
@@ -52,6 +54,8 @@ public class RongyunController {
     @Autowired
     private IFriendService friendService;
 
+    @Autowired
+    private IRegionService regionService;
     /**
      * 创建聊天室
      *
@@ -147,6 +151,7 @@ public class RongyunController {
 
                 Set<Integer> countryIds = new HashSet<>();
                 Set<Integer> cityIds = new HashSet<>();
+                Set<Integer> regionIds = new HashSet<>();
 
                 for(UserModel tmpUser : userModels) {
                     userIds.add(tmpUser.getId());
@@ -155,9 +160,12 @@ public class RongyunController {
                     cityIds.add(tmpUser.getCityId());
                 }
 
+                regionIds.addAll(countryIds);
+                regionIds.addAll(cityIds);
                 Map<Integer, CountryModel> countryMap = countryService.findMapByCountryIds(new ArrayList<>(countryIds));
-                Map<Integer, CityModel> cityMap = cityService.findMapByCityIds(new ArrayList<>(cityIds));
+                /*Map<Integer, CityModel> cityMap = cityService.findMapByCityIds(new ArrayList<>(cityIds));*/
 
+                Map<Integer, RegionModel> regionMap = regionService.findMapByIds(new ArrayList<>(regionIds));
                 Map<Integer, FriendModel> friendMap = friendService.findMapByUserId(SecurityUtil.getCurrentUserId());
 
                 for(UserModel tmpUser : userModels) {
@@ -169,9 +177,9 @@ public class RongyunController {
                             .setAgencyName(tmpUser.getAgencyName())
                             .setUserDesc(tmpUser.getUserDesc());
 
-                    CountryModel tmpCountry = countryMap.get(tmpUser.getCountryId());
-                    CityModel tmpCity = cityMap.get(tmpUser.getCityId());
-                    FriendModel tmpFriend = friendMap.get(tmpUser.getId());
+                    CountryModel tmpCountry = countryMap.get(tmpUser.getCountryId().intValue());
+                    RegionModel tmpCity = regionMap.get(tmpUser.getCityId().intValue());
+                    FriendModel tmpFriend = friendMap.get(tmpUser.getId().intValue());
                     ChatroomMember blockMember = blockMemberMap.get(String.valueOf(tmpUser.getId()));
 
                     if(tmpCountry != null) {
@@ -181,8 +189,8 @@ public class RongyunController {
                     }
 
                     if(tmpCity != null) {
-                        roomUser.setCityCnName(tmpCity.getCityCn());
-                        roomUser.setCityEnName(tmpCity.getCityEn());
+                        roomUser.setCityCnName(tmpCity.getRegionCnName());
+                        roomUser.setCityEnName(tmpCity.getRegionEnName());
                     }
 
                     if(tmpFriend != null) {
